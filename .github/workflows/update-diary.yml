@@ -1,0 +1,44 @@
+name: Update Dev Diary
+
+on:
+  schedule:
+    - cron: '0 15 * * *'   # JST 00:00 (UTC 15:00)
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '対象日付 (YYYY-MM-DD, 省略時: 昨日JST)'
+        required: false
+        default: ''
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Fetch commits & update diary
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DATE: ${{ inputs.date }}
+        run: python scripts/update_diary.py
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "yc-diary-bot"
+          git config user.email "bot@ycompany.co.jp"
+          git add docs/diary.html
+          git diff --staged --quiet && echo "変更なし" || (
+            git commit -m "diary: auto-update $(TZ=Asia/Tokyo date +%Y-%m-%d)"
+            git push
+          )
