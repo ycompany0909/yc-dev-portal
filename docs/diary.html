@@ -161,6 +161,24 @@
     }
     .task-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
     .task-hint { font-size: 12px; color: #334155; margin-top: 8px; }
+    /* ── Context tab ── */
+    .ctx-box {
+      background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+      padding: 16px; margin-bottom: 14px; position: relative;
+    }
+    .ctx-label { font-size: 11px; color: #64748b; margin-bottom: 8px; }
+    .ctx-copy-btn {
+      position: absolute; top: 12px; right: 12px;
+      background: #2563eb; color: #fff; border: none; border-radius: 8px;
+      padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .ctx-copy-btn.done { background: #16a34a; }
+    .ctx-content {
+      font-size: 12px; color: #94a3b8; white-space: pre-wrap; line-height: 1.6;
+      max-height: 55vh; overflow-y: auto;
+    }
+    .ctx-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
+    .ctx-updated { font-size: 11px; color: #475569; margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -174,6 +192,7 @@
     <button class="tab-btn active" onclick="switchTab('calendar', this)">📅 カレンダー</button>
     <button class="tab-btn" onclick="switchTab('memo', this)">📝 メモ</button>
     <button class="tab-btn" onclick="switchTab('tasks', this)">📋 残タスク</button>
+    <button class="tab-btn" onclick="switchTab('context', this)">🔗 壁打ち</button>
   </div>
 
   <!-- ===== CALENDAR TAB ===== -->
@@ -250,6 +269,22 @@
     </div>
   </div>
 
+  <!-- ===== CONTEXT TAB ===== -->
+  <div id="tab-context" class="tab-pane">
+    <div class="container">
+      <div class="ctx-updated" id="ctx-updated"></div>
+      <div class="ctx-box" id="ctx-box" style="display:none">
+        <div class="ctx-label">このテキストをコピーして Claude.ai の最初のメッセージに貼ると、開発文脈を即共有できます</div>
+        <button class="ctx-copy-btn" id="ctx-copy-btn" onclick="copyContext()">コピー</button>
+        <div class="ctx-content" id="ctx-content"></div>
+      </div>
+      <div class="ctx-empty" id="ctx-empty">
+        読み込み中...
+        <div class="task-hint">Claude Terminal で /sync-context を唱えると更新されます</div>
+      </div>
+    </div>
+  </div>
+
 <script>
 const WORKER_URL = 'https://yc-dev-memo.ycompany0909.workers.dev';
 
@@ -261,6 +296,7 @@ function switchTab(name, btn) {
   btn.classList.add('active');
   if (name === 'memo') loadMemos();
   if (name === 'tasks') loadTasks();
+  if (name === 'context') loadContext();
 }
 
 // ===== MEMO =====
@@ -377,6 +413,36 @@ async function loadTasks() {
   } catch {
     document.getElementById('task-list').innerHTML = '<div class="task-empty">読み込みエラー</div>';
   }
+}
+
+// ===== CONTEXT =====
+async function loadContext() {
+  const empty = document.getElementById('ctx-empty');
+  const box = document.getElementById('ctx-box');
+  const content = document.getElementById('ctx-content');
+  const updated = document.getElementById('ctx-updated');
+  try {
+    const res = await fetch('context.md?t=' + Date.now());
+    if (!res.ok) throw new Error('not found');
+    const text = await res.text();
+    content.textContent = text;
+    const m = text.match(/（(\d{4}-\d{2}-\d{2}[^）]*)更新）/);
+    if (m) updated.textContent = `最終同期: ${m[1]}`;
+    box.style.display = 'block';
+    empty.style.display = 'none';
+  } catch {
+    empty.innerHTML = `まだコンテキストがありません<div class="task-hint">Claude Terminal で /sync-context を唱えると更新されます</div>`;
+  }
+}
+
+function copyContext() {
+  const text = document.getElementById('ctx-content').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('ctx-copy-btn');
+    btn.textContent = '✅ コピー済み';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('done'); }, 2000);
+  });
 }
 
 // ===== CALENDAR (unchanged) =====
