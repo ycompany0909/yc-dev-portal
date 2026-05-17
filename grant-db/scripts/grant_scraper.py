@@ -313,7 +313,7 @@ def scrape_hojyokin(page: Page):
         time.sleep(DELAY * 2)
         page.wait_for_load_state("networkidle")
         p_num += 1
-        if p_num > 20: break   # 4056件 → 最大200件（20p×10）
+        if p_num > 100: break   # 4056件 → 最大1000件（100p×10）
 
     log(f"補助金ポータル完了: {len([p for p in programs if p['data_source']=='補助金ポータル'])}件")
 
@@ -724,6 +724,18 @@ def scrape_jfc(page: Page):
 # ═══════════════════════════════════════════════════════════════
 
 OTHER_FOUNDATIONS = [
+    {"name":"公益財団法人東急財団","short":"東急財団","parent":"東急グループ",
+     "url":"https://foundation.tokyu.co.jp/environment/","pref":"東京都","type":"企業財団"},
+    {"name":"公益財団法人セコム科学技術振興財団","short":"セコム科学技術財団","parent":"セコム",
+     "url":"https://www.secomzaidan.jp/","pref":"東京都","type":"企業財団"},
+    {"name":"公益財団法人ソニー教育財団","short":"ソニー教育財団","parent":"ソニーグループ",
+     "url":"https://www.sony-ef.or.jp/program/","pref":"東京都","type":"企業財団"},
+    {"name":"公益財団法人積水ハウスマッチングプログラム財団","short":"積水ハウス財団","parent":"積水ハウス",
+     "url":"https://www.sekisuihouse.co.jp/matching/","pref":"大阪府","type":"企業財団"},
+    {"name":"一般財団法人三菱UFJ環境財団","short":"三菱UFJ環境財団","parent":"三菱UFJフィナンシャルグループ",
+     "url":"https://www.muef.or.jp/muef/","pref":"東京都","type":"企業財団"},
+    {"name":"公益財団法人花王芸術・科学財団","short":"花王芸術科学財団","parent":"花王グループ",
+     "url":"https://www.kao-foundation.or.jp/art/","pref":"東京都","type":"企業財団"},
     {"name":"公益財団法人三菱財団","short":"三菱財団","parent":"三菱グループ",
      "url":"https://www.mitsubishi-zaidan.jp/support/","pref":"東京都","type":"企業財団"},
     {"name":"公益財団法人笹川平和財団","short":"笹川平和財団","parent":"日本財団グループ",
@@ -875,6 +887,86 @@ def scrape_other_foundation(page: Page, info: dict):
         add_log(info["name"], info["url"], "error", notes=str(e))
 
 # ═══════════════════════════════════════════════════════════════
+# ── J-Grants API（デジタル庁）──────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
+
+def scrape_jgrants_api():
+    """J-Grants公開APIから補助金データを取得。Playwright不要・純requests。"""
+    import requests as _req
+    log("=== J-Grants API（デジタル庁）===")
+    BASE = "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies"
+
+    # NPO/公益系キーワードで広範囲をカバー。keywordは必須パラメータ。
+    KEYWORDS = [
+        "NPO", "助成", "ボランティア", "市民活動", "社会福祉",
+        "地域活動", "環境", "子ども", "障害", "高齢", "教育",
+        "国際", "文化", "防災", "女性",
+    ]
+    seen_ids: set = set()
+    total = 0
+
+    for kw in KEYWORDS:
+        try:
+            r = _req.get(BASE, params={
+                "keyword": kw,
+                "sort": "acceptance_end_datetime",
+                "order": "ASC",
+                "acceptance": "1",
+            }, timeout=15)
+            if r.status_code != 200:
+                log(f"  J-Grants '{kw}': HTTP {r.status_code}", "WARN")
+                continue
+
+            items = r.json().get("result", [])
+            new_items = [it for it in items if it.get("id") not in seen_ids]
+            log(f"  J-Grants '{kw}': {len(items)}件（新規{len(new_items)}件）")
+
+            for item in new_items:
+                gid = item.get("id", "")
+                seen_ids.add(gid)
+
+                title = item.get("title", "").strip()
+                if not title: continue
+
+                area  = item.get("target_area_search", "")
+                amax  = item.get("subsidy_max_limit") or None
+                start = (item.get("acceptance_start_datetime") or "")[:10] or None
+                end   = (item.get("acceptance_end_datetime")   or "")[:10] or None
+                inst  = item.get("institution_name") or "(行政)"
+                emp   = item.get("target_number_of_employees", "")
+
+                dlm = None
+                if end:
+                    try: dlm = int(end[5:7])
+                    except: pass
+
+                issues = classify(title + " " + (area or ""))
+
+                programs.append({
+                    "foundation_name": inst,
+                    "program_name": title,
+                    "target_org_types": emp,
+                    "target_issues": issues,
+                    "target_regions": area,
+                    "amount_max_jpy": amax,
+                    "deadline": end,
+                    "deadline_month_recurring": dlm,
+                    "application_method": "J-Grants電子申請",
+                    "grant_url": f"https://www.jgrants-portal.go.jp/subsidy/{gid}",
+                    "status": "active",
+                    "data_completeness": "partial",
+                    "data_source": "J-Grants API",
+                    "fiscal_year": 2026,
+                })
+                total += 1
+
+            time.sleep(0.5)
+        except Exception as e:
+            log(f"  J-Grants '{kw}': {e}", "WARN")
+
+    log(f"J-Grants API完了: {total}件（重複除去済み）")
+
+# ═══════════════════════════════════════════════════════════════
 # ── メイン ──────────────────────────────────────────────────────
 # ═══════════════════════════════════════════════════════════════
 
@@ -884,7 +976,7 @@ def main():
     parser.add_argument("--skip-jfc", action="store_true", help="JFC naviをスキップ")
     parser.add_argument("--headless", action="store_true", default=False, help="ヘッドレスモード（デフォルト: 表示あり）")
     parser.add_argument("--sources", default="all",
-                        help="実行するソース: all / canpan / hojyokin / toyota / sumitomo / panasonic / nippon / others / jfc")
+                        help="実行するソース: all / canpan / hojyokin / jgrants / toyota / sumitomo / panasonic / nippon / others / jfc")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(exist_ok=True)
@@ -918,6 +1010,10 @@ def main():
 
             if src in ("all", "hojyokin"):
                 scrape_hojyokin(page)
+                save_all()
+
+            if src in ("all", "jgrants"):
+                scrape_jgrants_api()
                 save_all()
 
             if src in ("all", "toyota"):
