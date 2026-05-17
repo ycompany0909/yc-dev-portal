@@ -8,209 +8,159 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      min-height: 100vh;
+      background: #0f172a; color: #e2e8f0; min-height: 100vh;
     }
     header {
-      background: #1e293b;
-      padding: 14px 20px;
+      background: #1e293b; padding: 14px 20px;
       border-bottom: 1px solid #334155;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; gap: 12px;
     }
     header a { color: #94a3b8; text-decoration: none; font-size: 13px; }
-    header a:active { color: #e2e8f0; }
     header h1 { font-size: 17px; font-weight: 700; color: #f8fafc; }
+
+    /* Tabs */
+    .tabs {
+      display: flex; background: #1e293b;
+      border-bottom: 1px solid #334155;
+      position: sticky; top: 49px; z-index: 9;
+    }
+    .tab-btn {
+      flex: 1; padding: 12px 0; font-size: 13px; font-weight: 600;
+      color: #64748b; background: none; border: none; cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .tab-btn.active { color: #f1f5f9; border-bottom-color: #2563eb; }
+    .tab-btn:active { background: #334155; }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
     .container { padding: 16px; max-width: 800px; margin: 0 auto; }
 
-    /* Month nav */
+    /* ── Calendar tab ── */
     .month-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
     }
     .month-nav button {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #94a3b8;
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
+      background: #1e293b; border: 1px solid #334155; color: #94a3b8;
+      width: 36px; height: 36px; border-radius: 8px; font-size: 16px; cursor: pointer;
     }
     .month-nav button:active { background: #334155; }
     .month-title { font-size: 16px; font-weight: 700; color: #f1f5f9; }
-
-    /* Calendar grid */
-    .calendar {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    .cal-header {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      background: #0f172a;
-    }
-    .cal-header span {
-      text-align: center;
-      font-size: 11px;
-      font-weight: 600;
-      color: #475569;
-      padding: 8px 0;
-    }
-    .cal-body {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-    }
-    .cal-cell {
-      min-height: 52px;
-      padding: 6px;
-      border-top: 1px solid #334155;
-      border-right: 1px solid #334155;
-      cursor: default;
-      position: relative;
-    }
+    .calendar { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+    .cal-header { display: grid; grid-template-columns: repeat(7, 1fr); background: #0f172a; }
+    .cal-header span { text-align: center; font-size: 11px; font-weight: 600; color: #475569; padding: 8px 0; }
+    .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); }
+    .cal-cell { min-height: 52px; padding: 6px; border-top: 1px solid #334155; border-right: 1px solid #334155; cursor: default; }
     .cal-cell:nth-child(7n) { border-right: none; }
     .cal-cell.has-entry { cursor: pointer; }
     .cal-cell.has-entry:active { background: #334155; }
     .cal-cell.today .day-num { background: #2563eb; color: #fff; border-radius: 50%; }
     .cal-cell.selected { background: #1e3a5f; }
-    .day-num {
-      font-size: 12px;
-      font-weight: 600;
-      color: #475569;
-      width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .day-num { font-size: 12px; font-weight: 600; color: #475569; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
     .cal-cell.has-entry .day-num { color: #e2e8f0; }
     .cal-cell.other-month .day-num { color: #1e293b; }
-    .dots {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2px;
-      margin-top: 3px;
-    }
-    .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-    }
-    .dot-op { background: #3b82f6; }
-    .dot-workers { background: #a855f7; }
-    .dot-portal { background: #22c55e; }
-    .dot-other { background: #f59e0b; }
-
-    /* Entry panel */
-    .entry-panel {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      overflow: hidden;
-      display: none;
-    }
+    .dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
+    .dot { width: 5px; height: 5px; border-radius: 50%; }
+    .dot-op { background: #3b82f6; } .dot-workers { background: #a855f7; }
+    .dot-portal { background: #22c55e; } .dot-other { background: #f59e0b; }
+    .entry-panel { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; display: none; }
     .entry-panel.visible { display: block; }
-    .entry-date {
-      padding: 12px 16px;
-      background: #0f172a;
-      border-bottom: 1px solid #334155;
-      font-size: 14px;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
+    .entry-date { padding: 12px 16px; background: #0f172a; border-bottom: 1px solid #334155; font-size: 14px; font-weight: 700; color: #f1f5f9; }
     .entry-date span { font-size: 12px; font-weight: 400; color: #64748b; margin-left: 8px; }
-    .entry-section {
-      padding: 12px 16px;
-      border-bottom: 1px solid #1e293b;
-    }
+    .entry-section { padding: 12px 16px; border-bottom: 1px solid #1e293b; }
     .entry-section:last-child { border-bottom: none; }
-    .repo-tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 999px;
-      margin-bottom: 8px;
-    }
-    .tag-op { background: #1d4ed8; color: #bfdbfe; }
-    .tag-workers { background: #6d28d9; color: #ddd6fe; }
-    .tag-portal { background: #166534; color: #bbf7d0; }
-    .tag-accounting { background: #92400e; color: #fde68a; }
-    .tag-dotfiles { background: #1e3a5f; color: #7dd3fc; }
-    .tag-setagaya { background: #4d7c0f; color: #d9f99d; }
+    .repo-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; margin-bottom: 8px; }
+    .tag-op { background: #1d4ed8; color: #bfdbfe; } .tag-workers { background: #6d28d9; color: #ddd6fe; }
+    .tag-portal { background: #166534; color: #bbf7d0; } .tag-accounting { background: #92400e; color: #fde68a; }
+    .tag-dotfiles { background: #1e3a5f; color: #7dd3fc; } .tag-setagaya { background: #4d7c0f; color: #d9f99d; }
     .tag-other { background: #374151; color: #d1d5db; }
     .feat-list { list-style: none; }
-    .feat-item {
-      font-size: 13px;
-      color: #cbd5e1;
-      padding: 3px 0;
-      display: flex;
-      gap: 8px;
-      align-items: baseline;
-      line-height: 1.5;
-    }
+    .feat-item { font-size: 13px; color: #cbd5e1; padding: 3px 0; display: flex; gap: 8px; align-items: baseline; line-height: 1.5; }
     .feat-item::before { content: "—"; color: #475569; flex-shrink: 0; }
-    .feat-type {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 1px 5px;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-    .type-feat { background: #1d4ed8; color: #bfdbfe; }
-    .type-fix { background: #7f1d1d; color: #fca5a5; }
-    .type-docs { background: #374151; color: #9ca3af; }
-    .type-refactor { background: #4c1d95; color: #c4b5fd; }
+    .feat-type { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; flex-shrink: 0; }
+    .type-feat { background: #1d4ed8; color: #bfdbfe; } .type-fix { background: #7f1d1d; color: #fca5a5; }
+    .type-docs { background: #374151; color: #9ca3af; } .type-refactor { background: #4c1d95; color: #c4b5fd; }
     .type-init { background: #166534; color: #86efac; }
-
-    .no-entry {
-      text-align: center;
-      padding: 40px 20px;
-      color: #475569;
-      font-size: 14px;
-    }
-
-    /* Stats bar */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .stat-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-    }
+    .no-entry { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
+    .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+    .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; text-align: center; }
     .stat-num { font-size: 22px; font-weight: 800; color: #f1f5f9; }
     .stat-label { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #94a3b8; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-    /* Legend */
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
+    /* ── Memo tab ── */
+    .memo-form {
+      background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+      padding: 16px; margin-bottom: 20px;
     }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: #94a3b8;
+    .memo-form h2 { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 12px; }
+    .memo-textarea {
+      width: 100%; min-height: 100px; background: #0f172a; border: 1px solid #334155;
+      border-radius: 8px; color: #e2e8f0; font-size: 14px; padding: 10px 12px;
+      resize: vertical; font-family: inherit;
     }
-    .legend-dot {
-      width: 8px; height: 8px; border-radius: 50%;
+    .memo-textarea:focus { outline: none; border-color: #2563eb; }
+    .tag-input-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .tag-chip {
+      padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      border: 1px solid #334155; background: #0f172a; color: #94a3b8; cursor: pointer;
     }
+    .tag-chip.selected { background: #1d4ed8; border-color: #2563eb; color: #bfdbfe; }
+    .memo-pw-row { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+    .memo-pw-input {
+      flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 8px;
+      color: #e2e8f0; font-size: 13px; padding: 8px 12px;
+    }
+    .memo-pw-input:focus { outline: none; border-color: #2563eb; }
+    .memo-submit {
+      background: #2563eb; color: #fff; border: none; border-radius: 8px;
+      padding: 8px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .memo-submit:active { background: #1d4ed8; }
+    .memo-submit:disabled { background: #334155; color: #64748b; cursor: default; }
+    .memo-status { font-size: 12px; color: #64748b; margin-top: 8px; min-height: 18px; }
+    .memo-status.ok { color: #22c55e; }
+    .memo-status.err { color: #ef4444; }
+
+    .memo-list { display: flex; flex-direction: column; gap: 10px; }
+    .memo-card {
+      background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 14px 16px;
+    }
+    .memo-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .memo-date { font-size: 11px; color: #64748b; }
+    .memo-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: #1d4ed8; color: #bfdbfe; }
+    .memo-text { font-size: 14px; color: #e2e8f0; line-height: 1.6; white-space: pre-wrap; }
+    .memo-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
+
+    /* ── Tasks tab ── */
+    .tasks-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    }
+    .tasks-header h2 { font-size: 14px; font-weight: 700; color: #f1f5f9; }
+    .tasks-updated { font-size: 11px; color: #475569; }
+    .task-card {
+      background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+      padding: 14px 16px; margin-bottom: 10px;
+    }
+    .task-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+    .task-priority {
+      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+    }
+    .pri-high { background: #7f1d1d; color: #fca5a5; }
+    .pri-medium { background: #78350f; color: #fcd34d; }
+    .pri-low { background: #1e3a5f; color: #7dd3fc; }
+    .task-title { font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.4; }
+    .task-detail { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+    .task-blocker {
+      margin-top: 6px; font-size: 12px; color: #fca5a5;
+      background: #450a0a; border-radius: 6px; padding: 4px 8px; display: inline-block;
+    }
+    .task-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
+    .task-hint { font-size: 12px; color: #334155; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -219,63 +169,217 @@
     <h1>開発日記</h1>
   </header>
 
-  <div class="container">
+  <!-- Tab bar -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('calendar', this)">📅 カレンダー</button>
+    <button class="tab-btn" onclick="switchTab('memo', this)">📝 メモ</button>
+    <button class="tab-btn" onclick="switchTab('tasks', this)">📋 残タスク</button>
+  </div>
 
-    <!-- Stats -->
-    <div class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-num" id="stat-days">—</div>
-        <div class="stat-label">開発日数</div>
+  <!-- ===== CALENDAR TAB ===== -->
+  <div id="tab-calendar" class="tab-pane active">
+    <div class="container">
+      <div class="stats-bar">
+        <div class="stat-card"><div class="stat-num" id="stat-days">—</div><div class="stat-label">開発日数</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-commits">—</div><div class="stat-label">総コミット</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-repos">—</div><div class="stat-label">リポジトリ</div></div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-commits">—</div>
-        <div class="stat-label">総コミット</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Operation-Mgmt</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>yc-workers</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>各種ポータル</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>その他</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-repos">—</div>
-        <div class="stat-label">リポジトリ</div>
+      <div class="month-nav">
+        <button onclick="prevMonth()">‹</button>
+        <div class="month-title" id="month-title"></div>
+        <button onclick="nextMonth()">›</button>
+      </div>
+      <div class="calendar">
+        <div class="cal-header">
+          <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+        </div>
+        <div class="cal-body" id="cal-body"></div>
+      </div>
+      <div class="entry-panel" id="entry-panel">
+        <div class="entry-date" id="entry-date-label"></div>
+        <div id="entry-content"></div>
+      </div>
+      <div class="no-entry" id="no-entry-msg" style="display:none">この日は開発記録がありません</div>
+    </div>
+  </div>
+
+  <!-- ===== MEMO TAB ===== -->
+  <div id="tab-memo" class="tab-pane">
+    <div class="container">
+      <div class="memo-form">
+        <h2>📝 開発メモを追加</h2>
+        <textarea class="memo-textarea" id="memo-text" placeholder="アイデア・気づき・TODO など自由に&#10;&#10;例: Square決済の返金フローをBotで自動化できそう"></textarea>
+        <div class="tag-input-row" id="tag-chips">
+          <div class="tag-chip" data-tag="#アイデア" onclick="toggleTag(this)">#アイデア</div>
+          <div class="tag-chip" data-tag="#TODO" onclick="toggleTag(this)">#TODO</div>
+          <div class="tag-chip" data-tag="#バグ" onclick="toggleTag(this)">#バグ</div>
+          <div class="tag-chip" data-tag="#調査" onclick="toggleTag(this)">#調査</div>
+          <div class="tag-chip" data-tag="#デザイン" onclick="toggleTag(this)">#デザイン</div>
+        </div>
+        <div class="memo-pw-row">
+          <input class="memo-pw-input" id="memo-pw" type="password" placeholder="パスワード" oninput="savePw()">
+          <button class="memo-submit" id="memo-btn" onclick="submitMemo()">送信</button>
+        </div>
+        <div class="memo-status" id="memo-status"></div>
+      </div>
+      <div class="memo-list" id="memo-list">
+        <div class="memo-empty">読み込み中...</div>
       </div>
     </div>
+  </div>
 
-    <!-- Legend -->
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Operation-Mgmt</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>yc-workers</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>各種ポータル</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>その他</div>
-    </div>
-
-    <!-- Month nav -->
-    <div class="month-nav">
-      <button onclick="prevMonth()">‹</button>
-      <div class="month-title" id="month-title"></div>
-      <button onclick="nextMonth()">›</button>
-    </div>
-
-    <!-- Calendar -->
-    <div class="calendar">
-      <div class="cal-header">
-        <span>日</span><span>月</span><span>火</span><span>水</span>
-        <span>木</span><span>金</span><span>土</span>
+  <!-- ===== TASKS TAB ===== -->
+  <div id="tab-tasks" class="tab-pane">
+    <div class="container">
+      <div class="tasks-header">
+        <h2>📋 残タスク</h2>
+        <div class="tasks-updated" id="tasks-updated"></div>
       </div>
-      <div class="cal-body" id="cal-body"></div>
+      <div id="task-list">
+        <div class="task-empty">
+          読み込み中...
+          <div class="task-hint">Claude Terminal で /push-tasks を唱えると更新されます</div>
+        </div>
+      </div>
     </div>
-
-    <!-- Entry detail -->
-    <div class="entry-panel" id="entry-panel">
-      <div class="entry-date" id="entry-date-label"></div>
-      <div id="entry-content"></div>
-    </div>
-
-    <div class="no-entry" id="no-entry-msg" style="display:none">
-      この日は開発記録がありません
-    </div>
-
   </div>
 
 <script>
-// ========== DIARY DATA ==========
-// format: { "YYYY-MM-DD": [ { repo, tag, items: [{type, text}] } ] }
+const WORKER_URL = 'https://yc-dev-memo.ycompany0909.workers.dev';
+
+// ===== TAB SWITCH =====
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'memo') loadMemos();
+  if (name === 'tasks') loadTasks();
+}
+
+// ===== MEMO =====
+function savePw() {
+  const pw = document.getElementById('memo-pw').value;
+  if (pw) localStorage.setItem('yc_memo_pw', pw);
+}
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('yc_memo_pw');
+  if (saved) document.getElementById('memo-pw').value = saved;
+});
+
+function toggleTag(el) {
+  el.classList.toggle('selected');
+}
+
+async function submitMemo() {
+  const text = document.getElementById('memo-text').value.trim();
+  if (!text) return;
+  const pw = document.getElementById('memo-pw').value;
+  if (!pw) { setStatus('パスワードを入力してください', 'err'); return; }
+  const tags = [...document.querySelectorAll('.tag-chip.selected')].map(c => c.dataset.tag);
+
+  const btn = document.getElementById('memo-btn');
+  btn.disabled = true;
+  setStatus('送信中...');
+
+  try {
+    const res = await fetch(`${WORKER_URL}/memo`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw, text, tags }),
+    });
+    if (res.ok) {
+      setStatus('✅ 保存しました（数分で反映）', 'ok');
+      document.getElementById('memo-text').value = '';
+      document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
+      localStorage.setItem('yc_memo_pw', pw);
+      setTimeout(loadMemos, 1000);
+    } else if (res.status === 401) {
+      setStatus('❌ パスワードが違います', 'err');
+    } else {
+      setStatus('❌ エラーが発生しました', 'err');
+    }
+  } catch {
+    setStatus('❌ 通信エラー', 'err');
+  }
+  btn.disabled = false;
+}
+
+function setStatus(msg, cls = '') {
+  const el = document.getElementById('memo-status');
+  el.textContent = msg;
+  el.className = 'memo-status' + (cls ? ' ' + cls : '');
+}
+
+async function loadMemos() {
+  try {
+    const res = await fetch('memos.json?t=' + Date.now());
+    const memos = await res.json();
+    const list = document.getElementById('memo-list');
+    if (!memos.length) {
+      list.innerHTML = '<div class="memo-empty">まだメモがありません</div>';
+      return;
+    }
+    list.innerHTML = memos.map(m => {
+      const date = new Date(m.created_at).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      const tags = (m.tags || []).map(t => `<span class="memo-tag">${t}</span>`).join('');
+      return `<div class="memo-card">
+        <div class="memo-meta"><span class="memo-date">${date}</span>${tags}</div>
+        <div class="memo-text">${m.text.replace(/</g,'&lt;')}</div>
+      </div>`;
+    }).join('');
+  } catch {
+    document.getElementById('memo-list').innerHTML = '<div class="memo-empty">読み込みエラー</div>';
+  }
+}
+
+// ===== TASKS =====
+async function loadTasks() {
+  try {
+    const res = await fetch('tasks.json?t=' + Date.now());
+    const data = await res.json();
+    const list = document.getElementById('task-list');
+    const updated = document.getElementById('tasks-updated');
+
+    if (data.updated_at) {
+      const d = new Date(data.updated_at);
+      updated.textContent = `更新: ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
+    if (!data.tasks || !data.tasks.length) {
+      list.innerHTML = `<div class="task-empty">
+        タスクがありません
+        <div class="task-hint">Claude Terminal で /push-tasks を唱えると更新されます</div>
+      </div>`;
+      return;
+    }
+
+    const priLabel = { high: '高', medium: '中', low: '低' };
+    const priCls = { high: 'pri-high', medium: 'pri-medium', low: 'pri-low' };
+    list.innerHTML = data.tasks.map(t => {
+      const pri = t.priority || 'medium';
+      const blocker = t.blocker ? `<div class="task-blocker">🚧 ${t.blocker}</div>` : '';
+      return `<div class="task-card">
+        <div class="task-header">
+          <span class="task-priority ${priCls[pri] || 'pri-medium'}">${priLabel[pri] || pri}</span>
+          <div class="task-title">${t.title}</div>
+        </div>
+        ${t.detail ? `<div class="task-detail">${t.detail}</div>` : ''}
+        ${blocker}
+      </div>`;
+    }).join('');
+  } catch {
+    document.getElementById('task-list').innerHTML = '<div class="task-empty">読み込みエラー</div>';
+  }
+}
+
+// ===== CALENDAR (unchanged) =====
 const DIARY = {
   "2026-04-30": [
     { repo: "demoday-backend", tag: "tag-other", items: [
@@ -293,44 +397,25 @@ const DIARY = {
   "2026-05-12": [
     { repo: "Operation-Management", tag: "tag-op", items: [
       { type: "init", text: "YC運用マニュアルをNotionからGitHubへ移行（Initial commit）" },
-      { type: "feat", text: "v1.1マニュアル: GHソースから59手順を更新" },
-      { type: "feat", text: "v1.2マニュアル: YS Brain Obsidian vaultの知識統合" },
-      { type: "feat", text: "v1.3マニュアル + AI壁打ち分析レポート" },
-      { type: "docs", text: "SESSION_REPORT_20260512 作成" },
-      { type: "docs", text: "YC_ネクストアクションリスト_20260512 追加" },
+      { type: "feat", text: "v1.1〜v1.3マニュアル更新 + AI壁打ち分析レポート" },
     ]}
   ],
   "2026-05-13": [
     { repo: "Operation-Management", tag: "tag-op", items: [
       { type: "feat", text: "統合ポータル新設（index.html）" },
-      { type: "feat", text: "個人別マニュアル（山川・田貝）+ インタラクティブヒアリングUI" },
-      { type: "feat", text: "マニュアル画像143枚（54MB）をDriveから抽出して追加" },
+      { type: "feat", text: "個人別マニュアル + インタラクティブヒアリングUI" },
       { type: "feat", text: "議事録→タスク化テンプレート（meeting.html + Worker連携）" },
-      { type: "feat", text: "申請フォーム生成テンプレートHTML UI" },
-      { type: "feat", text: "AI業務変革パッケージ営業資料（北極星10/10 完全達成）" },
-      { type: "feat", text: "コメント欄に「保存」「佐々生さんへ送信」ボタン追加" },
-      { type: "feat", text: "NocoDB直接投入チェックボックスを議事録UIに追加" },
-      { type: "docs", text: "README を標準フォーマット化 + Mirror追加（bot/notifier/asakai）" },
+      { type: "feat", text: "AI業務変革パッケージ営業資料" },
     ]}
   ],
   "2026-05-14": [
     { repo: "Operation-Management", tag: "tag-op", items: [
-      { type: "feat", text: "シフト管理 v2 (3 Worker) 追加" },
-      { type: "feat", text: "FAQ Bot/編集・お酒情報・運用ダッシュボードのポータルタイル追加" },
-      { type: "feat", text: "組織図タイル追加（86名リニューアル）" },
-      { type: "feat", text: "YC用語集システム実装（glossary.html）+ ガイド内ホバーツールチップ" },
-      { type: "feat", text: "開発・改善要望フォーム（dev-request）本体追加" },
-      { type: "feat", text: "内部Worker URLをCF Access保護カスタムドメイン(*.ycompany.co.jp)に統一" },
-      { type: "feat", text: "VPS Pythonスクリプト群（yc-asakai系）追加" },
-      { type: "feat", text: "API status dashboard（LINE quota + Anthropic Consoleリンク）" },
-      { type: "feat", text: "ロールベース表示 + 障害Runbook + ヘルスチェック反映" },
-      { type: "feat", text: "event-meeting-log: iMac版WorkerをMacBook/ポータル本体に移植" },
-      { type: "feat", text: "お酒情報 一言キャッチを4言語化（162銘柄翻訳）" },
+      { type: "feat", text: "シフト管理 v2 (3 Worker)" },
+      { type: "feat", text: "FAQ Bot / お酒情報 / 運用ダッシュボード追加" },
+      { type: "feat", text: "YC用語集システム + ガイド内ホバーツールチップ" },
+      { type: "feat", text: "CF AccessカスタムドメインURL統一" },
+      { type: "feat", text: "event-meeting-log iMac版をMacBook/ポータル本体に移植" },
       { type: "feat", text: "マルチテナント基盤（Idea C Week 1）" },
-      { type: "feat", text: "Notta議事録コミュニティ会議の自動判定追加（Idea B）" },
-      { type: "feat", text: "yc-shortcut: CF Access OTPバイパス用プロキシWorker（orzugul専用）" },
-      { type: "feat", text: "使い方ガイド（guide.html）素案追加" },
-      { type: "feat", text: "MACBOOK_HANDOFF.md — 新MacBook引き継ぎガイド" },
     ]},
     { repo: "yc-workers", tag: "tag-workers", items: [
       { type: "init", text: "18本のYC Cloudflare Workersを1リポジトリに統合" },
@@ -338,42 +423,26 @@ const DIARY = {
   ],
   "2026-05-15": [
     { repo: "Operation-Management", tag: "tag-op", items: [
-      { type: "feat", text: "開店/閉店チェックリスト + 提出状況コックピットタブ" },
-      { type: "feat", text: "CVリマインダー + cv_status追加 + CV成立率メトリクス" },
-      { type: "feat", text: "日報拡張(v2) — 8フィールド追加 + イベント集客信号バッジ" },
+      { type: "feat", text: "開店/閉店チェックリスト + 提出状況コックピット" },
+      { type: "feat", text: "日報拡張v2 — 8フィールド追加 + イベント集客バッジ" },
       { type: "feat", text: "1on1記録アプリ + AI再要約ボタン" },
-      { type: "feat", text: "イベント集客タブ追加（shift-cockpit + event_attendance API）" },
-      { type: "feat", text: "年間計画カレンダータブ（Google Sheets連携）" },
-      { type: "feat", text: "Notta議事録 → Todo承認パイプライン Phase 1/2 能動化" },
-      { type: "feat", text: "yc-drink-info ラベル照合精度改善（confidence=low時にNocoDB参照写真で再判定）" },
-      { type: "feat", text: "healthcheck監視対象拡充（todo-watchdog/morning-report/faq-editor）" },
-      { type: "feat", text: "人事ワークフローセクション + チェックリスト CF Access入口追加" },
-      { type: "feat", text: "yc-bot 日報/フォーム同義語 + LINEコマンド案内ドキュメント追加" },
-      { type: "fix", text: "attendance-form: 認証成功後にappContentが非表示のままになるバグ修正" },
-      { type: "fix", text: "山川さんFB対応 — 検索ボタンUX / QRカードclickable / 日報・勤怠cockpit連動" },
-      { type: "refactor", text: "NocoDB token fallbackを全Workerに統一" },
+      { type: "feat", text: "Notta議事録→Todo承認パイプライン能動化" },
+      { type: "fix", text: "attendance-form: 認証成功後appContent非表示バグ修正" },
+      { type: "fix", text: "山川さんFB対応 — 検索UX/QRカード/日報・勤怠cockpit連動" },
     ]},
     { repo: "yc-workers", tag: "tag-workers", items: [
-      { type: "feat", text: "Notta議事録Todoパイプライン + Phase 1/2能動化 反映" },
+      { type: "feat", text: "Notta議事録Todoパイプライン + Phase 1/2能動化" },
     ]}
   ],
   "2026-05-16": [
     { repo: "Operation-Management", tag: "tag-op", items: [
-      { type: "feat", text: "名刺スキャン機能: LINE画像 → Claude Vision + Web Search → NocoDB" },
-      { type: "feat", text: "お客様検索ページ追加（管理者専用）" },
-      { type: "feat", text: "NocoDB→Todoist sync（yc_noco_to_todoist.py + /api/noco-todoist-sync）" },
-      { type: "feat", text: "チェックリストマスター編集 + 写真別テーブル化 + ポータル整理" },
-      { type: "feat", text: "daily brief に D1店舗データ追加（シフト/日報/イベント集客）" },
-      { type: "fix", text: "hr-bulk-import: 日報スキーマにv2フィールド8列追加" },
-      { type: "feat", text: "photo compression for attendance form + drink search 改善" },
+      { type: "feat", text: "名刺スキャン: LINE画像 → Claude Vision → NocoDB" },
+      { type: "feat", text: "NocoDB→Todoist sync（yc_noco_to_todoist.py）" },
+      { type: "feat", text: "daily brief に D1店舗データ追加" },
     ]},
     { repo: "yc-workers", tag: "tag-workers", items: [
-      { type: "feat", text: "通知マスターページ追加（/notifications）" },
-      { type: "feat", text: "通知名フリー編集・トリガープルダウン対応" },
+      { type: "feat", text: "通知マスターページ追加" },
       { type: "feat", text: "yc-notta-webhook: 山川さん担当Todo承認メール自動送信" },
-    ]},
-    { repo: "timetree-mail", tag: "tag-other", items: [
-      { type: "init", text: "TimeTree scraper + GOTV push automation" },
     ]},
     { repo: "yc-accounting", tag: "tag-accounting", items: [
       { type: "init", text: "YC経理コックピット 構築" },
@@ -381,54 +450,42 @@ const DIARY = {
   ],
   "2026-05-17": [
     { repo: "Operation-Management", tag: "tag-op", items: [
-      { type: "feat", text: "シフト承認フロー: 田貝→山川 LINEプッシュ承認ワークフロー" },
-      { type: "feat", text: "portal.ycompany.co.jp への URL正規化（全Worker・メール・QRコード統一）" },
-      { type: "feat", text: "favicon 追加（全HTMLページ統一 + 残漏れ6件追加）" },
-      { type: "feat", text: "portal.ycompany.co.jp をヘルスチェック監視対象に追加" },
-      { type: "feat", text: "staff-forms IAPONIA貸切モード + 接待フォーム項目追加" },
-      { type: "feat", text: "event-meeting-log カレンダーファースト + em API拡張" },
-      { type: "feat", text: "event-meeting-log カレンダービュー追加（カード/カレンダー切替）" },
-      { type: "feat", text: "event-meeting-log: カレンダーベースのイベント選択フロー" },
-      { type: "feat", text: "管理UI機能追加（todo-approvalタブ・権限フィルタ・me API）" },
-      { type: "feat", text: "Workers更新（URL正規化・カテゴリ拡張・event-scanner追加）" },
-      { type: "feat", text: "YCコミュニティ実績管理表 HTML追加" },
-      { type: "feat", text: "名刺発行プロフィール統合・権限APIに役職/自宅住所フィールド追加" },
-      { type: "feat", text: "管理者専用7ページに permission-badge 追加（enforce: true）" },
-      { type: "fix", text: "コンタクト検索でメモ・趣味・居住地等もフリーテキスト検索対象に" },
-      { type: "feat", text: "ポータルに経理・財務セクション追加 + ゲスト向けログインボタン追加" },
+      { type: "feat", text: "シフト承認フロー: 田貝→山川 LINEプッシュ承認" },
+      { type: "feat", text: "portal.ycompany.co.jp URL正規化（全Worker統一）" },
+      { type: "feat", text: "event-meeting-log カレンダービュー追加" },
+      { type: "feat", text: "管理UI機能追加（todo-approval/権限フィルタ/me API）" },
+      { type: "feat", text: "名刺発行プロフィール統合 + permission-badge追加" },
     ]},
     { repo: "yc-workers", tag: "tag-workers", items: [
-      { type: "feat", text: "Square連携サブスク管理画面 + 顧客向けLINE Bot" },
-      { type: "feat", text: "Square自動同期 + 顧客LINEフロー統合" },
-      { type: "refactor", text: "サブスク管理をSquare直引き分析ダッシュボードに刷新" },
-      { type: "docs", text: "yc-shift-form: GASスクリプト + セットアップドキュメント追加" },
+      { type: "feat", text: "Square連携サブスク管理 + 顧客向けLINE Bot" },
     ]},
     { repo: "yc-dotfiles", tag: "tag-dotfiles", items: [
-      { type: "init", text: "YC開発環境dotfiles + /dev-check スキル 作成" },
-      { type: "feat", text: "yc-check TUI診断ツール + setup.sh" },
-      { type: "feat", text: "SSS tier, bonus tools (bat/eza/zoxide/fd/lazygit), security check 追加" },
+      { type: "init", text: "YC開発環境dotfiles + /dev-check + yc-check TUI" },
+      { type: "feat", text: "SSS tier + bonus tools 追加" },
     ]},
     { repo: "orzugul-portal", tag: "tag-portal", items: [
-      { type: "init", text: "orzugul portal v1 — 統合政治活動ポータル 初期化" },
-      { type: "feat", text: "議会質問アーカイブ・バックオフィスツール統合・ナビ刷新" },
-      { type: "feat", text: "Cloudflare Workers + D1 バックエンド追加" },
-      { type: "feat", text: "Drive CSV取込・マニフェスト進捗・依頼陳情管理追加" },
-    ]},
-    { repo: "Setagaya-seiji", tag: "tag-setagaya", items: [
-      { type: "init", text: "Setagaya-seiji プロジェクト初期化（api/ portal/ setagaya-morning）" },
-      { type: "feat", text: "Vue3ポータル + ポス太 iframe統合" },
-      { type: "feat", text: "GitHub Actions連携・Cloudflare Worker APIゲートウェイ・ポータルUI実装" },
+      { type: "init", text: "orzugul portal v1 — 統合政治活動ポータル" },
     ]},
     { repo: "yc-dev-portal", tag: "tag-dotfiles", items: [
-      { type: "init", text: "スマホ壁打ち用 GitHub Pages ダッシュボード構築（本システム）" },
+      { type: "init", text: "スマホ壁打ち用 GitHub Pages ダッシュボード構築" },
+    ]}
+  ],
+  "2026-05-18": [
+    { repo: "yc-dev-portal", tag: "tag-dotfiles", items: [
+      { type: "feat", text: "開発メモ機能追加（スマホ → Cloudflare Worker → GitHub）" },
+      { type: "feat", text: "残タスク表示タブ追加（/push-tasks で Terminal から更新）" },
+    ]},
+    { repo: "yc-workers", tag: "tag-workers", items: [
+      { type: "init", text: "yc-dev-memo Worker 新設（GitHub API連携）" },
+    ]},
+    { repo: "yc-dotfiles", tag: "tag-dotfiles", items: [
+      { type: "feat", text: "iMac環境整備: bat/eza/zoxide/fd/lazygit/docker/colima インストール" },
+      { type: "feat", text: "/env-check 呪文: iCloud経由で全マシン診断結果を比較表示" },
     ]}
   ]
 };
 
-// ======= Calendar logic =======
-let currentYear = 2026;
-let currentMonth = 4; // 0-indexed → 4 = May
-let selectedDate = null;
+let currentYear = 2026, currentMonth = 4, selectedDate = null;
 
 function getEntryDots(dateStr) {
   const entry = DIARY[dateStr];
@@ -446,23 +503,16 @@ function getEntryDots(dateStr) {
 function renderCalendar() {
   const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
   document.getElementById('month-title').textContent = `${currentYear}年 ${months[currentMonth]}`;
-
   const today = new Date();
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const daysInPrev = new Date(currentYear, currentMonth, 0).getDate();
-
   let html = '';
   let dayCount = 0;
-
-  // prev month cells
   for (let i = firstDay - 1; i >= 0; i--) {
-    const d = daysInPrev - i;
-    html += `<div class="cal-cell other-month"><div class="day-num">${d}</div></div>`;
+    html += `<div class="cal-cell other-month"><div class="day-num">${daysInPrev - i}</div></div>`;
     dayCount++;
   }
-
-  // current month
   for (let d = 1; d <= daysInMonth; d++) {
     const mm = String(currentMonth + 1).padStart(2, '0');
     const dd = String(d).padStart(2, '0');
@@ -470,90 +520,52 @@ function renderCalendar() {
     const hasEntry = !!DIARY[dateStr];
     const isToday = (today.getFullYear() === currentYear && today.getMonth() === currentMonth && today.getDate() === d);
     const isSelected = selectedDate === dateStr;
-
-    const dots = getEntryDots(dateStr);
-    const dotsHtml = dots.map(cls => `<div class="dot ${cls}"></div>`).join('');
-
-    let cls = 'cal-cell';
-    if (hasEntry) cls += ' has-entry';
-    if (isToday) cls += ' today';
-    if (isSelected) cls += ' selected';
-
+    const dots = getEntryDots(dateStr).map(cls => `<div class="dot ${cls}"></div>`).join('');
+    let cls = 'cal-cell' + (hasEntry ? ' has-entry' : '') + (isToday ? ' today' : '') + (isSelected ? ' selected' : '');
     html += `<div class="${cls}" onclick="${hasEntry ? `showEntry('${dateStr}')` : ''}">
-      <div class="day-num">${d}</div>
-      <div class="dots">${dotsHtml}</div>
-    </div>`;
+      <div class="day-num">${d}</div><div class="dots">${dots}</div></div>`;
     dayCount++;
   }
-
-  // next month cells
-  const remaining = 42 - dayCount;
-  for (let d = 1; d <= remaining; d++) {
+  for (let d = 1; d <= 42 - dayCount; d++) {
     html += `<div class="cal-cell other-month"><div class="day-num">${d}</div></div>`;
   }
-
   document.getElementById('cal-body').innerHTML = html;
 }
 
 function showEntry(dateStr) {
   selectedDate = dateStr;
   renderCalendar();
-
   const entry = DIARY[dateStr];
   const panel = document.getElementById('entry-panel');
   const noMsg = document.getElementById('no-entry-msg');
-
-  // Date label
   const d = new Date(dateStr + 'T00:00:00');
   const weekdays = ['日','月','火','水','木','金','土'];
   const label = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${weekdays[d.getDay()]}）`;
   const commitCount = entry.reduce((sum, e) => sum + e.items.length, 0);
   document.getElementById('entry-date-label').innerHTML = `${label}<span>${commitCount}件の開発</span>`;
-
-  if (!entry || entry.length === 0) {
-    panel.classList.remove('visible');
-    noMsg.style.display = 'block';
-    return;
+  if (!entry || !entry.length) {
+    panel.classList.remove('visible'); noMsg.style.display = 'block'; return;
   }
-
-  noMsg.style.display = 'none';
-  panel.classList.add('visible');
-
+  noMsg.style.display = 'none'; panel.classList.add('visible');
   const typeLabels = { feat: 'feat', fix: 'fix', docs: 'docs', refactor: 'rfct', init: 'init' };
   let html = '';
   entry.forEach(section => {
     const items = section.items.map(item => {
-      const typeCls = `type-${item.type}`;
-      const typeText = typeLabels[item.type] || item.type;
-      return `<li class="feat-item"><span class="feat-type ${typeCls}">${typeText}</span>${item.text}</li>`;
+      return `<li class="feat-item"><span class="feat-type type-${item.type}">${typeLabels[item.type]||item.type}</span>${item.text}</li>`;
     }).join('');
-    html += `<div class="entry-section">
-      <span class="repo-tag ${section.tag}">${section.repo}</span>
-      <ul class="feat-list">${items}</ul>
-    </div>`;
+    html += `<div class="entry-section"><span class="repo-tag ${section.tag}">${section.repo}</span><ul class="feat-list">${items}</ul></div>`;
   });
   document.getElementById('entry-content').innerHTML = html;
-
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function prevMonth() {
-  currentMonth--;
-  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-  renderCalendar();
-}
-function nextMonth() {
-  currentMonth++;
-  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-  renderCalendar();
-}
+function prevMonth() { if (--currentMonth < 0) { currentMonth = 11; currentYear--; } renderCalendar(); }
+function nextMonth() { if (++currentMonth > 11) { currentMonth = 0; currentYear++; } renderCalendar(); }
 
-// Stats
 function calcStats() {
   const days = Object.keys(DIARY).length;
-  const commits = Object.values(DIARY).reduce((sum, day) =>
-    sum + day.reduce((s, sec) => s + sec.items.length, 0), 0);
-  const repos = new Set(Object.values(DIARY).flatMap(day => day.map(s => s.repo))).size;
+  const commits = Object.values(DIARY).reduce((s, d) => s + d.reduce((s2, sec) => s2 + sec.items.length, 0), 0);
+  const repos = new Set(Object.values(DIARY).flatMap(d => d.map(s => s.repo))).size;
   document.getElementById('stat-days').textContent = days;
   document.getElementById('stat-commits').textContent = commits;
   document.getElementById('stat-repos').textContent = repos;
@@ -561,8 +573,6 @@ function calcStats() {
 
 calcStats();
 renderCalendar();
-
-// Auto-show latest entry
 const latestDate = Object.keys(DIARY).sort().reverse()[0];
 if (latestDate) showEntry(latestDate);
 </script>
