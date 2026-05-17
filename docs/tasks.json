@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-18T00:00:00.000Z",
+  "updated_at": "2026-05-18T12:00:00.000Z",
   "tasks": [
     {
       "title": "VPS Python NOCODB_TOKEN 平文除去",
@@ -12,12 +12,6 @@
       "priority": "high",
       "detail": "yc-line-webhook の MONTHLY_REMINDER_END を '18' → '15' に変更してデプロイ。6月シフト希望提出延長のhotfixを元に戻す正常運用への復帰。",
       "blocker": "2026-05-19以降に実施（それより前に戻すと6月シフト収集が途切れる）"
-    },
-    {
-      "title": "orzugulポータル DNS移行完了",
-      "priority": "high",
-      "detail": "お名前.comでNSレコードを変更してCloudflareのNSに向ける。orzugul-portal.pages.dev は稼働中でDNS移行のみ残り。",
-      "blocker": "お名前.comへのログイン・NS変更作業"
     },
     {
       "title": "ICJデモデイ 6/11 本番準備",
@@ -36,6 +30,12 @@
       "priority": "high",
       "detail": "event-meeting-log 管理画面のパスワードが TEMP_PASSWORD_2026 の仮値のまま。本番運用不可。1Password(Personal vault)に実パスワードあり。",
       "blocker": "iMacで wrangler login 済み環境が必要"
+    },
+    {
+      "title": "YC Accounting 2026年売上データ入力",
+      "priority": "high",
+      "detail": "accounting.ycompany.co.jp から新橋・銀座・イベントの2026年1月〜現在分を手動入力。現データは2025/12で止まっている。Cloudflare Access保護済み。",
+      "blocker": null
     },
     {
       "title": "GitHub MCP 動作確認",

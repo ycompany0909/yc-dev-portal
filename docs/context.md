@@ -1,4 +1,4 @@
-# YC開発コンテキスト（2026-05-18 07:25 更新）
+# YC開発コンテキスト（2026-05-18 12:00 更新）
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
@@ -32,7 +32,8 @@
 | **経営コックピット（/executive）** | ✅ 稼働 | タグルール管理UI追加済み。カレンダー表示正常化済み |
 | ICJデモデイ運営 | 🟡 進行中 | 6/11本番・河内・大森・平野井で座組み完了 |
 | ポスター管理システム | 🔴 設計中 | NocoDB + LINE通知の構築 |
-| orzugulポータル | ✅ 稼働 | portal.orzugul.com（DNS移行完了） |
+| YC経理システム | ✅ 稼働 | accounting.ycompany.co.jp（CF Access保護済み・2026年売上入力が残り） |
+| orzugulポータル | ✅ 稼働 | portal.orzugul.com（DNS移行2026-05-18完了） |
 | yc-dev-portal | ✅ 稼働 | スマホ壁打ち体制確立済み |
 
 ---
@@ -44,6 +45,9 @@
 - **VPS Python NOCODB_TOKEN 平文除去** — feedback_server.py/send_report.pyのトークンを環境変数化→rotate。🚧iMacでSSH必要
 - **シフトリマインダー終了日 18→15 に戻す** — 🚧2026-05-19以降に実施
 - **ICJデモデイ 6/11 本番準備** — 最終確認が必要
+- **YC Accounting 2026年売上データ入力** — 新橋・銀座・イベント 2026/1〜現在分が未入力。accounting.ycompany.co.jpから入力
+- **ANTHROPIC_API_KEY を yc-manual-v13 Pages に設定** — hr-bulk-import.htmlが500エラー。🚧iMac必須
+- **EM_ADMIN_PASSWORD を実値に更新** — TEMP_PASSWORD_2026のまま。🚧iMac必須
 
 ### 🟡 MEDIUM
 - **GitHub MCP 動作確認** — claude mcp addを実行
@@ -51,8 +55,8 @@
 - **Notta議事録Todo 運用フォロー** — 承認処理+LINE User ID投入。🚧山川/田貝のLINE ID未取得
 - **yc-drink-info 2段階照合実装** — ラベル写真でClaude Vision再判定。🚧iMac必須
 - **event-meeting-log データ移行 → 旧Worker廃止** — 🚧iMac必須
+- **コミュニティ担当マッピング 次ステップ** — Messengerアカウント名入力・リマインド設計
 - **勤怠/日報リマインダー 有効化判断** — 🚧経営層判断が必要
-- **ANTHROPIC_API_KEY を yc-manual-v13 Pages に設定** — hr-bulk-import.htmlが500エラー。🚧iMac必須
 
 ### 🔵 LOW
 - Square 売上インテリジェンス実装（Square Developer登録後）
@@ -67,6 +71,8 @@
 - **タグルール管理**: NocoDB `tagging_rules` テーブル（ID: m9i4xs724u75tm8）。portal.ycompany.co.jp/executive/rules から編集可能
 - **自動タグ付け**: VPS `/opt/yc-asakai/auto_tagger.py` が毎朝7時実行。IKIZAMA/Y COMPANY/政治/店舗/行政/ICJをタグ付け
 - **経営カレンダーpadバグ修正**: padStart(2,"pad") → padStart(2,"0")（Cloudflareバンドル展開時の残骸）
+- **YC Accounting完成（2026-05-18）**: accounting.ycompany.co.jp 本番稼働・Cloudflare Access保護済み。2026年売上データ入力のみ残り
+- **orzugulポータルDNS完了（2026-05-18）**: portal.orzugul.com でHTTP 200確認済み
 - **push方針**: 汎用機能開発は確認なしでcommit→pushまで一括実行OK
 
 ---
@@ -78,6 +84,7 @@
 | YCポータル（議事録） | portal.ycompany.co.jp/meetings |
 | 経営カレンダー | portal.ycompany.co.jp/executive |
 | タグルール管理 | portal.ycompany.co.jp/executive/rules |
+| 経理システム | accounting.ycompany.co.jp |
 | orzugulポータル | portal.orzugul.com |
 | ポス太 | posta-app.pages.dev |
 | dev-portal | ycompany0909.github.io/yc-dev-portal/diary.html |
