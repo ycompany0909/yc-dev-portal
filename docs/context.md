@@ -1,4 +1,4 @@
-# YC開発コンテキスト（2026-05-18 12:00 更新）
+# YC開発コンテキスト（2026-05-18 更新）
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
@@ -30,6 +30,9 @@
 |---|---|---|
 | **Plaud議事録パイプライン** | ✅ 稼働中 | 要約フォーマット改善バッチ実行中（500件・2026-05-18） |
 | **経営コックピット（/executive）** | ✅ 稼働 | タグルール管理UI追加済み。カレンダー表示正常化済み |
+| **ポータルルート修正** | ✅ デプロイ済み | portal.ycompany.co.jp/ → /executive リダイレクト（2026-05-18 直前デプロイ） |
+| **ボウズ機能** | ✅ デプロイ済み | 日報クローズフォームにタスク入力UI・API実装済み |
+| **経営管理ダッシュボード /mgmt** | ✅ デプロイ済み | portal.ycompany.co.jp/mgmt — コックピットシークレット認証 |
 | ICJデモデイ運営 | 🟡 進行中 | 6/11本番・河内・大森・平野井で座組み完了 |
 | ポスター管理システム | 🔴 設計中 | NocoDB + LINE通知の構築 |
 | YC経理システム | ✅ 稼働 | accounting.ycompany.co.jp（CF Access保護済み・2026年売上入力が残り） |
@@ -67,6 +70,10 @@
 
 ## 最近の決定・学び
 
+- **ポータルWorkerが2つある（重要）**: 同名 `yc-portal` の Worker が2か所に存在。**本物** = `~/Code/Operation-Management/cloudflare/workers/yc-portal/`（/meetings, /executive など）。**旧物** = `~/yc-workers/yc-portal/`（/mgmt, /notifications 等のルートのみ担当）。本物を触るときは必ず `Code/Operation-Management/` 側を編集してデプロイ
+- **portal.ycompany.co.jp は Route Patterns（Custom Domainではない）**: `zone_name = "ycompany.co.jp"` パターンで動作。Custom Domain設定は「already managed DNS records」エラーで不可
+- **コックピット認証**: `X-Cockpit-Secret` ヘッダーで認証。ポータルはCF Access背後なのでブラウザから送信OK。yc-line-webhook Worker に cockpit API 群（/api/cockpit/*）追加済み
+- **ボウズスコア計算**: score = 量 / 作業時間（枚/分, 人/分）。タイプ: meishi_scan, follower, seiso, phone_follow, tokushu
 - **議事録要約フォーマット変更（2026-05-18）**: 旧「3〜5行200字」→ 新「4項目構造（目的・議論・決定・アクション）600〜1200字」。VPS `/opt/yc-asakai/yc_plaud_pipeline.py` 更新済み
 - **タグルール管理**: NocoDB `tagging_rules` テーブル（ID: m9i4xs724u75tm8）。portal.ycompany.co.jp/executive/rules から編集可能
 - **自動タグ付け**: VPS `/opt/yc-asakai/auto_tagger.py` が毎朝7時実行。IKIZAMA/Y COMPANY/政治/店舗/行政/ICJをタグ付け
@@ -84,6 +91,7 @@
 | YCポータル（議事録） | portal.ycompany.co.jp/meetings |
 | 経営カレンダー | portal.ycompany.co.jp/executive |
 | タグルール管理 | portal.ycompany.co.jp/executive/rules |
+| 経営管理ダッシュボード | portal.ycompany.co.jp/mgmt |
 | 経理システム | accounting.ycompany.co.jp |
 | orzugulポータル | portal.orzugul.com |
 | ポス太 | posta-app.pages.dev |
