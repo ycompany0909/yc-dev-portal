@@ -110,7 +110,7 @@ def build_entry_js(date_str: str, sections: list[dict]) -> str:
     for sec in sections:
         lines.append(f'    {{ repo: "{sec["repo"]}", tag: "{sec["tag"]}", items: [')
         for item in sec["items"]:
-            text = item["text"].replace("\\", "\\\\").replace('"', '\\"')
+            text = item["text"].replace("\\", "\\\\").replace('"', '\\"').replace("</", "<\\/")
             lines.append(f'      {{ type: "{item["type"]}", text: "{text}" }},')
         lines.append('    ]},')
     lines.append('  ]')
