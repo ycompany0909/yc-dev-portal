@@ -149,6 +149,22 @@
     }
     .claude-btn:active { background: #6d28d9; }
 
+    .diary-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .diary-btn:active { background: #334155; }
+
     .update-tag {
       font-size: 11px;
       color: #475569;
@@ -273,6 +289,12 @@
 [ここに質問を書く]</div>
         <button class="copy-btn" id="copy-btn" onclick="copyContext()">コンテキストをコピー</button>
       </div>
+    </section>
+
+    <!-- 開発日記 -->
+    <section>
+      <h2>開発日記</h2>
+      <a href="diary.html" class="diary-btn">📅 開発日記カレンダーを開く →</a>
     </section>
 
     <!-- Claudeで開く -->
