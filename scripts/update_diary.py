@@ -38,10 +38,10 @@ REPOS = [
 
 
 def target_date() -> str:
-    """Yesterday in JST. Override with DATE env var for backfill/testing."""
+    """Today in JST. Override with DATE env var for backfill/testing."""
     if d := os.environ.get("DATE"):
         return d
-    return (datetime.now(JST) - timedelta(days=1)).strftime("%Y-%m-%d")
+    return datetime.now(JST).strftime("%Y-%m-%d")
 
 
 def fetch_commits(repo: str, date_str: str) -> list[str]:
@@ -119,27 +119,27 @@ def build_entry_js(date_str: str, sections: list[dict]) -> str:
 
 def update_diary(date_str: str, sections: list[dict]) -> bool:
     html = DIARY_HTML.read_text(encoding="utf-8")
-
-    if f'"{date_str}"' in html:
-        print(f"Entry for {date_str} already exists — skipping.")
-        return False
-
     entry_js = build_entry_js(date_str, sections)
 
-    # The DIARY object tail pattern (last entry has no trailing comma):
-    #   ...
-    #   ]
-    # };
-    #
-    # let currentYear
-    old_tail = "  ]\n};\n\nlet currentYear"
-    new_tail = f"  ],\n{entry_js}\n}};\n\nlet currentYear"
+    # 既存エントリがあれば上書き、なければ末尾に追記
+    pattern = rf'  "{re.escape(date_str)}": \[.*?\n  \],?'
+    match = re.search(pattern, html, re.DOTALL)
 
-    if old_tail not in html:
-        print("ERROR: insertion point not found in diary.html", file=sys.stderr)
-        sys.exit(1)
+    if match:
+        has_comma = match.group().endswith(',')
+        replacement = entry_js + (',' if has_comma else '')
+        new_html = html[:match.start()] + replacement + html[match.end():]
+        print(f"  → 既存エントリを上書き")
+    else:
+        old_tail = "  ]\n};\n\nlet currentYear"
+        new_tail = f"  ],\n{entry_js}\n}};\n\nlet currentYear"
+        if old_tail not in html:
+            print("ERROR: insertion point not found in diary.html", file=sys.stderr)
+            sys.exit(1)
+        new_html = html.replace(old_tail, new_tail, 1)
+        print(f"  → 新規エントリを追加")
 
-    DIARY_HTML.write_text(html.replace(old_tail, new_tail, 1), encoding="utf-8")
+    DIARY_HTML.write_text(new_html, encoding="utf-8")
     return True
 
 
