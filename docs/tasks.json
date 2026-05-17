@@ -1,4 +1,101 @@
 {
-  "updated_at": "",
-  "tasks": []
+  "updated_at": "2026-05-18T00:00:00.000Z",
+  "tasks": [
+    {
+      "title": "VPS Python NOCODB_TOKEN 平文除去",
+      "priority": "high",
+      "detail": "feedback_server.py と send_report.py のハードコードトークンを環境変数化 → NocoDB APIトークンをrotate。Git履歴にトークンが残るとNocoDB全データが漏洩するセキュリティリスク。",
+      "blocker": "iMacでSSH接続が必要 (ssh -i ~/.ssh/yc_vps root@162.43.36.173)"
+    },
+    {
+      "title": "シフトリマインダー終了日 18→15 に戻す",
+      "priority": "high",
+      "detail": "yc-line-webhook の MONTHLY_REMINDER_END を '18' → '15' に変更してデプロイ。6月シフト希望提出延長のhotfixを元に戻す正常運用への復帰。",
+      "blocker": "2026-05-19以降に実施（それより前に戻すと6月シフト収集が途切れる）"
+    },
+    {
+      "title": "orzugulポータル DNS移行完了",
+      "priority": "high",
+      "detail": "お名前.comでNSレコードを変更してCloudflareのNSに向ける。orzugul-portal.pages.dev は稼働中でDNS移行のみ残り。",
+      "blocker": "お名前.comへのログイン・NS変更作業"
+    },
+    {
+      "title": "ICJデモデイ 6/11 本番準備",
+      "priority": "high",
+      "detail": "2026-06-11本番。河内・大森・平野井で座組み完了済み。当日運営の最終確認と資料整備。",
+      "blocker": null
+    },
+    {
+      "title": "ANTHROPIC_API_KEY を yc-manual-v13 Pages に設定",
+      "priority": "high",
+      "detail": "hr-bulk-import.html が Cloudflare Pages Function から Anthropic API を叩くが Pages secret 未設定のため Claude 呼出が 500 エラー。1Password に APIキーあり。",
+      "blocker": "iMacで wrangler login 済み環境が必要"
+    },
+    {
+      "title": "EM_ADMIN_PASSWORD を実値に更新",
+      "priority": "high",
+      "detail": "event-meeting-log 管理画面のパスワードが TEMP_PASSWORD_2026 の仮値のまま。本番運用不可。1Password(Personal vault)に実パスワードあり。",
+      "blocker": "iMacで wrangler login 済み環境が必要"
+    },
+    {
+      "title": "GitHub MCP 動作確認",
+      "priority": "medium",
+      "detail": "claude mcp add を実行して GitHub MCP サーバーを設定・動作確認する。",
+      "blocker": null
+    },
+    {
+      "title": "ポスター管理システム 設計着手",
+      "priority": "medium",
+      "detail": "NocoDB + LINE通知の構築。ポスター管理システムの設計フェーズ開始。",
+      "blocker": null
+    },
+    {
+      "title": "Notta議事録Todo 運用フォロー",
+      "priority": "medium",
+      "detail": "山川/田貝の議事録Todo 10件を todo-approval 画面で承認処理。yc-todo-watchdog の ASSIGNEE_LINE_MAP に LINE User ID を投入して担当者通知を有効化。旧Worker yc-todo-approval 廃止。",
+      "blocker": "山川/田貝の LINE User ID が未取得"
+    },
+    {
+      "title": "yc-drink-info 2段階照合実装",
+      "priority": "medium",
+      "detail": "identifyByVision() を拡張して confidence=low 時にラベル写真で Claude Vision 再判定する2段階照合を追加。NocoDB商品マスターのラベル写真Attachment列は追加済み。",
+      "blocker": "iMac必須（コード実装のみ）"
+    },
+    {
+      "title": "event-meeting-log データ移行 → 旧Worker廃止",
+      "priority": "medium",
+      "detail": "既存参加報告データを NocoDB(event_meta + event_entries)へ移行後、旧Worker event-meeting-log.ycompany0909.workers.dev を廃止。移行UI は本番稼働中。",
+      "blocker": "iMacで既存データファイルへのアクセスが必要"
+    },
+    {
+      "title": "コミュニティ担当マッピング 次ステップ",
+      "priority": "medium",
+      "detail": "各リーダーのMessengerアカウント名を入力 → 次回リマインド日設定 → 集客確認リマインド文面の詳細設計 → カレンダーUI実装(shift-cockpit.htmlに新タブ)。NocoDB反映は完了済み。",
+      "blocker": null
+    },
+    {
+      "title": "勤怠/日報リマインダー 有効化判断",
+      "priority": "medium",
+      "detail": "ATTENDANCE_REMINDER_ENABLED / DAILY_REPORT_REMINDER_ENABLED を '1' に切替えるだけで翌日から自動運用開始。実装・デプロイ完了済みでフラグ待ち。",
+      "blocker": "山川/田貝/佐々生の経営層判断が必要"
+    },
+    {
+      "title": "Square 売上インテリジェンス実装",
+      "priority": "low",
+      "detail": "Square Developer で Production Access Token + Location ID 取得後、VPS square_sync.py + NocoDB 売上ログテーブル + daily_brief.py 異常検知を実装。JIDAI/IAPONIA の売上データ自動取得・朝LINE検知。",
+      "blocker": "Square Developer 登録作業（user側 30〜60分）"
+    },
+    {
+      "title": "MyBridge → NocoDB 名刺DB移行",
+      "priority": "low",
+      "detail": "MyBridge(ycmeishi@gmail.com)から名刺データをCSV抽出し NocoDB mybridge_contacts テーブルへ移行。event-meeting-log の参加者データと突合して顧客LTV追跡を実現。",
+      "blocker": "MyBridgeのCSVエクスポート機能有無の確認が先"
+    },
+    {
+      "title": "Idea C 外販パッケージ化 Week 2〜6",
+      "priority": "low",
+      "detail": "YCの AI運用システムを月額¥30k〜¥200kで他の飲食/コミュニティ事業者へ外販。Week 1完了済み(multitenant/setup_tenant.sh)。Week 2以降はマルチテナント自動化・Stripe連携・パイロット顧客獲得。",
+      "blocker": "Stripe開設(Week 4頃)とパイロット顧客発見(Week 6)はuser作業"
+    }
+  ]
 }
