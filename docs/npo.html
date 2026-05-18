@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NPO・社会起業家のみなさまへ — Y COMPANY 社会変革支援</title>
+  <meta name="description" content="YCは、NPO・社会運動団体・社会起業家の「なぜ行き詰まるか」を診断し、具体的な突破口を示します。6軸フレームによる診断と、1,359件の助成金データベースを無償提供。">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      background: #f8faf9;
+      color: #1a2e1a;
+      line-height: 1.7;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(160deg, #052e16 0%, #14532d 55%, #166534 100%);
+      color: white;
+      padding: 60px 24px 56px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #86efac;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 20px;
+      color: #f0fdf4;
+    }
+    .hero h1 em { font-style: normal; color: #4ade80; }
+    .hero p {
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      color: #bbf7d0;
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 28px;
+      background: #16a34a;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #15803d; transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-block;
+      padding: 14px 28px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #d1fae5;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Stats ── */
+    .stats {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 24px;
+    }
+    .stats-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      text-align: center;
+    }
+    .stat-num { font-size: 1.9rem; font-weight: 800; color: #16a34a; line-height: 1; }
+    .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+    /* ── Section ── */
+    .section { padding: 56px 24px; }
+    .section-inner { max-width: 800px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #16a34a;
+      margin-bottom: 8px;
+    }
+    .section h2 {
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+      font-weight: 800;
+      color: #052e16;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .section p { color: #374151; font-size: 1rem; }
+
+    /* ── Gap table ── */
+    .gap-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 28px;
+      font-size: 14px;
+    }
+    .gap-table th {
+      background: #052e16;
+      color: #d1fae5;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .gap-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .gap-table tr:nth-child(even) td { background: #f0fdf4; }
+    .gap-table .highlight-row td { background: #052e16; color: #d1fae5; font-weight: 600; }
+    .gap-table .gap-cell { color: #dc2626; font-size: 13px; }
+
+    /* ── 6軸 ── */
+    .axes { background: #052e16; padding: 56px 24px; }
+    .axes-inner { max-width: 800px; margin: 0 auto; }
+    .axes-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4ade80; margin-bottom: 8px; }
+    .axes h2 { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 800; color: #f0fdf4; margin-bottom: 8px; }
+    .axes > .axes-inner > p { color: #86efac; margin-bottom: 32px; font-size: 0.95rem; }
+    .axes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .axis-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .axis-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: #4ade80;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .axis-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 6px; }
+    .axis-desc { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+    /* ── DB section ── */
+    .db-section { background: #f0fdf4; padding: 56px 24px; }
+    .db-inner { max-width: 800px; margin: 0 auto; }
+    .db-card {
+      background: white;
+      border: 2px solid #16a34a;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .db-icon { font-size: 48px; flex-shrink: 0; }
+    .db-content { flex: 1; min-width: 200px; }
+    .db-content h3 { font-size: 1.2rem; font-weight: 800; color: #052e16; margin-bottom: 8px; }
+    .db-content p { font-size: 14px; color: #374151; margin-bottom: 16px; }
+    .db-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .db-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+
+    /* ── Case ── */
+    .case-section { padding: 56px 24px; background: white; }
+    .case-inner { max-width: 800px; margin: 0 auto; }
+    .case-box {
+      background: #f8faf9;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 28px;
+    }
+    .case-before, .case-after {
+      padding: 20px 24px;
+    }
+    .case-before { border-bottom: 1px solid #e2e8f0; }
+    .case-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .tag-before { background: #fee2e2; color: #dc2626; }
+    .tag-after  { background: #dcfce7; color: #16a34a; }
+    .case-text { font-size: 14px; color: #374151; line-height: 1.7; }
+    .case-arrow {
+      text-align: center;
+      padding: 12px;
+      font-size: 22px;
+      background: #f0fdf4;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      color: #16a34a;
+    }
+
+    /* ── Contact ── */
+    .contact { background: linear-gradient(160deg, #052e16, #14532d); padding: 56px 24px; text-align: center; }
+    .contact h2 { font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: #f0fdf4; margin-bottom: 12px; }
+    .contact p { color: #86efac; margin-bottom: 28px; font-size: 0.98rem; max-width: 540px; margin-left: auto; margin-right: auto; }
+    .contact-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 16px; }
+    .acceptance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      max-width: 700px;
+      margin: 0 auto 28px;
+      text-align: left;
+    }
+    .acceptance-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .ac-label { font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .ac-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+    /* ── Footer ── */
+    footer {
+      background: #0a1a0a;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">Y COMPANY — Social Change Support</div>
+  <h1>NPO・社会起業家の<br><em>「なぜ行き詰まるか」</em>を<br>診断し、突破口を示す</h1>
+  <p>助成金が通らない。支援が広がらない。資金調達の壁。<br>その根本にある構造的な問題を、佐々生（Y COMPANY）が無償で診断します。</p>
+  <div class="hero-buttons">
+    <a href="grant-search.html" class="btn-primary">📊 助成金データベースを検索する</a>
+    <a href="mailto:orzugulsetagaya@gmail.com?subject=社会変革支援サービス相談" class="btn-ghost">相談を申し込む</a>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-num">1,359</div>
+      <div class="stat-label">助成プログラム収録数</div>
+    </div>
+    <div>
+      <div class="stat-num">25</div>
+      <div class="stat-label">財団マスタ登録数</div>
+    </div>
+    <div>
+      <div class="stat-num">6</div>
+      <div class="stat-label">診断軸（独自フレーム）</div>
+    </div>
+  </div>
+</div>
+
+<!-- Gap section -->
+<section class="section" style="background: white;">
+  <div class="section-inner">
+    <div class="section-label">なぜYCなのか</div>
+    <h2>既存の支援者では届かない<br>「空白地帯」があります</h2>
+    <p>経営コンサル、中間支援組織、弁護士、ファンドレイザー——それぞれに強みがあります。しかし、社会運動固有の課題に対応できるプレイヤーは、まだほとんど存在しません。</p>
+    <table class="gap-table">
+      <thead>
+        <tr><th>支援プレイヤー</th><th>提供価値</th><th>届かない領域</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>経営コンサル</td>
+          <td>戦略立案・分析</td>
+          <td class="gap-cell">社会運動固有の論理・審査側の視点がない</td>
+        </tr>
+        <tr>
+          <td>中間支援組織</td>
+          <td>情報提供・研修</td>
+          <td class="gap-cell">個別団体への深い伴走・人脈提供ができない</td>
+        </tr>
+        <tr>
+          <td>弁護士・会計士</td>
+          <td>法務・会計</td>
+          <td class="gap-cell">課題定義・戦略設計・資金調達の本質に触れない</td>
+        </tr>
+        <tr>
+          <td>ファンドレイザー</td>
+          <td>申請書作成代行</td>
+          <td class="gap-cell">申請が通る団体構造そのものを作れない</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>YC（佐々生）</td>
+          <td>審査設計 × 人脈 × AI</td>
+          <td style="color:#4ade80">── ここが空白地帯</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 6軸 -->
+<section class="axes">
+  <div class="axes-inner">
+    <div class="axes-label">診断フレームワーク</div>
+    <h2>なぜ団体は行き詰まるのか<br>— 6軸で現状を把握する</h2>
+    <p>YCは独自の6軸フレームで、団体が詰まっている場所を特定します。</p>
+    <div class="axes-grid">
+      <div class="axis-card">
+        <div class="axis-num">AXIS 01</div>
+        <div class="axis-title">実行体制</div>
+        <div class="axis-desc">理事・事務局の専門性と実行力。名前だけの理事は機能しない</div>
+      </div>
+      <div class="axis-card">
+        <div class="axis-num">AXIS 02</div>
+        <div class="axis-title">審査適合性</div>
+        <div class="axis-desc">助成プログラムの論理を読めているか。審査側の視点が持てているか</div>
+      </div>
+      <div class="axis-card">
+        <div class="axis-num">AXIS 03</div>
+        <div class="axis-title">インパクト定義</div>
+        <div class="axis-desc">社会的価値を数値・言語で示せるか。主観的では伝わらない</div>
+      </div>
+      <div class="axis-card">
+        <div class="axis-num">AXIS 04</div>
+        <div class="axis-title">課題の階層設計</div>
+        <div class="axis-desc">マニアックな入口から大きな出口へ展開できるか</div>
+      </div>
+      <div class="axis-card">
+        <div class="axis-num">AXIS 05</div>
+        <div class="axis-title">自走モデル</div>
+        <div class="axis-desc">助成終了後の資金・運営計画があるか。補助金依存の永久化を避ける</div>
+      </div>
+      <div class="axis-card">
+        <div class="axis-num">AXIS 06</div>
+        <div class="axis-title">CRM・エコシステム</div>
+        <div class="axis-desc">支援者・寄付者の関係値構築ができているか</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DB section -->
+<section class="db-section">
+  <div class="db-inner">
+    <div class="section-label">助成金データベース</div>
+    <h2 style="font-size: clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">1,359件の助成プログラムを<br>無償で検索できます</h2>
+    <p style="color:#374151; margin-bottom:28px;">CANPAN・補助金ポータル・J-Grants（デジタル庁）・各財団HP から収集。<br>課題分野・金額・締切月・地域で絞り込めます。</p>
+    <div class="db-card">
+      <div class="db-icon">📊</div>
+      <div class="db-content">
+        <h3>YC 助成金データベース</h3>
+        <p>キーワード検索・課題分野・金額・締切月で絞り込み。各プログラムの財団HP・申請ページへ直リンク。</p>
+        <div class="db-tags">
+          <span class="db-tag">子ども・青少年</span>
+          <span class="db-tag">環境・気候変動</span>
+          <span class="db-tag">障害者支援</span>
+          <span class="db-tag">国際協力</span>
+          <span class="db-tag">地域コミュニティ</span>
+          <span class="db-tag">+ 15分野</span>
+        </div>
+        <a href="grant-search.html" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">データベースを検索する →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Case -->
+<section class="case-section">
+  <div class="case-inner">
+    <div class="section-label">支援事例</div>
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">診断で何が変わるか</h2>
+    <p style="color:#374151;">児童養護施設出身者支援団体の相談事例（仮名処理済み）</p>
+    <div class="case-box">
+      <div class="case-before">
+        <span class="case-tag tag-before">BEFORE — 団体の当初の発想</span>
+        <p class="case-text">18歳で児童養護施設を出る若者に、月30万円の物件を12.5万円でシェアハウスとして貸し出す。差額を行政の補助金で補填してもらいたい。</p>
+      </div>
+      <div class="case-arrow">↓ YC診断・介入</div>
+      <div class="case-after">
+        <span class="case-tag tag-after">AFTER — 課題の再定義</span>
+        <p class="case-text">「差額補填」ではなく「18歳打ち切りという制度設計そのものを問い直す」案件として再定義。課題を「児童養護出身者支援（入口）→ 若年成人の社会的養護（中間）→ 孤立・貧困の世代連鎖断絶（出口）」と階層化し、財界・行政・企業CSR・議会ルートを同時に開拓する戦略へ転換。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact">
+  <h2>本気の社会課題に、<br>本気のリソースで応える</h2>
+  <p>まずはメールでご相談ください。内容を確認の上、佐々生より返信します。</p>
+  <div class="acceptance-grid">
+    <div class="acceptance-card">
+      <div class="ac-label">積極受け（フルコミット）</div>
+      <div class="ac-text">社会的信用が高く、実行力が弱く、政策軸と一致している団体</div>
+    </div>
+    <div class="acceptance-card">
+      <div class="ac-label">条件付き（助言のみ）</div>
+      <div class="ac-text">マニアックだが展開性があり、世田谷・地域軸と重なる活動</div>
+    </div>
+    <div class="acceptance-card">
+      <div class="ac-label">お断り</div>
+      <div class="ac-text">創造性がなく、政策軸とも無関係な申請代行の依頼</div>
+    </div>
+  </div>
+  <a href="mailto:orzugulsetagaya@gmail.com?subject=社会変革支援サービス相談申込&body=団体名:%0A活動内容:%0Aご相談内容:" class="btn-primary" style="font-size:16px; padding:16px 36px;">相談を申し込む（無償）</a>
+  <div class="contact-note">返信まで数日かかる場合があります。営利目的・政治的プロパガンダ目的のご相談はお断りします。</div>
+</section>
+
+<footer>
+  &copy; 2026 合同会社 Y COMPANY — 代表社員 佐々生オルズグル<br>
+  <a href="grant-search.html" style="color:rgba(255,255,255,0.3); text-decoration:none;">助成金データベース</a>
+</footer>
+
+</body>
+</html>
