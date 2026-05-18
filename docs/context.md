@@ -1,4 +1,4 @@
-# YC開発コンテキスト（2026-05-18 夜更新）
+# YC開発コンテキスト（2026-05-18 深夜更新）
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
@@ -103,3 +103,37 @@ Plaud録音 → Zapier(orzugulsetagaya) → Google Drive(YC_Plaud_Transcripts)
       → NocoDB meetings(mvl0ebr5efxaa1n) / insights(meuqx3an0r5zg61)
         → portal.ycompany.co.jp/meetings
 ```
+
+---
+
+## orzugulポータル（2026-05-18 大型実装）
+
+**ローカル**: `~/orzugul-portal/`（client/ + server/ + worker/）
+**本番**: https://portal.orzugul.com（= orzugul-portal.pages.dev）
+**Worker API**: https://orzugul-api.ycompany0909.workers.dev
+**D1**: orzugul-db（ID: 7c0dc592-adc7-45b4-855b-16a307915a94）
+
+### 本日実装済み ✅
+1. **ポスター履歴379件インポート** — color_class別（オルズグル110/NG42/現在なし17/長妻10/未入力200）
+2. **Xフォロワー分析 /twitter** — 19,260人、世田谷465人、12属性タグ分類
+3. **メディアダッシュボード /media** — SNS指標手動更新 + 世田谷モーニングニュース一覧（カレンダーリンク）
+4. **世田谷モーニングニュース自動保存** — setagaya-morning GitHub Actionsに保存ステップ追加済み
+   - PORTAL_NEWS_SECRET: `8272b7eb91c54ee7d9e36ac41800020c9aef528f1f72d71d`
+5. **ファビコン** — @orzugulsetagaya Xプロフィール画像、タブ「オルズグル ポータル」
+6. **統合マップ /map ポスターレイヤー** — color_class別色分けプロット（緑/赤/グレー/青/黄）
+
+### 残タスク（orzugul-portal）
+- 🔴 **setagaya-morning repoにGitHub Secret追加**（`PORTAL_NEWS_SECRET`）← 最優先、しないと朝ニュースが保存されない
+- 🟡 世田谷モーニングニュース 過去メール バックフィル
+- 🟡 orzugul.com Slimstat Analytics → アクセス数自動取得
+- 🟡 Facebook Graph API（facebook.com/orzugul Page Access Token）
+- 🟡 LINE公式フォロワー数自動取得（Channel Access Token）
+- 🔵 Instagram Graph API
+
+### DBテーブル（D1: orzugul-db）
+| テーブル | 概要 |
+|---|---|
+| `poster_spots` | 379件、color_class/permission/poster_count/contact |
+| `twitter_followers` | 19,260件、location_class/attr_tags/is_setagaya |
+| `morning_news` | date UNIQUE, subject, body |
+| `media_metrics` | recorded_date/platform/metric_name/value UNIQUE |
