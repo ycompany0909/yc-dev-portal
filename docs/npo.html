@@ -7,245 +7,165 @@
   <meta name="description" content="YCは、NPO・社会運動団体・社会起業家の「なぜ行き詰まるか」を診断し、具体的な突破口を示します。6軸フレームによる診断と、1,359件の助成金データベースを無償提供。">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
-      background: #f8faf9;
-      color: #1a2e1a;
-      line-height: 1.7;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif; background: #f8faf9; color: #1a2e1a; line-height: 1.7; }
 
-    /* ── Hero ── */
-    .hero {
-      background: linear-gradient(160deg, #052e16 0%, #14532d 55%, #166534 100%);
-      color: white;
-      padding: 60px 24px 56px;
-      text-align: center;
-    }
-    .hero-eyebrow {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: #86efac;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .hero h1 {
-      font-size: clamp(1.6rem, 5vw, 2.6rem);
-      font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 20px;
-      color: #f0fdf4;
-    }
+    /* Hero */
+    .hero { background: linear-gradient(160deg, #052e16 0%, #14532d 55%, #166534 100%); color: white; padding: 60px 24px 56px; text-align: center; }
+    .hero-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; color: #86efac; text-transform: uppercase; margin-bottom: 16px; }
+    .hero h1 { font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 800; line-height: 1.25; margin-bottom: 20px; color: #f0fdf4; }
     .hero h1 em { font-style: normal; color: #4ade80; }
-    .hero p {
-      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-      color: #bbf7d0;
-      max-width: 640px;
-      margin: 0 auto 32px;
-    }
+    .hero p { font-size: clamp(0.95rem, 2.5vw, 1.1rem); color: #bbf7d0; max-width: 640px; margin: 0 auto 32px; }
+    .hero-region { display: inline-block; font-size: 12px; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; margin-bottom: 28px; }
     .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-block;
-      padding: 14px 28px;
-      background: #16a34a;
-      color: white;
-      font-size: 15px;
-      font-weight: 700;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.15s, transform 0.15s;
-    }
+    .btn-primary { display: inline-block; padding: 14px 28px; background: #16a34a; color: white; font-size: 15px; font-weight: 700; border-radius: 8px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
     .btn-primary:hover { background: #15803d; transform: translateY(-1px); }
-    .btn-ghost {
-      display: inline-block;
-      padding: 14px 28px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #d1fae5;
-      font-size: 15px;
-      font-weight: 600;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
+    .btn-ghost { display: inline-block; padding: 14px 28px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #d1fae5; font-size: 15px; font-weight: 600; border-radius: 8px; text-decoration: none; transition: background 0.15s; }
     .btn-ghost:hover { background: rgba(255,255,255,0.2); }
 
-    /* ── Stats ── */
-    .stats {
-      background: white;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 24px;
-    }
-    .stats-inner {
-      max-width: 800px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      text-align: center;
-    }
+    /* Stats */
+    .stats { background: white; border-bottom: 1px solid #e2e8f0; padding: 24px; }
+    .stats-inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
     .stat-num { font-size: 1.9rem; font-weight: 800; color: #16a34a; line-height: 1; }
     .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
 
-    /* ── Section ── */
+    /* Sections */
     .section { padding: 56px 24px; }
     .section-inner { max-width: 800px; margin: 0 auto; }
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #16a34a;
-      margin-bottom: 8px;
-    }
-    .section h2 {
-      font-size: clamp(1.3rem, 4vw, 1.9rem);
-      font-weight: 800;
-      color: #052e16;
-      margin-bottom: 16px;
-      line-height: 1.3;
-    }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #16a34a; margin-bottom: 8px; }
+    .section h2 { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 800; color: #052e16; margin-bottom: 16px; line-height: 1.3; }
     .section p { color: #374151; font-size: 1rem; }
 
-    /* ── Gap table ── */
-    .gap-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 28px;
-      font-size: 14px;
-    }
-    .gap-table th {
-      background: #052e16;
-      color: #d1fae5;
-      padding: 10px 14px;
-      text-align: left;
-      font-weight: 600;
-    }
+    /* Worries */
+    .worries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 28px; }
+    .worry-card { background: white; border: 1px solid #e2e8f0; border-left: 3px solid #16a34a; border-radius: 8px; padding: 14px 16px; font-size: 14px; color: #374151; }
+    .worry-card::before { content: "✓ "; color: #16a34a; font-weight: 700; }
+
+    /* Gap table */
+    .gap-table { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 14px; }
+    .gap-table th { background: #052e16; color: #d1fae5; padding: 10px 14px; text-align: left; font-weight: 600; }
     .gap-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
     .gap-table tr:nth-child(even) td { background: #f0fdf4; }
     .gap-table .highlight-row td { background: #052e16; color: #d1fae5; font-weight: 600; }
-    .gap-table .gap-cell { color: #dc2626; font-size: 13px; }
+    .gap-cell { color: #dc2626; font-size: 13px; }
 
-    /* ── 6軸 ── */
+    /* 6軸 */
     .axes { background: #052e16; padding: 56px 24px; }
     .axes-inner { max-width: 800px; margin: 0 auto; }
     .axes-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4ade80; margin-bottom: 8px; }
     .axes h2 { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 800; color: #f0fdf4; margin-bottom: 8px; }
     .axes > .axes-inner > p { color: #86efac; margin-bottom: 32px; font-size: 0.95rem; }
-    .axes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
-    }
-    .axis-card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 16px;
-    }
-    .axis-num {
-      font-size: 11px;
-      font-weight: 700;
-      color: #4ade80;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
+    .axes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    .axis-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 16px; }
+    .axis-num { font-size: 11px; font-weight: 700; color: #4ade80; letter-spacing: 0.08em; margin-bottom: 6px; }
     .axis-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 6px; }
     .axis-desc { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
 
-    /* ── DB section ── */
-    .db-section { background: #f0fdf4; padding: 56px 24px; }
+    /* 処方箋表 */
+    .rx-table { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 13px; }
+    .rx-table th { background: #14532d; color: #d1fae5; padding: 10px 14px; text-align: left; font-weight: 600; }
+    .rx-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .rx-table tr:nth-child(even) td { background: #f0fdf4; }
+    .rx-table .rx-stuck { color: #dc2626; font-size: 12px; }
+    .rx-table .rx-fix { color: #15803d; font-size: 12px; }
+    .rx-table .rx-axis { font-weight: 700; color: #052e16; white-space: nowrap; }
+
+    /* Self-check */
+    .check-section { background: #f0fdf4; padding: 56px 24px; }
+    .check-inner { max-width: 800px; margin: 0 auto; }
+    .check-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .check-item { background: white; border: 1px solid #d1fae5; border-radius: 12px; padding: 18px 20px; }
+    .check-item-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .check-axis-badge { font-size: 10px; font-weight: 700; background: #052e16; color: #4ade80; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+    .check-axis-name { font-size: 15px; font-weight: 700; color: #052e16; }
+    .check-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .check-opt { display: none; }
+    .check-opt + label { display: inline-block; padding: 6px 14px; border: 1.5px solid #cbd5e0; border-radius: 20px; font-size: 13px; color: #374151; cursor: pointer; transition: all 0.15s; }
+    .check-opt:checked + label { border-color: #16a34a; background: #dcfce7; color: #15803d; font-weight: 600; }
+    .check-result-bar { margin-top: 24px; display: none; }
+    .check-result-bar.visible { display: block; }
+    .check-score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .check-score-label { font-size: 13px; color: #374151; width: 120px; flex-shrink: 0; }
+    .check-score-track { flex: 1; height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+    .check-score-fill { height: 100%; border-radius: 5px; transition: width 0.4s; }
+    .fill-good { background: #16a34a; }
+    .fill-ok { background: #f59e0b; }
+    .fill-bad { background: #dc2626; }
+    .check-summary { margin-top: 20px; padding: 16px; background: white; border-radius: 10px; border: 1px solid #d1fae5; font-size: 14px; color: #374151; }
+    .check-cta { margin-top: 16px; text-align: center; }
+
+    /* DB */
+    .db-section { background: white; padding: 56px 24px; }
     .db-inner { max-width: 800px; margin: 0 auto; }
-    .db-card {
-      background: white;
-      border: 2px solid #16a34a;
-      border-radius: 16px;
-      padding: 28px;
-      display: flex;
-      gap: 24px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .db-card { background: #f0fdf4; border: 2px solid #16a34a; border-radius: 16px; padding: 28px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
     .db-icon { font-size: 48px; flex-shrink: 0; }
     .db-content { flex: 1; min-width: 200px; }
     .db-content h3 { font-size: 1.2rem; font-weight: 800; color: #052e16; margin-bottom: 8px; }
     .db-content p { font-size: 14px; color: #374151; margin-bottom: 16px; }
     .db-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-    .db-tag {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: #dcfce7;
-      color: #15803d;
-      border: 1px solid #86efac;
-    }
+    .db-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
 
-    /* ── Case ── */
-    .case-section { padding: 56px 24px; background: white; }
+    /* Cases */
+    .case-section { background: #f8faf9; padding: 56px 24px; }
     .case-inner { max-width: 800px; margin: 0 auto; }
-    .case-box {
-      background: #f8faf9;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-top: 28px;
-    }
-    .case-before, .case-after {
-      padding: 20px 24px;
-    }
+    .case-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .case-tab { padding: 8px 16px; border: 1.5px solid #d1d5db; border-radius: 20px; font-size: 13px; color: #6b7280; cursor: pointer; background: white; transition: all 0.15s; }
+    .case-tab.active { border-color: #16a34a; background: #dcfce7; color: #15803d; font-weight: 600; }
+    .case-panel { display: none; }
+    .case-panel.active { display: block; }
+    .case-box { background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+    .case-before, .case-after { padding: 20px 24px; }
     .case-before { border-bottom: 1px solid #e2e8f0; }
-    .case-tag {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      padding: 3px 10px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
+    .case-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
     .tag-before { background: #fee2e2; color: #dc2626; }
     .tag-after  { background: #dcfce7; color: #16a34a; }
     .case-text { font-size: 14px; color: #374151; line-height: 1.7; }
-    .case-arrow {
-      text-align: center;
-      padding: 12px;
-      font-size: 22px;
-      background: #f0fdf4;
-      border-top: 1px solid #e2e8f0;
-      border-bottom: 1px solid #e2e8f0;
-      color: #16a34a;
-    }
+    .case-arrow { text-align: center; padding: 12px; font-size: 22px; background: #f0fdf4; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; color: #16a34a; }
+    .case-axes-hit { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .axis-hit { font-size: 11px; padding: 3px 9px; border-radius: 20px; }
+    .axis-ng { background: #fee2e2; color: #dc2626; }
+    .axis-ok { background: #dcfce7; color: #15803d; }
 
-    /* ── Contact ── */
-    .contact { background: linear-gradient(160deg, #052e16, #14532d); padding: 56px 24px; text-align: center; }
+    /* FAQ */
+    .faq-section { background: white; padding: 56px 24px; }
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq-list { margin-top: 28px; display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+    .faq-q { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 600; color: #052e16; background: white; gap: 12px; }
+    .faq-q::after { content: "＋"; font-size: 18px; color: #16a34a; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { content: "－"; }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 14px; color: #374151; line-height: 1.7; background: white; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* Contact */
+    .contact { background: linear-gradient(160deg, #052e16, #14532d); padding: 56px 24px; }
+    .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
     .contact h2 { font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 800; color: #f0fdf4; margin-bottom: 12px; }
-    .contact p { color: #86efac; margin-bottom: 28px; font-size: 0.98rem; max-width: 540px; margin-left: auto; margin-right: auto; }
-    .contact-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 16px; }
-    .acceptance-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      max-width: 700px;
-      margin: 0 auto 28px;
-      text-align: left;
+    .contact > .contact-inner > p { color: #86efac; margin-bottom: 32px; font-size: 0.98rem; }
+    .contact-form { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 28px; text-align: left; margin-bottom: 24px; }
+    .form-row { margin-bottom: 14px; }
+    .form-row label { display: block; font-size: 12px; color: #86efac; font-weight: 600; margin-bottom: 6px; }
+    .form-row input, .form-row textarea, .form-row select {
+      width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px; color: white; font-size: 14px; font-family: inherit;
     }
-    .acceptance-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 10px;
-      padding: 14px;
-    }
-    .ac-label { font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.08em; margin-bottom: 6px; }
-    .ac-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+    .form-row input::placeholder, .form-row textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-row input:focus, .form-row textarea:focus, .form-row select:focus { outline: none; border-color: #4ade80; }
+    .form-row textarea { resize: vertical; min-height: 100px; }
+    .form-row select option { background: #14532d; color: white; }
+    .form-submit { width: 100%; padding: 14px; background: #16a34a; color: white; font-size: 15px; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+    .form-submit:hover { background: #15803d; }
+    .contact-alt { font-size: 13px; color: rgba(255,255,255,0.45); text-align: center; margin-top: 16px; }
+    .contact-alt a { color: rgba(255,255,255,0.6); }
+    .sns-row { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+    .sns-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity 0.15s; }
+    .sns-btn:hover { opacity: 0.85; }
+    .sns-x { background: #000; color: white; }
+    .sns-line { background: #06c755; color: white; }
+    .region-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 20px; }
 
-    /* ── Footer ── */
-    footer {
-      background: #0a1a0a;
-      color: rgba(255,255,255,0.35);
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-    }
+    /* Footer */
+    footer { background: #0a1a0a; color: rgba(255,255,255,0.35); text-align: center; padding: 20px; font-size: 12px; }
+    footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
   </style>
 </head>
 <body>
@@ -254,67 +174,56 @@
 <section class="hero">
   <div class="hero-eyebrow">Y COMPANY — Social Change Support</div>
   <h1>NPO・社会起業家の<br><em>「なぜ行き詰まるか」</em>を<br>診断し、突破口を示す</h1>
-  <p>助成金が通らない。支援が広がらない。資金調達の壁。<br>その根本にある構造的な問題を、佐々生（Y COMPANY）が無償で診断します。</p>
+  <p>助成金が通らない。支援が広がらない。資金調達の壁。<br>その根本にある構造的な問題を、Y COMPANYが無償で診断します。</p>
+  <div class="hero-region">🗺 世田谷・東京都内は対面対応可 ／ 全国オンライン対応</div>
   <div class="hero-buttons">
     <a href="grant-search.html" class="btn-primary">📊 助成金データベースを検索する</a>
-    <a href="mailto:orzugulsetagaya@gmail.com?subject=社会変革支援サービス相談" class="btn-ghost">相談を申し込む</a>
+    <a href="#contact" class="btn-ghost">相談を申し込む</a>
   </div>
 </section>
 
 <!-- Stats -->
 <div class="stats">
   <div class="stats-inner">
-    <div>
-      <div class="stat-num">1,359</div>
-      <div class="stat-label">助成プログラム収録数</div>
-    </div>
-    <div>
-      <div class="stat-num">25</div>
-      <div class="stat-label">財団マスタ登録数</div>
-    </div>
-    <div>
-      <div class="stat-num">6</div>
-      <div class="stat-label">診断軸（独自フレーム）</div>
-    </div>
+    <div><div class="stat-num">1,359</div><div class="stat-label">助成プログラム収録数</div></div>
+    <div><div class="stat-num">25</div><div class="stat-label">財団マスタ登録数</div></div>
+    <div><div class="stat-num">6</div><div class="stat-label">診断軸（独自フレーム）</div></div>
   </div>
 </div>
 
-<!-- Gap section -->
+<!-- よくある悩み -->
 <section class="section" style="background: white;">
+  <div class="section-inner">
+    <div class="section-label">こんなお悩みはありませんか？</div>
+    <h2>多くの団体が同じ壁で<br>行き詰まっています</h2>
+    <div class="worries-grid">
+      <div class="worry-card">助成金に何度応募しても通らない</div>
+      <div class="worry-card">どの助成プログラムに出すべきか判断できない</div>
+      <div class="worry-card">活動は本物なのに、言語化できていない</div>
+      <div class="worry-card">理事会があっても機能していない</div>
+      <div class="worry-card">助成が終わった後の資金計画がない</div>
+      <div class="worry-card">企業・行政へのアクセス方法がわからない</div>
+      <div class="worry-card">寄付者・支援者との関係が深まらない</div>
+      <div class="worry-card">活動が点で終わり、社会変革につながらない</div>
+      <div class="worry-card">申請書を書いてくれる人はいるが、構造を変えてくれる人がいない</div>
+    </div>
+  </div>
+</section>
+
+<!-- 空白地帯 -->
+<section class="section" style="background: #f8faf9;">
   <div class="section-inner">
     <div class="section-label">なぜYCなのか</div>
     <h2>既存の支援者では届かない<br>「空白地帯」があります</h2>
     <p>経営コンサル、中間支援組織、弁護士、ファンドレイザー——それぞれに強みがあります。しかし、社会運動固有の課題に対応できるプレイヤーは、まだほとんど存在しません。</p>
     <table class="gap-table">
-      <thead>
-        <tr><th>支援プレイヤー</th><th>提供価値</th><th>届かない領域</th></tr>
-      </thead>
+      <thead><tr><th>支援プレイヤー</th><th>提供価値</th><th>届かない領域</th></tr></thead>
       <tbody>
-        <tr>
-          <td>経営コンサル</td>
-          <td>戦略立案・分析</td>
-          <td class="gap-cell">社会運動固有の論理・審査側の視点がない</td>
-        </tr>
-        <tr>
-          <td>中間支援組織</td>
-          <td>情報提供・研修</td>
-          <td class="gap-cell">個別団体への深い伴走・人脈提供ができない</td>
-        </tr>
-        <tr>
-          <td>弁護士・会計士</td>
-          <td>法務・会計</td>
-          <td class="gap-cell">課題定義・戦略設計・資金調達の本質に触れない</td>
-        </tr>
-        <tr>
-          <td>ファンドレイザー</td>
-          <td>申請書作成代行</td>
-          <td class="gap-cell">申請が通る団体構造そのものを作れない</td>
-        </tr>
-        <tr class="highlight-row">
-          <td>YC（佐々生）</td>
-          <td>審査設計 × 人脈 × AI</td>
-          <td style="color:#4ade80">── ここが空白地帯</td>
-        </tr>
+        <tr><td>経営コンサル</td><td>戦略立案・分析</td><td class="gap-cell">社会運動固有の論理・審査側の視点がない</td></tr>
+        <tr><td>中間支援組織</td><td>情報提供・研修</td><td class="gap-cell">個別団体への深い伴走・人脈提供ができない</td></tr>
+        <tr><td>弁護士・会計士</td><td>法務・会計</td><td class="gap-cell">課題定義・戦略設計・資金調達の本質に触れない</td></tr>
+        <tr><td>ファンドレイザー</td><td>申請書作成代行</td><td class="gap-cell">申請が通る団体構造そのものを作れない</td></tr>
+        <tr class="highlight-row"><td>YC（佐々生）</td><td>審査設計 × 人脈 × AI</td><td style="color:#4ade80">── ここが空白地帯</td></tr>
       </tbody>
     </table>
   </div>
@@ -327,58 +236,143 @@
     <h2>なぜ団体は行き詰まるのか<br>— 6軸で現状を把握する</h2>
     <p>YCは独自の6軸フレームで、団体が詰まっている場所を特定します。</p>
     <div class="axes-grid">
-      <div class="axis-card">
-        <div class="axis-num">AXIS 01</div>
-        <div class="axis-title">実行体制</div>
-        <div class="axis-desc">理事・事務局の専門性と実行力。名前だけの理事は機能しない</div>
+      <div class="axis-card"><div class="axis-num">AXIS 01</div><div class="axis-title">実行体制</div><div class="axis-desc">理事・事務局の専門性と実行力。名前だけの理事は機能しない</div></div>
+      <div class="axis-card"><div class="axis-num">AXIS 02</div><div class="axis-title">審査適合性</div><div class="axis-desc">助成プログラムの論理を読めているか。審査側の視点が持てているか</div></div>
+      <div class="axis-card"><div class="axis-num">AXIS 03</div><div class="axis-title">インパクト定義</div><div class="axis-desc">社会的価値を数値・言語で示せるか。主観的では伝わらない</div></div>
+      <div class="axis-card"><div class="axis-num">AXIS 04</div><div class="axis-title">課題の階層設計</div><div class="axis-desc">マニアックな入口から大きな出口へ展開できるか</div></div>
+      <div class="axis-card"><div class="axis-num">AXIS 05</div><div class="axis-title">自走モデル</div><div class="axis-desc">助成終了後の資金・運営計画があるか。補助金依存の永久化を避ける</div></div>
+      <div class="axis-card"><div class="axis-num">AXIS 06</div><div class="axis-title">CRM・エコシステム</div><div class="axis-desc">支援者・寄付者の関係値構築ができているか</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6軸×処方箋 -->
+<section class="section" style="background: white;">
+  <div class="section-inner">
+    <div class="section-label">詰まりへの処方箋</div>
+    <h2>6軸の「詰まり」に対して<br>YCは何をするか</h2>
+    <p>典型的な行き詰まりパターンと、YCが提供する具体的な介入内容です。</p>
+    <table class="rx-table">
+      <thead><tr><th>軸</th><th>典型的な詰まり</th><th>YCの処方箋</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="rx-axis">①実行体制</td>
+          <td class="rx-stuck">理事が名前だけ・事務局機能なし</td>
+          <td class="rx-fix">適切な理事候補の紹介、ガバナンス設計テンプレ提供</td>
+        </tr>
+        <tr>
+          <td class="rx-axis">②審査適合性</td>
+          <td class="rx-stuck">審査員の視点がわかっていない</td>
+          <td class="rx-fix">審査側経験から「通る申請」の論理を事前レクチャー</td>
+        </tr>
+        <tr>
+          <td class="rx-axis">③インパクト定義</td>
+          <td class="rx-stuck">社会的価値が主観的で伝わらない</td>
+          <td class="rx-fix">AIで類似事例・受益者規模を試算、一枚資料化</td>
+        </tr>
+        <tr>
+          <td class="rx-axis">④課題の階層設計</td>
+          <td class="rx-stuck">マニアックな課題が単発で終わる</td>
+          <td class="rx-fix">上位概念への接続設計、共感できる出口の言語化</td>
+        </tr>
+        <tr>
+          <td class="rx-axis">⑤自走モデル</td>
+          <td class="rx-stuck">助成終了後の絵がない</td>
+          <td class="rx-fix">企業CSR・サブスク寄付・事業収益の複層化設計</td>
+        </tr>
+        <tr>
+          <td class="rx-axis">⑥CRM</td>
+          <td class="rx-stuck">支援者の関係値管理ができていない</td>
+          <td class="rx-fix">YCコミュニティと接続、支持者拡大の動線設計</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- セルフチェック -->
+<section class="check-section">
+  <div class="check-inner">
+    <div class="section-label">セルフ診断</div>
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">今すぐ6軸を<br>セルフチェックする</h2>
+    <p style="color:#374151;">各軸について、あなたの団体の現状を選んでください。</p>
+
+    <div class="check-grid" id="check-grid">
+      <div class="check-item">
+        <div class="check-item-head"><span class="check-axis-badge">AXIS 01</span><span class="check-axis-name">実行体制</span></div>
+        <div class="check-options">
+          <input class="check-opt" type="radio" name="ax1" id="ax1a" value="2"><label for="ax1a">理事・スタッフが専門性をもって機能している</label>
+          <input class="check-opt" type="radio" name="ax1" id="ax1b" value="1"><label for="ax1b">不十分な部分がある</label>
+          <input class="check-opt" type="radio" name="ax1" id="ax1c" value="0"><label for="ax1c">理事が名前だけ、事務局が機能していない</label>
+        </div>
       </div>
-      <div class="axis-card">
-        <div class="axis-num">AXIS 02</div>
-        <div class="axis-title">審査適合性</div>
-        <div class="axis-desc">助成プログラムの論理を読めているか。審査側の視点が持てているか</div>
+      <div class="check-item">
+        <div class="check-item-head"><span class="check-axis-badge">AXIS 02</span><span class="check-axis-name">審査適合性</span></div>
+        <div class="check-options">
+          <input class="check-opt" type="radio" name="ax2" id="ax2a" value="2"><label for="ax2a">審査員の視点を意識して申請書を書ける</label>
+          <input class="check-opt" type="radio" name="ax2" id="ax2b" value="1"><label for="ax2b">意識はしているが自信がない</label>
+          <input class="check-opt" type="radio" name="ax2" id="ax2c" value="0"><label for="ax2c">審査側の論理がよくわからない</label>
+        </div>
       </div>
-      <div class="axis-card">
-        <div class="axis-num">AXIS 03</div>
-        <div class="axis-title">インパクト定義</div>
-        <div class="axis-desc">社会的価値を数値・言語で示せるか。主観的では伝わらない</div>
+      <div class="check-item">
+        <div class="check-item-head"><span class="check-axis-badge">AXIS 03</span><span class="check-axis-name">インパクト定義</span></div>
+        <div class="check-options">
+          <input class="check-opt" type="radio" name="ax3" id="ax3a" value="2"><label for="ax3a">受益者数・変化量を数字で示せる</label>
+          <input class="check-opt" type="radio" name="ax3" id="ax3b" value="1"><label for="ax3b">言語化はできているが数値化は難しい</label>
+          <input class="check-opt" type="radio" name="ax3" id="ax3c" value="0"><label for="ax3c">活動の社会的価値をうまく説明できない</label>
+        </div>
       </div>
-      <div class="axis-card">
-        <div class="axis-num">AXIS 04</div>
-        <div class="axis-title">課題の階層設計</div>
-        <div class="axis-desc">マニアックな入口から大きな出口へ展開できるか</div>
+      <div class="check-item">
+        <div class="check-item-head"><span class="check-axis-badge">AXIS 04</span><span class="check-axis-name">課題の階層設計</span></div>
+        <div class="check-options">
+          <input class="check-opt" type="radio" name="ax4" id="ax4a" value="2"><label for="ax4a">入口の課題から大きな社会変革の出口まで設計できている</label>
+          <input class="check-opt" type="radio" name="ax4" id="ax4b" value="1"><label for="ax4b">活動の意義は語れるが、出口が曖昧</label>
+          <input class="check-opt" type="radio" name="ax4" id="ax4c" value="0"><label for="ax4c">単発の活動で終わっている</label>
+        </div>
       </div>
-      <div class="axis-card">
-        <div class="axis-num">AXIS 05</div>
-        <div class="axis-title">自走モデル</div>
-        <div class="axis-desc">助成終了後の資金・運営計画があるか。補助金依存の永久化を避ける</div>
+      <div class="check-item">
+        <div class="check-item-head"><span class="check-axis-badge">AXIS 05</span><span class="check-axis-name">自走モデル</span></div>
+        <div class="check-options">
+          <input class="check-opt" type="radio" name="ax5" id="ax5a" value="2"><label for="ax5a">助成終了後の収益・運営計画がある</label>
+          <input class="check-opt" type="radio" name="ax5" id="ax5b" value="1"><label for="ax5b">考えてはいるが具体化できていない</label>
+          <input class="check-opt" type="radio" name="ax5" id="ax5c" value="0"><label for="ax5c">助成に頼り続けるしかない状態</label>
+        </div>
       </div>
-      <div class="axis-card">
-        <div class="axis-num">AXIS 06</div>
-        <div class="axis-title">CRM・エコシステム</div>
-        <div class="axis-desc">支援者・寄付者の関係値構築ができているか</div>
+      <div class="check-item">
+        <div class="check-item-head"><span class="check-axis-badge">AXIS 06</span><span class="check-axis-name">CRM・エコシステム</span></div>
+        <div class="check-options">
+          <input class="check-opt" type="radio" name="ax6" id="ax6a" value="2"><label for="ax6a">支援者・寄付者と継続的な関係を構築できている</label>
+          <input class="check-opt" type="radio" name="ax6" id="ax6b" value="1"><label for="ax6b">つながりはあるが深められていない</label>
+          <input class="check-opt" type="radio" name="ax6" id="ax6c" value="0"><label for="ax6c">支援者管理ができておらず、関係が途切れがち</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-result-bar" id="check-result">
+      <h3 style="font-size:16px; font-weight:700; color:#052e16; margin-bottom:16px;">診断結果</h3>
+      <div id="score-bars"></div>
+      <div class="check-summary" id="check-summary"></div>
+      <div class="check-cta">
+        <a href="#contact" class="btn-primary" style="display:inline-block; margin-top:12px;">この結果をもとに相談する →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DB section -->
+<!-- DB -->
 <section class="db-section">
   <div class="db-inner">
     <div class="section-label">助成金データベース</div>
-    <h2 style="font-size: clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">1,359件の助成プログラムを<br>無償で検索できます</h2>
-    <p style="color:#374151; margin-bottom:28px;">CANPAN・補助金ポータル・J-Grants（デジタル庁）・各財団HP から収集。<br>課題分野・金額・締切月・地域で絞り込めます。</p>
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">1,359件の助成プログラムを<br>無償で検索できます</h2>
+    <p style="color:#374151; margin-bottom:28px;">CANPAN・補助金ポータル・J-Grants（デジタル庁）・各財団HP から収集。課題分野・金額・締切月で絞り込めます。</p>
     <div class="db-card">
       <div class="db-icon">📊</div>
       <div class="db-content">
         <h3>YC 助成金データベース</h3>
-        <p>キーワード検索・課題分野・金額・締切月で絞り込み。各プログラムの財団HP・申請ページへ直リンク。</p>
+        <p>キーワード検索・課題分野・金額・締切月で絞り込み。各プログラムの財団HP・申請ページへ直リンク。毎月更新予定。</p>
         <div class="db-tags">
-          <span class="db-tag">子ども・青少年</span>
-          <span class="db-tag">環境・気候変動</span>
-          <span class="db-tag">障害者支援</span>
-          <span class="db-tag">国際協力</span>
-          <span class="db-tag">地域コミュニティ</span>
-          <span class="db-tag">+ 15分野</span>
+          <span class="db-tag">子ども・青少年</span><span class="db-tag">環境・気候変動</span><span class="db-tag">障害者支援</span>
+          <span class="db-tag">国際協力</span><span class="db-tag">地域コミュニティ</span><span class="db-tag">+ 15分野</span>
         </div>
         <a href="grant-search.html" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">データベースを検索する →</a>
       </div>
@@ -386,52 +380,217 @@
   </div>
 </section>
 
-<!-- Case -->
+<!-- 事例 -->
 <section class="case-section">
   <div class="case-inner">
     <div class="section-label">支援事例</div>
     <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">診断で何が変わるか</h2>
-    <p style="color:#374151;">児童養護施設出身者支援団体の相談事例（仮名処理済み）</p>
-    <div class="case-box">
-      <div class="case-before">
-        <span class="case-tag tag-before">BEFORE — 団体の当初の発想</span>
-        <p class="case-text">18歳で児童養護施設を出る若者に、月30万円の物件を12.5万円でシェアハウスとして貸し出す。差額を行政の補助金で補填してもらいたい。</p>
+    <p style="color:#374151; margin-bottom:20px;">※ 仮名・一部改変処理済み</p>
+    <div class="case-tabs">
+      <button class="case-tab active" onclick="showCase(0)">🏠 児童養護支援</button>
+      <button class="case-tab" onclick="showCase(1)">🌿 環境NPO</button>
+      <button class="case-tab" onclick="showCase(2)">📚 教育支援団体</button>
+    </div>
+
+    <div class="case-panel active" id="case0">
+      <div class="case-box">
+        <div class="case-before">
+          <span class="case-tag tag-before">BEFORE — 団体の当初の発想</span>
+          <p class="case-text">18歳で児童養護施設を出る若者に、月30万円の物件を12.5万円でシェアハウスとして貸し出す。差額を行政の補助金で補填してもらいたい。</p>
+          <div class="case-axes-hit">
+            <span class="axis-hit axis-ng">②審査適合性 ✗</span>
+            <span class="axis-hit axis-ng">③インパクト定義 ✗</span>
+            <span class="axis-hit axis-ng">④課題の階層設計 ✗</span>
+            <span class="axis-hit axis-ng">⑤自走モデル ✗</span>
+          </div>
+        </div>
+        <div class="case-arrow">↓ YC診断・介入</div>
+        <div class="case-after">
+          <span class="case-tag tag-after">AFTER — 課題の再定義</span>
+          <p class="case-text">「差額補填」ではなく「18歳打ち切りという制度設計そのものを問い直す」案件として再定義。課題を「児童養護出身者支援（入口）→ 若年成人の社会的養護（中間）→ 孤立・貧困の世代連鎖断絶（出口）」と階層化し、財界・行政・企業CSR・議会ルートを同時に開拓する戦略へ転換。</p>
+        </div>
       </div>
-      <div class="case-arrow">↓ YC診断・介入</div>
-      <div class="case-after">
-        <span class="case-tag tag-after">AFTER — 課題の再定義</span>
-        <p class="case-text">「差額補填」ではなく「18歳打ち切りという制度設計そのものを問い直す」案件として再定義。課題を「児童養護出身者支援（入口）→ 若年成人の社会的養護（中間）→ 孤立・貧困の世代連鎖断絶（出口）」と階層化し、財界・行政・企業CSR・議会ルートを同時に開拓する戦略へ転換。</p>
+    </div>
+
+    <div class="case-panel" id="case1">
+      <div class="case-box">
+        <div class="case-before">
+          <span class="case-tag tag-before">BEFORE — 団体の当初の発想</span>
+          <p class="case-text">都市部の空き地を使った市民農園プロジェクトを展開したい。環境系の助成金に何度も出しているが落ち続けている。「緑を増やす」という訴求で申請書を書いてきた。</p>
+          <div class="case-axes-hit">
+            <span class="axis-hit axis-ng">②審査適合性 ✗</span>
+            <span class="axis-hit axis-ng">③インパクト定義 ✗</span>
+            <span class="axis-hit axis-ng">④課題の階層設計 ✗</span>
+          </div>
+        </div>
+        <div class="case-arrow">↓ YC診断・介入</div>
+        <div class="case-after">
+          <span class="case-tag tag-after">AFTER — 課題の再定義</span>
+          <p class="case-text">「緑化」ではなく「都市の食と土壌の自給ネットワーク構築」として再定義。受益者を「参加市民」から「周辺地域の食環境格差を抱える低所得世帯」に拡張し、CO₂固定量・参加者の食費変化・地域コミュニティ再生の3軸でインパクトを数値化。企業CSR（農業参入希望の食品メーカー）との協働モデルを入れることで自走性を確保した。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-panel" id="case2">
+      <div class="case-box">
+        <div class="case-before">
+          <span class="case-tag tag-before">BEFORE — 団体の当初の発想</span>
+          <p class="case-text">外国ルーツの子どもへの日本語学習支援をしているが、助成が3年で切れる。継続するための次の資金が見つからない。「子どもたちのために続けたい」という訴求で申請している。</p>
+          <div class="case-axes-hit">
+            <span class="axis-hit axis-ng">④課題の階層設計 ✗</span>
+            <span class="axis-hit axis-ng">⑤自走モデル ✗</span>
+            <span class="axis-hit axis-ng">⑥CRM ✗</span>
+          </div>
+        </div>
+        <div class="case-arrow">↓ YC診断・介入</div>
+        <div class="case-after">
+          <span class="case-tag tag-after">AFTER — 課題の再定義</span>
+          <p class="case-text">「日本語学習支援（入口）→ 多文化共生の地域モデル構築（中間）→ 外国人労働者の社会統合政策への提言（出口）」として再設計。企業向けに「多文化対応の職場研修」プログラムを有償展開することで自走収益源を確立。支援対象だった保護者層をボランティア・口コミ発信者として取り込むCRM設計も追加し、外部依存度を段階的に下げる5年計画を策定。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="section-label">よくある質問</div>
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">FAQ</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">なぜ無償なのですか？</div>
+        <div class="faq-a">隠しません。本気の社会課題に向き合う団体との関係が積み上がることで、YCのコミュニティや事業（JIDAI・IAPONIA）への自然なつながりが生まれること、また代表・佐々生の社会的信用と政策基盤の強化につながることを期待しています。「見返りを求めない善意」ではなく、「関係値が積み上がった結果として自然につながる」という設計です。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">どんな団体でも相談できますか？</div>
+        <div class="faq-a">すべての相談に対応できるわけではありません。「社会的信用が高く、実行力が弱い団体」へはフルコミットで伴走します。「展開性はあるが規模が小さい」場合は助言のみ。創造性がなく、補助金依存を永続させるだけの申請代行はお断りします。お断りする場合も、その理由はお伝えします。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">相談後のプロセスはどうなりますか？</div>
+        <div class="faq-a">まずメールまたはフォームでご相談内容をお送りください。内容を確認した上で、佐々生より返信します（数日かかる場合があります）。その後、オンラインまたは対面での30〜60分のヒアリングを経て、6軸診断と処方箋をお伝えします。継続的な伴走が必要な場合は別途ご相談します。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">守秘義務はありますか？</div>
+        <div class="faq-a">相談内容は第三者に開示しません。ただし、事例としてページに掲載する場合は事前に許可を確認し、仮名・改変処理を行います。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">世田谷以外の団体でも相談できますか？</div>
+        <div class="faq-a">はい。全国からオンラインで対応しています。対面が必要な場合は世田谷・東京都内を優先しますが、状況によって柔軟に対応します。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">助成金データベースはどのくらいの頻度で更新されますか？</div>
+        <div class="faq-a">スクレイパーによる自動収集を定期的に実施し、更新しています。財団HP・CANPAN・補助金ポータル・J-Grants APIを横断的に収集しています。締切情報は変更される場合があるため、応募前に必ず各財団の公式ページをご確認ください。</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Contact -->
-<section class="contact">
-  <h2>本気の社会課題に、<br>本気のリソースで応える</h2>
-  <p>まずはメールでご相談ください。内容を確認の上、佐々生より返信します。</p>
-  <div class="acceptance-grid">
-    <div class="acceptance-card">
-      <div class="ac-label">積極受け（フルコミット）</div>
-      <div class="ac-text">社会的信用が高く、実行力が弱く、政策軸と一致している団体</div>
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2>本気の社会課題に、<br>本気のリソースで応える</h2>
+    <p>フォームに入力して送信してください。内容を確認の上、返信します。</p>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <label>団体名 / お名前</label>
+        <input type="text" id="f-org" placeholder="例：NPO法人〇〇・個人（氏名）">
+      </div>
+      <div class="form-row">
+        <label>活動分野</label>
+        <select id="f-field">
+          <option value="">選択してください</option>
+          <option>子ども・青少年</option><option>教育・学習支援</option>
+          <option>環境・気候変動</option><option>地域コミュニティ</option>
+          <option>障害者支援</option><option>国際協力</option>
+          <option>女性・ジェンダー</option><option>貧困・生活困窮</option>
+          <option>文化・芸術</option><option>医療・保健</option>
+          <option>その他・複合</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>主なお悩み・相談内容</label>
+        <textarea id="f-body" placeholder="例：助成金に3回落ちた。審査に何が足りないのか知りたい。&#10;例：理事会の機能が弱く、申請書を書ける人がいない。"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitForm()">相談を送る（無償）</button>
     </div>
-    <div class="acceptance-card">
-      <div class="ac-label">条件付き（助言のみ）</div>
-      <div class="ac-text">マニアックだが展開性があり、世田谷・地域軸と重なる活動</div>
+
+    <div class="sns-row">
+      <a class="sns-btn sns-x" href="https://x.com/orzugulsetagaya" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.857L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X でDM
+      </a>
     </div>
-    <div class="acceptance-card">
-      <div class="ac-label">お断り</div>
-      <div class="ac-text">創造性がなく、政策軸とも無関係な申請代行の依頼</div>
-    </div>
+
+    <div class="region-note">世田谷・東京都内は対面対応可 ／ 全国オンライン対応<br>返信まで数日かかる場合があります。営利目的・政治的プロパガンダ目的のご相談はお断りします。</div>
   </div>
-  <a href="mailto:orzugulsetagaya@gmail.com?subject=社会変革支援サービス相談申込&body=団体名:%0A活動内容:%0Aご相談内容:" class="btn-primary" style="font-size:16px; padding:16px 36px;">相談を申し込む（無償）</a>
-  <div class="contact-note">返信まで数日かかる場合があります。営利目的・政治的プロパガンダ目的のご相談はお断りします。</div>
 </section>
 
 <footer>
-  &copy; 2026 合同会社 Y COMPANY — 代表社員 佐々生オルズグル<br>
-  <a href="grant-search.html" style="color:rgba(255,255,255,0.3); text-decoration:none;">助成金データベース</a>
+  &copy; 2026 合同会社 Y COMPANY<br>
+  <a href="grant-search.html">助成金データベース</a> ／ <a href="https://x.com/orzugulsetagaya" target="_blank">X @orzugulsetagaya</a>
 </footer>
 
+<script>
+// ── 事例タブ ──
+function showCase(i) {
+  document.querySelectorAll('.case-panel').forEach((p,j) => p.classList.toggle('active', i===j));
+  document.querySelectorAll('.case-tab').forEach((t,j) => t.classList.toggle('active', i===j));
+}
+
+// ── FAQ ──
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+
+// ── セルフチェック ──
+const AXES = ['①実行体制','②審査適合性','③インパクト定義','④課題の階層設計','⑤自走モデル','⑥CRM'];
+const COLORS = ['fill-good','fill-ok','fill-bad'];
+
+function calcCheck() {
+  const scores = [];
+  for (let i=1; i<=6; i++) {
+    const sel = document.querySelector(`input[name="ax${i}"]:checked`);
+    if (!sel) return;
+    scores.push(parseInt(sel.value));
+  }
+  const result = document.getElementById('check-result');
+  result.classList.add('visible');
+
+  const bars = document.getElementById('score-bars');
+  bars.innerHTML = scores.map((s,i) => {
+    const pct = s===2?100:s===1?50:10;
+    const cls = s===2?'fill-good':s===1?'fill-ok':'fill-bad';
+    return `<div class="check-score-row">
+      <div class="check-score-label">${AXES[i]}</div>
+      <div class="check-score-track"><div class="check-score-fill ${cls}" style="width:${pct}%"></div></div>
+      <div style="font-size:11px;color:#6b7280;width:28px;text-align:right">${s===2?'◎':s===1?'△':'✗'}</div>
+    </div>`;
+  }).join('');
+
+  const total = scores.reduce((a,b)=>a+b,0);
+  const weakAxes = AXES.filter((_,i)=>scores[i]===0);
+  const okAxes = AXES.filter((_,i)=>scores[i]===1);
+  let msg = '';
+  if (total>=10) msg = '全体的にバランスが取れています。さらなる強化や外部リソース接続についてご相談ください。';
+  else if (weakAxes.length===0) msg = `概ね機能していますが、${okAxes.join('・')}に改善余地があります。`;
+  else msg = `特に<strong>${weakAxes.join('・')}</strong>に課題があります。ここが助成通過率や活動の持続性に直結している可能性が高いです。`;
+
+  document.getElementById('check-summary').innerHTML = msg;
+  result.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+document.querySelectorAll('.check-opt').forEach(r => r.addEventListener('change', calcCheck));
+
+// ── 相談フォーム ──
+function submitForm() {
+  const org  = document.getElementById('f-org').value.trim();
+  const field = document.getElementById('f-field').value;
+  const body  = document.getElementById('f-body').value.trim();
+  if (!org || !body) { alert('団体名とご相談内容を入力してください'); return; }
+  const subject = encodeURIComponent('社会変革支援サービス相談申込');
+  const bodyText = encodeURIComponent(`団体名・お名前: ${org}\n活動分野: ${field}\n\nご相談内容:\n${body}`);
+  window.location.href = `mailto:orzugulsetagaya@gmail.com?subject=${subject}&body=${bodyText}`;
+}
+</script>
 </body>
 </html>

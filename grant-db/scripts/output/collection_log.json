@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "name": "公益財団法人花王芸術・科学財団",
+    "url": "https://www.kao-foundation.or.jp/art/",
+    "status": "error",
+    "notes": "Timeout 30000ms exceeded.",
+    "at": "2026-05-18T10:51:10.390597"
+  }
+]
