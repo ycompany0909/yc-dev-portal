@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YC 助成金データベース</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #052e16 0%, #14532d 100%);
+      padding: 20px 20px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    header h1 { font-size: 17px; font-weight: 700; color: #d1fae5; }
+    #count-badge {
+      font-size: 12px;
+      background: rgba(255,255,255,0.15);
+      color: #a7f3d0;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #f1f5f9;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .search-bar::placeholder { color: rgba(255,255,255,0.45); }
+    .search-bar:focus { outline: none; border-color: rgba(134,239,172,0.5); background: rgba(255,255,255,0.14); }
+
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.75);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .chip:hover { background: rgba(255,255,255,0.15); }
+    .chip.active { background: #16a34a; border-color: #22c55e; color: #fff; }
+
+    .filter-section {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      padding: 10px 16px;
+    }
+    .filter-label { font-size: 10px; color: #64748b; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .filter-inner { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    select.filter-select {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: #334155;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    select.filter-select:focus { outline: none; border-color: #22c55e; }
+
+    .main { padding: 14px 16px; max-width: 900px; margin: 0 auto; }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .sort-select {
+      font-size: 12px;
+      padding: 4px 8px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .cards { display: flex; flex-direction: column; gap: 10px; }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-left: 4px solid #16a34a;
+      border-radius: 10px;
+      padding: 14px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover { border-color: #22c55e; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+    .card[data-source="補助金ポータル"] { border-left-color: #2563eb; }
+    .card[data-source="J-Grants API"]  { border-left-color: #7c3aed; }
+    .card[data-source="CANPAN"]         { border-left-color: #0891b2; }
+
+    .card-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+    .card-main { flex: 1; min-width: 0; }
+    .card-foundation { font-size: 11px; color: #94a3b8; margin-bottom: 3px; }
+    .card-title { font-size: 14px; font-weight: 600; color: #f1f5f9; line-height: 1.4; }
+    .card-amount {
+      font-size: 13px;
+      font-weight: 700;
+      color: #4ade80;
+      flex-shrink: 0;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+    .tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #94a3b8;
+      border: 1px solid #334155;
+    }
+    .tag.issue { background: #1e3a5f; color: #93c5fd; border-color: #1d4ed8; }
+    .tag.source-portal  { background: #1e3a8a; color: #bfdbfe; }
+    .tag.source-jgrants { background: #3b0764; color: #e9d5ff; }
+    .tag.source-canpan  { background: #083344; color: #a5f3fc; }
+    .tag.source-hp      { background: #052e16; color: #a7f3d0; }
+
+    .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .card-deadline { font-size: 11px; color: #64748b; }
+    .card-deadline span { color: #f59e0b; font-weight: 600; }
+    .card-link {
+      font-size: 11px;
+      padding: 5px 12px;
+      background: #166534;
+      color: #d1fae5;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .card-link:hover { background: #15803d; }
+
+    .load-more {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .load-more:hover { background: #334155; }
+
+    .empty { text-align: center; padding: 48px 20px; color: #475569; }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+    .loading { text-align: center; padding: 60px 20px; color: #475569; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>🌱 YC 助成金データベース</h1>
+    <span id="count-badge">読み込み中...</span>
+  </div>
+  <input class="search-bar" id="search" type="search" placeholder="財団名・プログラム名・課題でキーワード検索...">
+  <div class="filter-row" id="issue-chips"></div>
+</header>
+
+<div class="filter-section">
+  <div class="filter-label">絞り込み</div>
+  <div class="filter-inner">
+    <select class="filter-select" id="source-filter">
+      <option value="">すべてのソース</option>
+      <option value="CANPAN">CANPAN</option>
+      <option value="補助金ポータル">補助金ポータル</option>
+      <option value="J-Grants API">J-Grants API</option>
+      <option value="HP">各財団HP</option>
+    </select>
+    <select class="filter-select" id="status-filter">
+      <option value="">すべての状態</option>
+      <option value="active">募集中</option>
+      <option value="unknown">不明</option>
+    </select>
+    <select class="filter-select" id="month-filter">
+      <option value="">締切月を絞る</option>
+      <option value="1">1月</option><option value="2">2月</option>
+      <option value="3">3月</option><option value="4">4月</option>
+      <option value="5">5月</option><option value="6">6月</option>
+      <option value="7">7月</option><option value="8">8月</option>
+      <option value="9">9月</option><option value="10">10月</option>
+      <option value="11">11月</option><option value="12">12月</option>
+    </select>
+    <select class="filter-select" id="amount-filter">
+      <option value="">金額上限を絞る</option>
+      <option value="500000">〜50万円</option>
+      <option value="1000000">〜100万円</option>
+      <option value="5000000">〜500万円</option>
+      <option value="10000000">〜1000万円</option>
+      <option value="99999999">1000万円超</option>
+    </select>
+  </div>
+</div>
+
+<div class="main">
+  <div class="result-header">
+    <span id="result-count"></span>
+    <select class="sort-select" id="sort-select">
+      <option value="deadline">締切が近い順</option>
+      <option value="amount_desc">金額が多い順</option>
+      <option value="amount_asc">金額が少ない順</option>
+      <option value="name">財団名順</option>
+    </select>
+  </div>
+  <div class="cards" id="cards">
+    <div class="loading">データを読み込んでいます...</div>
+  </div>
+  <button class="load-more" id="load-more" style="display:none">さらに表示</button>
+</div>
+
+<script>
+const PAGE = 30;
+let allData = [], filtered = [], shown = 0;
+let activeIssue = '';
+
+const ISSUES = ['子ども・青少年','教育・学習支援','環境・気候変動','地域コミュニティ',
+  '障害者支援','国際協力','文化・芸術','女性・ジェンダー','貧困・生活困窮',
+  '就労・雇用','医療・保健','防災・減災','農山漁村・地方創生','まちづくり','食・フードバンク','科学技術'];
+
+function fmt(n) {
+  if (!n) return '';
+  const v = parseInt(n);
+  if (isNaN(v)) return '';
+  if (v >= 100000000) return (v/100000000).toFixed(0) + '億円';
+  if (v >= 10000) return Math.round(v/10000) + '万円';
+  return v.toLocaleString() + '円';
+}
+
+function sourceTag(src) {
+  if (!src) return '';
+  if (src === '補助金ポータル') return `<span class="tag source-portal">補助金ポータル</span>`;
+  if (src === 'J-Grants API')   return `<span class="tag source-jgrants">J-Grants</span>`;
+  if (src === 'CANPAN')          return `<span class="tag source-canpan">CANPAN</span>`;
+  return `<span class="tag source-hp">${src.replace('HP','').trim()}</span>`;
+}
+
+function deadlineStr(r) {
+  if (r.deadline) {
+    const d = new Date(r.deadline);
+    const today = new Date();
+    const diff = Math.ceil((d - today) / 86400000);
+    const label = `${r.deadline.slice(0,7)} 締切`;
+    if (diff < 0)  return `<span style="color:#ef4444">締切済み</span>`;
+    if (diff <= 14) return `<span style="color:#f97316">残${diff}日 (${label})</span>`;
+    return `<span>${label}</span>`;
+  }
+  if (r.deadline_month_recurring) return `<span>毎年${r.deadline_month_recurring}月頃</span>`;
+  return '<span style="color:#475569">締切不明</span>';
+}
+
+function renderCard(r) {
+  const issues = (r.target_issues || '').split('|').filter(Boolean);
+  const amount = r.amount_max_jpy ? fmt(r.amount_max_jpy) : (r.amount_note || '');
+  const src = r.data_source || '';
+  return `<div class="card" data-source="${src.includes('HP') ? src : src}">
+    <div class="card-head">
+      <div class="card-main">
+        <div class="card-foundation">${r.foundation_name || ''}</div>
+        <div class="card-title">${r.program_name || '（名称不明）'}</div>
+      </div>
+      ${amount ? `<div class="card-amount">最大<br>${amount}</div>` : ''}
+    </div>
+    <div class="card-tags">
+      ${issues.map(i => `<span class="tag issue">${i}</span>`).join('')}
+      ${sourceTag(src)}
+    </div>
+    <div class="card-footer">
+      <div class="card-deadline">${deadlineStr(r)}</div>
+      ${r.grant_url ? `<a class="card-link" href="${r.grant_url}" target="_blank" rel="noopener">詳細を見る →</a>` : ''}
+    </div>
+  </div>`;
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const src = document.getElementById('source-filter').value;
+  const status = document.getElementById('status-filter').value;
+  const month = document.getElementById('month-filter').value;
+  const amtMax = document.getElementById('amount-filter').value;
+
+  filtered = allData.filter(r => {
+    if (q) {
+      const hay = `${r.foundation_name} ${r.program_name} ${r.description || ''} ${r.target_issues || ''}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    if (activeIssue && !(r.target_issues || '').includes(activeIssue)) return false;
+    if (src) {
+      if (src === 'HP') { if (!(r.data_source || '').endsWith('HP')) return false; }
+      else if (!(r.data_source || '').startsWith(src)) return false;
+    }
+    if (status && r.status !== status) return false;
+    if (month) {
+      const m = String(month);
+      const dl = r.deadline ? String(parseInt(r.deadline.slice(5,7))) : '';
+      const rec = r.deadline_month_recurring ? String(r.deadline_month_recurring) : '';
+      if (dl !== m && rec !== m) return false;
+    }
+    if (amtMax) {
+      const v = parseInt(r.amount_max_jpy);
+      if (isNaN(v) || v > parseInt(amtMax)) return false;
+    }
+    return true;
+  });
+
+  const sort = document.getElementById('sort-select').value;
+  filtered.sort((a, b) => {
+    if (sort === 'deadline') {
+      const da = a.deadline || '9999';
+      const db = b.deadline || '9999';
+      return da.localeCompare(db);
+    }
+    if (sort === 'amount_desc') return (parseInt(b.amount_max_jpy)||0) - (parseInt(a.amount_max_jpy)||0);
+    if (sort === 'amount_asc') {
+      const va = parseInt(a.amount_max_jpy)||0, vb = parseInt(b.amount_max_jpy)||0;
+      if (!va && !vb) return 0;
+      if (!va) return 1;
+      if (!vb) return -1;
+      return va - vb;
+    }
+    if (sort === 'name') return (a.foundation_name||'').localeCompare(b.foundation_name||'');
+    return 0;
+  });
+
+  shown = 0;
+  document.getElementById('result-count').textContent = `${filtered.length.toLocaleString()} 件`;
+  document.getElementById('count-badge').textContent = `${filtered.length} / ${allData.length} 件`;
+  renderMore(true);
+}
+
+function renderMore(reset) {
+  const container = document.getElementById('cards');
+  if (reset) container.innerHTML = '';
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div>該当する助成プログラムが見つかりません</div>';
+    document.getElementById('load-more').style.display = 'none';
+    return;
+  }
+  const chunk = filtered.slice(shown, shown + PAGE);
+  container.insertAdjacentHTML('beforeend', chunk.map(renderCard).join(''));
+  shown += chunk.length;
+  document.getElementById('load-more').style.display = shown < filtered.length ? 'block' : 'none';
+}
+
+function buildIssueChips() {
+  const row = document.getElementById('issue-chips');
+  row.innerHTML = ['すべて', ...ISSUES].map(iss => {
+    const active = iss === 'すべて' && !activeIssue ? ' active' : (iss === activeIssue ? ' active' : '');
+    return `<span class="chip${active}" data-issue="${iss === 'すべて' ? '' : iss}">${iss}</span>`;
+  }).join('');
+  row.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      activeIssue = c.dataset.issue;
+      row.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      applyFilters();
+    });
+  });
+}
+
+fetch('grant-data.json')
+  .then(r => r.json())
+  .then(data => {
+    allData = data;
+    document.getElementById('count-badge').textContent = `${data.length} 件`;
+    buildIssueChips();
+    applyFilters();
+    ['search','source-filter','status-filter','month-filter','amount-filter','sort-select']
+      .forEach(id => document.getElementById(id).addEventListener('input', applyFilters));
+    document.getElementById('load-more').addEventListener('click', () => renderMore(false));
+  })
+  .catch(() => {
+    document.getElementById('cards').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div>データの読み込みに失敗しました</div>';
+  });
+</script>
+</body>
+</html>
