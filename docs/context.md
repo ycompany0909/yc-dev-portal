@@ -1,4 +1,4 @@
-# YC開発コンテキスト（2026-05-18 更新）
+# YC開発コンテキスト（2026-05-18 夕方更新）
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
@@ -7,13 +7,12 @@
 
 ## 作業者・基本情報
 
-- **担当**: オルズグル（Y COMPANY代表）、佐々生（パートナー / Sasao）
+- **担当**: オルズグル（Y COMPANY代表）、佐々生（パートナー / ycompany0909@gmail.com）
 - **スタック**: Cloudflare Workers（素のJS）/ NocoDB / LINE API / GAS / Python / VPS(Ubuntu)
-- **店舗**: JIDAI（銀座・日報GAS稼働）/ IAPONIA（新橋）
+- **店舗**: JIDAI（銀座・gin）/ IAPONIA（新橋・shim）
 - **ポータル**: portal.ycompany.co.jp
 - **CF Account**: ycompany0909@gmail.com（Account ID: 518cd04ae0a78ab125311da3f2a9da15）
 - **VPS**: root@162.43.36.173（Xserver）
-- **マシン**: MacBook Air（外出/自宅兼用）/ iMac（自宅専用 — posta/event-meeting-logはiMacのみ）
 
 ### 重要ルール
 - Workers は TypeScript不使用・素のJS
@@ -28,59 +27,53 @@
 
 | プロジェクト | 状況 | 次のアクション |
 |---|---|---|
-| **Plaud議事録パイプライン** | ✅ 稼働中 | 要約フォーマット改善バッチ実行中（500件・2026-05-18） |
-| **経営コックピット（/executive）** | ✅ 稼働 | タグルール管理UI追加済み。カレンダー表示正常化済み |
-| **ポータルルート修正** | ✅ デプロイ済み | portal.ycompany.co.jp/ → /executive リダイレクト（2026-05-18 直前デプロイ） |
-| **ボウズ機能** | ✅ デプロイ済み | 日報クローズフォームにタスク入力UI・API実装済み |
-| **経営管理ダッシュボード /mgmt** | ✅ デプロイ済み | portal.ycompany.co.jp/mgmt — コックピットシークレット認証 |
-| ICJデモデイ運営 | 🟡 進行中 | 6/11本番・河内・大森・平野井で座組み完了 |
-| ポスター管理システム | 🔴 設計中 | NocoDB + LINE通知の構築 |
-| YC経理システム | ✅ 稼働 | accounting.ycompany.co.jp（CF Access保護済み・2026年売上入力が残り） |
-| orzugulポータル | ✅ 稼働 | portal.orzugul.com（DNS移行2026-05-18完了） |
-| yc-dev-portal | ✅ 稼働 | スマホ壁打ち体制確立済み |
+| **CF Accessポータル権限** | ✅ 完了 | ycompany0909/orzugulsetagaya/山川/田貝が正常ログイン可 |
+| **統合ポータル (yc-manual-v13)** | ✅ 稼働 | 権限バッジ・ログアウトボタン・ボウズ現場表示・申請フォーム文言修正 済み |
+| **店休日プリセット** | ✅ 完了 | gin=日曜, shim=土日 + お盆・年末年始 2026-2027 D1投入済み |
+| **Plaud議事録パイプライン** | ✅ 稼働 | 要約4項目フォーマット稼働中 |
+| **経営コックピット（/executive）** | ✅ 稼働 | portal.ycompany.co.jp/executive |
+| **ICJデモデイ運営** | 🟡 進行中 | 6/11本番・河内・大森・平野井で座組み完了 |
+| **ポスター管理システム** | 🔴 設計中 | NocoDB + LINE通知の構築 |
+| **YC経理システム** | ✅ 稼働 | accounting.ycompany.co.jp（2026年売上入力が残り） |
 
 ---
 
 ## 残タスク（優先度順）
 
-### 🔴 HIGH
-- **議事録要約 品質向上** — 500件の要約を新4項目フォーマットで一括再生成中（VPS バックグラウンド実行中）
-- **VPS Python NOCODB_TOKEN 平文除去** — feedback_server.py/send_report.pyのトークンを環境変数化→rotate。🚧iMacでSSH必要
-- **シフトリマインダー終了日 18→15 に戻す** — 🚧2026-05-19以降に実施
-- **ICJデモデイ 6/11 本番準備** — 最終確認が必要
-- **YC Accounting 2026年売上データ入力** — 新橋・銀座・イベント 2026/1〜現在分が未入力。accounting.ycompany.co.jpから入力
-- **ANTHROPIC_API_KEY を yc-manual-v13 Pages に設定** — hr-bulk-import.htmlが500エラー。🚧iMac必須
-- **EM_ADMIN_PASSWORD を実値に更新** — TEMP_PASSWORD_2026のまま。🚧iMac必須
+### 🔴 HIGH（iMac必須）
+- **ANTHROPIC_API_KEY を yc-manual-v13 Pages に設定** — hr-bulk-import.htmlが500エラー。`wrangler pages secret put ANTHROPIC_API_KEY --project-name yc-manual-v13`
+- **EM_ADMIN_PASSWORD を実値に更新** — TEMP_PASSWORD_2026のまま
+- **VPS Python NOCODB_TOKEN 平文除去** — feedback_server.py/send_report.pyのトークンを環境変数化→rotate
 
 ### 🟡 MEDIUM
-- **GitHub MCP 動作確認** — claude mcp addを実行
-- **ポスター管理システム 設計着手** — NocoDB + LINE通知の構築
-- **Notta議事録Todo 運用フォロー** — 承認処理+LINE User ID投入。🚧山川/田貝のLINE ID未取得
-- **yc-drink-info 2段階照合実装** — ラベル写真でClaude Vision再判定。🚧iMac必須
-- **event-meeting-log データ移行 → 旧Worker廃止** — 🚧iMac必須
-- **コミュニティ担当マッピング 次ステップ** — Messengerアカウント名入力・リマインド設計
-- **勤怠/日報リマインダー 有効化判断** — 🚧経営層判断が必要
+- **YC Accounting 2026年売上データ入力** — 新橋・銀座・イベント 2026/1〜現在分。accounting.ycompany.co.jpから入力
+- **ICJデモデイ 6/11 本番準備** — 最終確認
+- **コミュニティ参加者管理 色分け確認** — community-performance.html の色が正しいか（後回し）
+- **ポスター管理システム 設計着手** — NocoDB + LINE通知
+- **Notta議事録Todo 運用フォロー** — 山川/田貝のLINE ID未取得
+- **コミュニティ担当マッピング** — Messengerアカウント名入力・リマインド設計
+- **勤怠/日報リマインダー 有効化判断** — 経営層判断が必要
 
 ### 🔵 LOW
-- Square 売上インテリジェンス実装（Square Developer登録後）
+- GitHub MCP 動作確認
+- yc-drink-info 2段階照合実装（iMac必須）
+- Square 売上インテリジェンス実装
 - MyBridge → NocoDB 名刺DB移行
-- Idea C 外販パッケージ化
+- event-meeting-log データ移行（iMac必須）
 
 ---
 
-## 最近の決定・学び
+## 最近の決定・学び（2026-05-18）
 
-- **ポータルWorkerが2つある（重要）**: 同名 `yc-portal` の Worker が2か所に存在。**本物** = `~/Code/Operation-Management/cloudflare/workers/yc-portal/`（/meetings, /executive など）。**旧物** = `~/yc-workers/yc-portal/`（/mgmt, /notifications 等のルートのみ担当）。本物を触るときは必ず `Code/Operation-Management/` 側を編集してデプロイ
-- **portal.ycompany.co.jp は Route Patterns（Custom Domainではない）**: `zone_name = "ycompany.co.jp"` パターンで動作。Custom Domain設定は「already managed DNS records」エラーで不可
-- **コックピット認証**: `X-Cockpit-Secret` ヘッダーで認証。ポータルはCF Access背後なのでブラウザから送信OK。yc-line-webhook Worker に cockpit API 群（/api/cockpit/*）追加済み
-- **ボウズスコア計算**: score = 量 / 作業時間（枚/分, 人/分）。タイプ: meishi_scan, follower, seiso, phone_follow, tokushu
-- **議事録要約フォーマット変更（2026-05-18）**: 旧「3〜5行200字」→ 新「4項目構造（目的・議論・決定・アクション）600〜1200字」。VPS `/opt/yc-asakai/yc_plaud_pipeline.py` 更新済み
-- **タグルール管理**: NocoDB `tagging_rules` テーブル（ID: m9i4xs724u75tm8）。portal.ycompany.co.jp/executive/rules から編集可能
-- **自動タグ付け**: VPS `/opt/yc-asakai/auto_tagger.py` が毎朝7時実行。IKIZAMA/Y COMPANY/政治/店舗/行政/ICJをタグ付け
-- **経営カレンダーpadバグ修正**: padStart(2,"pad") → padStart(2,"0")（Cloudflareバンドル展開時の残骸）
-- **YC Accounting完成（2026-05-18）**: accounting.ycompany.co.jp 本番稼働・Cloudflare Access保護済み。2026年売上データ入力のみ残り
-- **orzugulポータルDNS完了（2026-05-18）**: portal.orzugul.com でHTTP 200確認済み
-- **push方針**: 汎用機能開発は確認なしでcommit→pushまで一括実行OK
+- **ポータル権限の根本修正**: CF Access JWT は `cf-access-jwt-assertion` ヘッダーで届く（`Cf-Access-Authenticated-User-Email` は来ない）。Pages Function で Cookie fallback も追加済み
+- **COCKPIT_SECRET 不一致が原因だった**: Pages と yc-line-webhook で別々に設定されていたため 401。新シークレット `d5d03fbf...` で統一済み
+- **D1 binding名注意**: yc-line-webhook の staff_permissions は `env.SHIFT_DB`（`env.DB` ではない）
+- **D1カラム名注意**: staff_permissions の custom_overrides カラムは `custom_overrides_json`
+- **Pages シークレット更新は再デプロイが必要**: `wrangler pages secret put` 後に `wrangler pages deploy` しないと反映されない
+- **店休日スキーマ**: D1 `yc-shift-db` の `closed_days` テーブル (year, month, day, store) PRIMARY KEY 4列。gin=銀座JIDAI, shim=新橋IAPONIA
+- **シフトリマインダー**: MONTHLY_REMINDER_END を 18→15 に戻した（2026-05 hotfix解除）
+- **ポータルWorkerは routes なし**: `yc-portal` Worker（Operation-Management側）のwrangler.tomlにroutesなし。portal.ycompany.co.jpは全て `yc-manual-v13` Pages が担当
+- **CF Access スタッフ**: orzugulsetagaya@gmail.com(admin), ycompany0909@gmail.com(executive), masakiyamakawa670@gmail.com(admin), tberith@gmail.com(admin)
 
 ---
 
@@ -88,15 +81,13 @@
 
 | サービス | URL |
 |---|---|
-| YCポータル（議事録） | portal.ycompany.co.jp/meetings |
+| YCポータル（統合） | portal.ycompany.co.jp |
+| 議事録 | portal.ycompany.co.jp/meetings |
 | 経営カレンダー | portal.ycompany.co.jp/executive |
-| タグルール管理 | portal.ycompany.co.jp/executive/rules |
 | 経営管理ダッシュボード | portal.ycompany.co.jp/mgmt |
 | 経理システム | accounting.ycompany.co.jp |
 | orzugulポータル | portal.orzugul.com |
-| ポス太 | posta-app.pages.dev |
 | dev-portal | ycompany0909.github.io/yc-dev-portal/diary.html |
-| Operation-Management CF Pages | yc-manual-v13.pages.dev |
 
 ---
 
@@ -109,15 +100,3 @@ Plaud録音 → Zapier(orzugulsetagaya) → Google Drive(YC_Plaud_Transcripts)
       → NocoDB meetings(mvl0ebr5efxaa1n) / insights(meuqx3an0r5zg61)
         → portal.ycompany.co.jp/meetings
 ```
-
----
-
-## 呪文一覧（Claude Code CLI スラッシュコマンド）
-
-| 呪文 | 内容 |
-|---|---|
-| /sync-context | このファイルを更新してスマホへ同期 |
-| /push-tasks | 残タスクをdiary.htmlの残タスクタブへ反映 |
-| /env-check | MacBook/iMac 全マシン診断比較 |
-| /dev-check | このマシンの開発環境診断 |
-| /blockers | 今詰まっていることを整理 |
