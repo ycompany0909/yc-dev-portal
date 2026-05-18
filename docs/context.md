@@ -1,4 +1,4 @@
-# YC開発コンテキスト（2026-05-18 夜 更新）
+# YC開発コンテキスト（2026-05-18 夜更新）
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
@@ -27,16 +27,15 @@
 
 | プロジェクト | 状況 | 次のアクション |
 |---|---|---|
-| **CF Accessポータル権限** | ✅ 完了 | executive/admin/field/nonfield ロール正常稼働 |
-| **統合ポータル (yc-manual-v13)** | ✅ 稼働 | 経営コーナー表示バグ修正済（CSS !important対応）|
-| **文化資本夜話ページ** | ✅ 追加 | /文化資本夜話.html 作成・social-cornerにカード追加済 |
-| **一日店長ミートアップページ** | ✅ 追加 | /一日店長ミートアップ.html 作成・social-cornerにカード追加済 |
+| **CF Accessポータル権限** | ✅ 完了 | ycompany0909/orzugulsetagaya/山川/田貝が正常ログイン可 |
+| **統合ポータル (yc-manual-v13)** | ✅ 稼働 | 権限バッジ・ログアウトボタン・経理マニュアルカード追加済 |
 | **店休日プリセット** | ✅ 完了 | gin=日曜, shim=土日 + お盆・年末年始 2026-2027 D1投入済み |
-| **Plaud議事録パイプライン** | ✅ 稼働 | 要約4項目フォーマット稼働中・500件一括再生成完了 |
+| **Plaud議事録パイプライン** | ✅ 稼働 | 要約4項目フォーマット稼働中 |
 | **経営コックピット（/executive）** | ✅ 稼働 | portal.ycompany.co.jp/executive |
+| **YC経理システム** | ✅ 稼働 | accounting.ycompany.co.jp（銀座1-5月・新橋1-4月完了。新橋5月のみ残り） |
+| **経理 自動化マニュアル** | ✅ 完了 | accounting.ycompany.co.jp/manual・ポータル経営コーナーカード追加済 |
 | **ICJデモデイ運営** | 🟡 進行中 | 6/11本番・河内・大森・平野井で座組み完了 |
 | **ポスター管理システム** | 🔴 設計中 | NocoDB + LINE通知の構築 |
-| **YC経理システム** | ✅ 稼働 | accounting.ycompany.co.jp（2026年売上入力が残り） |
 
 ---
 
@@ -48,9 +47,8 @@
 - **VPS Python NOCODB_TOKEN 平文除去** — feedback_server.py/send_report.pyのトークンを環境変数化→rotate
 
 ### 🟡 MEDIUM
-- **YC Accounting 2026年売上データ入力** — 新橋・銀座・イベント 2026/1〜現在分
+- **YC Accounting 新橋5月売上データ入力** — 速報値 ¥265,234(通常+イベント)+¥474,000(サブスク)確認済み。`import_iaponia_2026.py` RECORDS追記→実行→rsync
 - **ICJデモデイ 6/11 本番準備** — 最終確認
-- **コミュニティ参加者管理 色分け確認** — community-performance.html の色が正しいか
 - **ポスター管理システム 設計着手** — NocoDB + LINE通知
 - **Notta議事録Todo 運用フォロー** — 山川/田貝のLINE ID未取得
 - **コミュニティ担当マッピング** — Messengerアカウント名入力・リマインド設計
@@ -59,7 +57,7 @@
 ### 🔵 LOW
 - GitHub MCP 動作確認
 - yc-drink-info 2段階照合実装（iMac必須）
-- Square 売上インテリジェンス実装
+- Square 売上インテリジェンス実装（`services/square_importer.py` 実装済み。Square Production Tokenのみ未取得）
 - MyBridge → NocoDB 名刺DB移行
 - event-meeting-log データ移行（iMac必須）
 
@@ -67,14 +65,18 @@
 
 ## 最近の決定・学び（2026-05-18）
 
-- **経営コーナー非表示バグ修正**: `[data-role="executive"]`要素に`style="display:none"`があるとCSSクラスベースの制御が効かない。`body.role-effective-executive [data-role="executive"] { display: block !important; }` で解決
-- **permission-badge.jsにapplyDataRole()追加**: JSでも`[data-role]`要素のインラインstyleをクリアするよう修正（CSS修正と二重対策）
-- **議事録要約4項目フォーマット**: 【会議の目的・背景】【主な議論・検討内容】【決定事項・合意内容】【アクションアイテム】600〜1200字。VPSのyc_plaud_pipeline.py適用済み
-- **議事録500件一括再生成完了**: Claude Haiku使用（Sonnetだと遅すぎる。~6s/件・50分）
-- **文化資本夜話・一日店長ミートアップ ページ作成**: /文化資本夜話.html（紫テーマ）、/一日店長ミートアップ.html（茶テーマ）。social-cornerカード追加済
-- **NocoDB PATCH/DELETE はarray形式**: `[{Id:n, ...fields}]` でないと保存失敗
-- **経営カレンダー0件バグ修正**: `padStart(2,"pad")`→`padStart(2,"0")` (Cloudflare bundle再構築の残骸)
-- **ポータルWorkerは routes なし**: portal.ycompany.co.jpは全て `yc-manual-v13` Pages が担当
+- **経理 2026年売上インポート完了**:
+  - 銀座(JIDAI) 1-5月: `scripts/import_jidai_2026.py` で5件追加（Jan¥1,376,750〜May¥436,100速報）
+  - 新橋(IAPONIA) 1-4月: `scripts/import_iaponia_2026.py` で16件追加（通常/イベント/サブスク/IAPONIAサブスク4分類）
+  - ソース: Google Drive `JIDAI_MM.YYYY売上`（0135_銀座売上表/2026/）・`売上実績26/1-4`（0131_売上速報・予想/）
+- **自動化マニュアル**: `accounting.ycompany.co.jp/manual` 作成。月次チェックリスト・VPS rsync手順・Square API将来計画収録
+- **ポータル財務経理カード**: yc-manual-v13 の経営コックピットに「📘 経理 自動化マニュアル」カード追加・pushデプロイ済み
+- **経理アカウント対応**:
+  - 1=新橋店頭売上(BU1)、2=新橋サブスク(BU1)、3=新橋IAPONIAサブスク(BU1)
+  - 4=銀座売上(BU2)、5=イベント売上(BU3)
+  - dedup key: `jidai:YYYY-MM` / `iaponia:YYYY-MM` / `iaponia_event:YYYY-MM` / `iaponia_sub:YYYY-MM` / `iaponia_subsriap:YYYY-MM`
+- **新橋サブスク内訳（月次基本額）**: YAMATO ¥60k + AKITSUSHIMA ¥340k + MIZUHO ¥21k = ¥421k（＋IAPONIA新橋分 ¥60k）
+- **VPS rsync手順**: `rsync -avz ~/yc-accounting/data/yc_accounting.db root@162.43.36.173:/opt/yc-accounting/data/` → `ssh root@162.43.36.173 "systemctl restart yc-accounting"`
 
 ---
 
@@ -86,6 +88,7 @@
 | 議事録 | portal.ycompany.co.jp/meetings |
 | 経営カレンダー | portal.ycompany.co.jp/executive |
 | 経理システム | accounting.ycompany.co.jp |
+| 経理 自動化マニュアル | accounting.ycompany.co.jp/manual |
 | orzugulポータル | portal.orzugul.com |
 | dev-portal | ycompany0909.github.io/yc-dev-portal/diary.html |
 
