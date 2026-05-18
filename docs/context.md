@@ -1,4 +1,4 @@
-# YC開発コンテキスト（2026-05-18 夕方更新）
+# YC開発コンテキスト（2026-05-18 夜 更新）
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
@@ -27,10 +27,12 @@
 
 | プロジェクト | 状況 | 次のアクション |
 |---|---|---|
-| **CF Accessポータル権限** | ✅ 完了 | ycompany0909/orzugulsetagaya/山川/田貝が正常ログイン可 |
-| **統合ポータル (yc-manual-v13)** | ✅ 稼働 | 権限バッジ・ログアウトボタン・ボウズ現場表示・申請フォーム文言修正 済み |
+| **CF Accessポータル権限** | ✅ 完了 | executive/admin/field/nonfield ロール正常稼働 |
+| **統合ポータル (yc-manual-v13)** | ✅ 稼働 | 経営コーナー表示バグ修正済（CSS !important対応）|
+| **文化資本夜話ページ** | ✅ 追加 | /文化資本夜話.html 作成・social-cornerにカード追加済 |
+| **一日店長ミートアップページ** | ✅ 追加 | /一日店長ミートアップ.html 作成・social-cornerにカード追加済 |
 | **店休日プリセット** | ✅ 完了 | gin=日曜, shim=土日 + お盆・年末年始 2026-2027 D1投入済み |
-| **Plaud議事録パイプライン** | ✅ 稼働 | 要約4項目フォーマット稼働中 |
+| **Plaud議事録パイプライン** | ✅ 稼働 | 要約4項目フォーマット稼働中・500件一括再生成完了 |
 | **経営コックピット（/executive）** | ✅ 稼働 | portal.ycompany.co.jp/executive |
 | **ICJデモデイ運営** | 🟡 進行中 | 6/11本番・河内・大森・平野井で座組み完了 |
 | **ポスター管理システム** | 🔴 設計中 | NocoDB + LINE通知の構築 |
@@ -46,9 +48,9 @@
 - **VPS Python NOCODB_TOKEN 平文除去** — feedback_server.py/send_report.pyのトークンを環境変数化→rotate
 
 ### 🟡 MEDIUM
-- **YC Accounting 2026年売上データ入力** — 新橋・銀座・イベント 2026/1〜現在分。accounting.ycompany.co.jpから入力
+- **YC Accounting 2026年売上データ入力** — 新橋・銀座・イベント 2026/1〜現在分
 - **ICJデモデイ 6/11 本番準備** — 最終確認
-- **コミュニティ参加者管理 色分け確認** — community-performance.html の色が正しいか（後回し）
+- **コミュニティ参加者管理 色分け確認** — community-performance.html の色が正しいか
 - **ポスター管理システム 設計着手** — NocoDB + LINE通知
 - **Notta議事録Todo 運用フォロー** — 山川/田貝のLINE ID未取得
 - **コミュニティ担当マッピング** — Messengerアカウント名入力・リマインド設計
@@ -65,15 +67,14 @@
 
 ## 最近の決定・学び（2026-05-18）
 
-- **ポータル権限の根本修正**: CF Access JWT は `cf-access-jwt-assertion` ヘッダーで届く（`Cf-Access-Authenticated-User-Email` は来ない）。Pages Function で Cookie fallback も追加済み
-- **COCKPIT_SECRET 不一致が原因だった**: Pages と yc-line-webhook で別々に設定されていたため 401。新シークレット `d5d03fbf...` で統一済み
-- **D1 binding名注意**: yc-line-webhook の staff_permissions は `env.SHIFT_DB`（`env.DB` ではない）
-- **D1カラム名注意**: staff_permissions の custom_overrides カラムは `custom_overrides_json`
-- **Pages シークレット更新は再デプロイが必要**: `wrangler pages secret put` 後に `wrangler pages deploy` しないと反映されない
-- **店休日スキーマ**: D1 `yc-shift-db` の `closed_days` テーブル (year, month, day, store) PRIMARY KEY 4列。gin=銀座JIDAI, shim=新橋IAPONIA
-- **シフトリマインダー**: MONTHLY_REMINDER_END を 18→15 に戻した（2026-05 hotfix解除）
-- **ポータルWorkerは routes なし**: `yc-portal` Worker（Operation-Management側）のwrangler.tomlにroutesなし。portal.ycompany.co.jpは全て `yc-manual-v13` Pages が担当
-- **CF Access スタッフ**: orzugulsetagaya@gmail.com(admin), ycompany0909@gmail.com(executive), masakiyamakawa670@gmail.com(admin), tberith@gmail.com(admin)
+- **経営コーナー非表示バグ修正**: `[data-role="executive"]`要素に`style="display:none"`があるとCSSクラスベースの制御が効かない。`body.role-effective-executive [data-role="executive"] { display: block !important; }` で解決
+- **permission-badge.jsにapplyDataRole()追加**: JSでも`[data-role]`要素のインラインstyleをクリアするよう修正（CSS修正と二重対策）
+- **議事録要約4項目フォーマット**: 【会議の目的・背景】【主な議論・検討内容】【決定事項・合意内容】【アクションアイテム】600〜1200字。VPSのyc_plaud_pipeline.py適用済み
+- **議事録500件一括再生成完了**: Claude Haiku使用（Sonnetだと遅すぎる。~6s/件・50分）
+- **文化資本夜話・一日店長ミートアップ ページ作成**: /文化資本夜話.html（紫テーマ）、/一日店長ミートアップ.html（茶テーマ）。social-cornerカード追加済
+- **NocoDB PATCH/DELETE はarray形式**: `[{Id:n, ...fields}]` でないと保存失敗
+- **経営カレンダー0件バグ修正**: `padStart(2,"pad")`→`padStart(2,"0")` (Cloudflare bundle再構築の残骸)
+- **ポータルWorkerは routes なし**: portal.ycompany.co.jpは全て `yc-manual-v13` Pages が担当
 
 ---
 
@@ -84,7 +85,6 @@
 | YCポータル（統合） | portal.ycompany.co.jp |
 | 議事録 | portal.ycompany.co.jp/meetings |
 | 経営カレンダー | portal.ycompany.co.jp/executive |
-| 経営管理ダッシュボード | portal.ycompany.co.jp/mgmt |
 | 経理システム | accounting.ycompany.co.jp |
 | orzugulポータル | portal.orzugul.com |
 | dev-portal | ycompany0909.github.io/yc-dev-portal/diary.html |
