@@ -2,6 +2,32 @@
 
 > このブロック全体をコピーして Claude.ai の最初のメッセージに貼ると、
 > Claude Terminal での開発状況をそのまま引き継げます。
+>
+> **受け取ったClaudeへ**: まず下記「📢 引き継ぎ宣言」を読み上げてから作業を開始してください。
+
+---
+
+## 📢 引き継ぎ宣言
+
+> こちらは **MacBook Air、セッション #2732** からの引き継ぎです。
+>
+> **今回やったこと**:
+> - orzugul-portal にメディアダッシュボード（`/media`）を新設 — SNS指標手動入力 + 世田谷モーニングニュース一覧（Googleカレンダーリンク付き）
+> - 世田谷モーニングニュース自動保存 — setagaya-morning GitHub Actionsワークフローにポータル保存ステップを追加
+> - Xフォロワー分析ページ（`/twitter`）— 19,260人全件 D1 インポート、世田谷465人・12属性分類・戦略セグメント
+> - ポスター履歴379件インポート（2019〜2023年）— color_class別フィルタ + 地図プロット（色分けピン）
+> - ファビコンを @orzugulsetagaya Xプロフィール画像に変更、タブ「オルズグル ポータル」
+> - 統合マップのポスターレイヤー color_class 色分け対応
+>
+> **残課題**:
+> - 🔴 setagaya-morning リポジトリに `PORTAL_NEWS_SECRET` を GitHub Secret として追加（しないと朝ニュースがDBに保存されない）
+> - 🟡 世田谷モーニングニュース 過去メールのバックフィル
+> - 🟡 orzugul.com Slimstat Analytics → アクセス数自動取得
+> - 🟡 Facebook Graph API（facebook.com/orzugul）フォロワー数自動取得
+> - 🟡 LINE公式フォロワー数自動取得（Channel Access Token 必要）
+> - 🔵 Instagram Graph API 連携
+>
+> 以上を受けて作業を継続してください。
 
 ---
 
