@@ -110,6 +110,20 @@
     .db-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
     .db-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
 
+    /* Corporate CSR */
+    .corp-section { background: #f0fdf4; padding: 56px 24px; }
+    .corp-inner { max-width: 800px; margin: 0 auto; }
+    .corp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+    @media (max-width: 600px) { .corp-grid { grid-template-columns: 1fr; } }
+    .corp-box { background: white; border: 1px solid #d1fae5; border-radius: 14px; padding: 24px; }
+    .corp-box-title { font-size: 13px; font-weight: 700; color: #15803d; letter-spacing: 0.06em; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+    .corp-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .corp-list li { font-size: 14px; color: #374151; padding-left: 20px; position: relative; line-height: 1.55; }
+    .corp-list li::before { content: "▸"; color: #16a34a; position: absolute; left: 0; font-size: 12px; top: 2px; }
+    .corp-budget { background: #052e16; color: #d1fae5; border-radius: 10px; padding: 18px 22px; margin-top: 28px; font-size: 14px; line-height: 1.7; }
+    .corp-budget strong { color: #4ade80; }
+    .corp-cta { margin-top: 28px; text-align: center; }
+
     /* Cases */
     .case-section { background: #f8faf9; padding: 56px 24px; }
     .case-inner { max-width: 800px; margin: 0 auto; }
@@ -518,6 +532,47 @@
         </div>
         <a href="grant-search.html" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">データベースを検索する →</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- 企業CSR受託 -->
+<section class="corp-section">
+  <div class="corp-inner">
+    <div class="section-label">新しい資金源</div>
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:12px;">企業のCSR担当者は、<br>信頼できる団体を探している</h2>
+    <p style="color:#374151; max-width:640px;">大企業のCSR担当者の多くが「既に関係のある団体に、もっと多くの仕事を任せたい」と感じています。少人数で多くのプログラムを回す必要があり、信頼できるパートナーへの委託拡大が最大の解決策だからです。</p>
+
+    <div class="corp-grid">
+      <div class="corp-box">
+        <div class="corp-box-title">📋 企業が委託したいプログラム</div>
+        <ul class="corp-list">
+          <li>社員向けボランティアプログラムの企画・運営</li>
+          <li>社内勉強会・講演（社会課題テーマ）</li>
+          <li>年次CSRレポートの活動素材・数値提供</li>
+          <li>従業員エンゲージメント施策への組み込み</li>
+          <li>寄付先候補の調査・スクリーニング代行</li>
+        </ul>
+      </div>
+      <div class="corp-box">
+        <div class="corp-box-title">✅ 企業が「信頼できる」と判断する条件</div>
+        <ul class="corp-list">
+          <li>財務・意思決定のガバナンスが透明</li>
+          <li>提案書を企業向けに書ける（数値・他社事例）</li>
+          <li>活動実績・インパクトを定量で報告できる</li>
+          <li>期日・品質・連絡レスポンスが安定している</li>
+          <li>担当者が上司に説明できる「選定根拠」がある</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="corp-budget">
+      <strong>年間数百万円規模の委託予算が動く領域です。</strong><br>
+      助成金は「審査を通る」必要がありますが、企業委託は「担当者に信頼される」ことで継続します。YCは団体の6軸診断をもとに、企業受託に必要な体制整備・提案書フォーマット・報告書テンプレートを一緒に設計します。
+    </div>
+
+    <div class="corp-cta">
+      <a href="#contact" class="btn-primary" style="font-size:15px; padding:14px 32px;">企業受託の体制整備について相談する</a>
     </div>
   </div>
 </section>
