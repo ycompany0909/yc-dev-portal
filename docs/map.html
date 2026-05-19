@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YC システムマップ</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; font-size: 13px; padding: 16px; }
+
+    h1 { font-size: 18px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px; }
+    .subtitle { font-size: 11px; color: #64748b; margin-bottom: 20px; }
+
+    /* レイヤー */
+    .layer { margin-bottom: 12px; }
+    .layer-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #475569; margin-bottom: 8px; padding-left: 4px; }
+
+    /* カード共通 */
+    .cards { display: flex; flex-wrap: wrap; gap: 8px; }
+    .card { border-radius: 10px; padding: 10px 12px; flex: 1; min-width: 140px; max-width: 260px; }
+    .card-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .card-url { font-size: 10px; opacity: 0.65; margin-bottom: 6px; font-family: monospace; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag { font-size: 10px; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+
+    /* ポータル */
+    .card.portal-yc       { background: #1e3a5f; border: 1px solid #2563eb; }
+    .card.portal-ikizama  { background: #3b1f2b; border: 1px solid #9f1239; }
+    .card.portal-orzugul  { background: #1a2e1a; border: 1px solid #16a34a; }
+    .card.portal-demoday  { background: #2d1f3b; border: 1px solid #7c3aed; }
+    .card.portal-dev      { background: #1e2a1e; border: 1px solid #4ade80; }
+
+    /* Workers */
+    .card.worker-central  { background: #1c2330; border: 1px solid #f59e0b; }
+    .card.worker-normal   { background: #1c2330; border: 1px solid #334155; }
+
+    /* インフラ */
+    .card.infra           { background: #1e1e2e; border: 1px solid #4f46e5; }
+    .card.external        { background: #1e2020; border: 1px solid #0891b2; }
+
+    /* tag colors */
+    .tag.cf   { background: #f97316; color: #fff; }
+    .tag.gh   { background: #334155; color: #94a3b8; }
+    .tag.vps  { background: #7c3aed; color: #fff; }
+    .tag.line { background: #16a34a; color: #fff; }
+    .tag.db   { background: #0891b2; color: #fff; }
+    .tag.mail { background: #dc2626; color: #fff; }
+    .tag.ai   { background: #d97706; color: #fff; }
+    .tag.py   { background: #3b82f6; color: #fff; }
+    .tag.d1   { background: #6366f1; color: #fff; }
+    .tag.notion { background: #1a1a1a; color: #fff; border: 1px solid #555; }
+    .tag.pub  { background: #064e3b; color: #6ee7b7; }
+
+    /* Workers grid */
+    .workers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+    .wcard { background: #1c2330; border: 1px solid #1e40af; border-radius: 8px; padding: 8px 10px; }
+    .wcard.central { border-color: #f59e0b; background: #1c1a10; }
+    .wcard-name { font-size: 11px; font-weight: 700; color: #93c5fd; margin-bottom: 3px; }
+    .wcard.central .wcard-name { color: #fbbf24; }
+    .wcard-desc { font-size: 10px; color: #64748b; line-height: 1.4; }
+
+    /* 矢印セクション */
+    .flows { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+    .flow { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #94a3b8; background: #1e293b; border-radius: 8px; padding: 8px 12px; }
+    .flow-from { color: #cbd5e1; font-weight: 600; min-width: 120px; }
+    .flow-arrow { color: #475569; }
+    .flow-to { color: #7dd3fc; }
+
+    .divider { height: 1px; background: #1e293b; margin: 16px 0; }
+
+    .section-title { font-size: 14px; font-weight: 700; color: #cbd5e1; margin-bottom: 10px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>YC システムマップ</h1>
+<p class="subtitle">最終更新: 2026-05-20 — ycompany0909</p>
+
+<!-- ── ポータル層 ── -->
+<div class="layer">
+  <div class="layer-label">🌐 ポータル（公開エンドポイント）</div>
+  <div class="cards">
+
+    <div class="card portal-yc">
+      <div class="card-title">Y COMPANY ポータル</div>
+      <div class="card-url">portal.ycompany.co.jp</div>
+      <div class="card-tags">
+        <span class="tag cf">CF Pages</span>
+        <span class="tag cf">CF Access</span>
+        <span class="tag db">NocoDB</span>
+        <span class="tag d1">D1</span>
+      </div>
+    </div>
+
+    <div class="card portal-ikizama">
+      <div class="card-title">IKIZAMA ポータル</div>
+      <div class="card-url">portal.edo-castle.com</div>
+      <div class="card-tags">
+        <span class="tag cf">CF Pages</span>
+        <span class="tag notion">Notion</span>
+      </div>
+    </div>
+
+    <div class="card portal-orzugul">
+      <div class="card-title">オルズグル事務所</div>
+      <div class="card-url">portal.orzugul.com</div>
+      <div class="card-tags">
+        <span class="tag cf">CF Pages</span>
+        <span class="tag gh">GitHub Actions</span>
+      </div>
+    </div>
+
+    <div class="card portal-demoday">
+      <div class="card-title">ICJ ESGアクセラ</div>
+      <div class="card-url">demoday.esgaccelerator.com</div>
+      <div class="card-tags">
+        <span class="tag cf">CF Workers</span>
+        <span class="tag d1">D1</span>
+        <span class="tag mail">Resend</span>
+      </div>
+    </div>
+
+    <div class="card portal-dev">
+      <div class="card-title">YC Dev Portal</div>
+      <div class="card-url">ycompany0909.github.io/yc-dev-portal</div>
+      <div class="card-tags">
+        <span class="tag gh">GitHub Pages</span>
+        <span class="tag pub">公開</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Workers層 ── -->
+<div class="section-title">⚡ Cloudflare Workers（27本）</div>
+<div class="workers-grid">
+  <div class="wcard central">
+    <div class="wcard-name">yc-line-webhook</div>
+    <div class="wcard-desc">LINE受信の中枢。全LINEイベントの振り分け</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-faq-bot</div>
+    <div class="wcard-desc">FAQ自動応答（Service Binding受信）</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-todo-approval</div>
+    <div class="wcard-desc">Todoタスク承認フロー</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-todo-watchdog</div>
+    <div class="wcard-desc">Todo期限監視・cron実行</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-attendance-form</div>
+    <div class="wcard-desc">出勤フォーム受信</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-notta-webhook</div>
+    <div class="wcard-desc">Notta議事録→Todo抽出</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-failure-notifier</div>
+    <div class="wcard-desc">エラー通知</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-shift-form</div>
+    <div class="wcard-desc">シフト希望入力フォーム</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-shift-admin</div>
+    <div class="wcard-desc">シフト管理API</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-glossary-api</div>
+    <div class="wcard-desc">用語集API</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-portal</div>
+    <div class="wcard-desc">/meetings・/executive 専用Worker</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-npo-contact</div>
+    <div class="wcard-desc">NPO相談フォーム→Resend</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-morning-report</div>
+    <div class="wcard-desc">朝次レポート送信</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-daily-report-form</div>
+    <div class="wcard-desc">日報フォーム</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-drink-form / info</div>
+    <div class="wcard-desc">ドリンク注文フォーム</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-members-editor</div>
+    <div class="wcard-desc">メンバー編集UI</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-faq-editor</div>
+    <div class="wcard-desc">FAQ編集UI</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-subscription-admin</div>
+    <div class="wcard-desc">サブスク管理</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">yc-healthcheck</div>
+    <div class="wcard-desc">ヘルスチェック専用</div>
+  </div>
+  <div class="wcard">
+    <div class="wcard-name">その他 8本</div>
+    <div class="wcard-desc">bot / customer-line / dev-memo / template-form / template-meeting / manual-feedback / daily-brief / bot</div>
+  </div>
+</div>
+
+<!-- ── VPS層 ── -->
+<div class="section-title">🖥 VPS（162.43.36.173）— cron ジョブ</div>
+<div class="cards">
+  <div class="card infra">
+    <div class="card-title">daily_brief.py</div>
+    <div class="card-url">毎朝9:00 JST</div>
+    <div class="card-tags"><span class="tag py">Python</span><span class="tag ai">Claude API</span><span class="tag mail">Gmail</span></div>
+  </div>
+  <div class="card infra">
+    <div class="card-title">feedback_server.py</div>
+    <div class="card-url">常駐 port:8090</div>
+    <div class="card-tags"><span class="tag py">Python</span><span class="tag db">NocoDB</span></div>
+  </div>
+  <div class="card infra">
+    <div class="card-title">yc_noco_to_todoist.py</div>
+    <div class="card-url">定期 cron</div>
+    <div class="card-tags"><span class="tag py">Python</span><span class="tag db">NocoDB</span></div>
+  </div>
+  <div class="card infra">
+    <div class="card-title">TimeTree Sync</div>
+    <div class="card-url">yc-timetree-sync/*</div>
+    <div class="card-tags"><span class="tag py">Python</span><span class="tag db">D1</span></div>
+  </div>
+</div>
+
+<!-- ── データ層 ── -->
+<div class="section-title">🗄 データ・外部連携</div>
+<div class="cards">
+  <div class="card external">
+    <div class="card-title">NocoDB</div>
+    <div class="card-url">db.ycompany.co.jp</div>
+    <div class="card-tags"><span class="tag db">主DB</span></div>
+  </div>
+  <div class="card external">
+    <div class="card-title">Cloudflare D1</div>
+    <div class="card-url">yc-shift-db / demoday-db</div>
+    <div class="card-tags"><span class="tag d1">SQLite</span></div>
+  </div>
+  <div class="card external">
+    <div class="card-title">LINE Messaging API</div>
+    <div class="card-url">→ yc-line-webhook</div>
+    <div class="card-tags"><span class="tag line">LINE</span></div>
+  </div>
+  <div class="card external">
+    <div class="card-title">Resend</div>
+    <div class="card-url">メール送信</div>
+    <div class="card-tags"><span class="tag mail">Email</span></div>
+  </div>
+  <div class="card external">
+    <div class="card-title">Plaud → Zapier → Drive</div>
+    <div class="card-url">→ VPS → NocoDB</div>
+    <div class="card-tags"><span class="tag ai">音声録音</span></div>
+  </div>
+  <div class="card external">
+    <div class="card-title">Notion API</div>
+    <div class="card-url">IKIZAMAポータル専用</div>
+    <div class="card-tags"><span class="tag notion">Notion</span></div>
+  </div>
+</div>
+
+<!-- ── CI/CD ── -->
+<div class="section-title">🔁 CI / 監視（GitHub Actions）</div>
+<div class="flows">
+  <div class="flow">
+    <span class="flow-from">push → manual_v1.3_html/</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-to">JS構文チェック → デプロイ → スモークテスト13件</span>
+  </div>
+  <div class="flow">
+    <span class="flow-from">毎日 JST 05:00</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-to">本番10エンドポイント確認（portal.ycompany.co.jp）</span>
+  </div>
+  <div class="flow">
+    <span class="flow-from">毎日 JST 05:10</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-to">全27Worker生存確認</span>
+  </div>
+  <div class="flow">
+    <span class="flow-from">毎日 JST 05:20</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-to">VPS cron・feedback_server・NocoDB疎通確認</span>
+  </div>
+</div>
+
+</body>
+</html>
