@@ -137,6 +137,47 @@
     .repo-stats { padding:8px 16px; border-top:1px solid #1e293b;
                   display:flex; gap:12px; font-size:10px; color:#475569; }
     .stat-item  { display:flex; align-items:center; gap:4px; }
+
+    /* ===== TAB3: 他ポータル ===== */
+    .other-wrap { padding:0 20px 32px; }
+    .other-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:4px; }
+    @media(max-width:700px){ .other-grid { grid-template-columns:1fr; } }
+    .portal-diagram {
+      background:#0f172a; border:1px solid #1e293b; border-radius:14px; overflow:hidden;
+    }
+    .pd-header { padding:14px 16px 10px; border-bottom:1px solid #1e293b; }
+    .pd-name   { font-size:14px; font-weight:800; margin-bottom:2px; }
+    .pd-url    { font-size:10px; font-family:monospace; opacity:.5; }
+    .pd-summary { font-size:10px; color:#64748b; margin-top:6px; line-height:1.5; }
+    .pd-body   { padding:14px 16px; }
+    .pd-layer  {
+      display:flex; align-items:flex-start; gap:10px; margin-bottom:8px;
+    }
+    .pd-icon   { font-size:18px; width:28px; text-align:center; flex-shrink:0; padding-top:2px; }
+    .pd-info   { flex:1; }
+    .pd-node   { font-size:11px; font-weight:700; color:#e2e8f0; margin-bottom:2px; }
+    .pd-node-sub { font-size:10px; color:#475569; line-height:1.4; }
+    .pd-arrow  { text-align:center; color:#334155; font-size:11px; margin:2px 0 2px 38px; }
+    .pd-routes {
+      display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; padding-top:8px;
+      border-top:1px solid #1e293b;
+    }
+    .pd-route  {
+      font-size:9px; font-family:monospace; padding:2px 6px; border-radius:5px;
+      background:#1e293b; color:#64748b;
+    }
+    .pd-route.pub { background:#064e3b22; border:1px solid #065f4644; color:#6ee7b7; }
+    .pd-tag    { font-size:9px; padding:2px 6px; border-radius:10px; display:inline-block; }
+    .pd-footer { padding:10px 16px; border-top:1px solid #1e293b;
+                 display:flex; gap:10px; font-size:10px; color:#475569; flex-wrap:wrap; }
+    .compare-banner {
+      background:#1c1a08; border:1px solid #f59e0b44; border-radius:10px;
+      padding:12px 16px; margin-bottom:14px; display:flex; gap:16px;
+      flex-wrap:wrap; font-size:11px; line-height:1.6;
+    }
+    .compare-item { flex:1; min-width:160px; }
+    .compare-label { font-size:9px; font-weight:700; letter-spacing:.1em;
+                     text-transform:uppercase; color:#f59e0b; margin-bottom:4px; }
   </style>
 </head>
 <body>
@@ -187,6 +228,7 @@
 <div class="tabs">
   <div class="tab active" onclick="switchTab('flow')">⚡ データフロー</div>
   <div class="tab" onclick="switchTab('repo')">📁 リポジトリ構成</div>
+  <div class="tab" onclick="switchTab('other')">🏛 他ポータル</div>
 </div>
 
 <!-- ═══ TAB1: フロー ═══ -->
@@ -650,15 +692,179 @@
   </div>
 </div><!-- /tab-repo -->
 
+<!-- ═══ TAB3: 他ポータル ═══ -->
+<div class="tab-content" id="tab-other">
+  <div class="other-wrap">
+
+    <!-- 比較バナー -->
+    <div class="compare-banner">
+      <div class="compare-item">
+        <div class="compare-label">💡 重要な観察</div>
+        IKIZAMAもorzugulも <strong style="color:#4ade80">Worker 1本</strong> でAPIを全て処理している。<br>
+        YCは現在18本。これらが目指すべきアーキテクチャの正解形。
+      </div>
+      <div class="compare-item">
+        <div class="compare-label">Worker数比較</div>
+        <span style="color:#f87171">Y COMPANY: 18本（統合前）</span><br>
+        <span style="color:#4ade80">IKIZAMA: 1本 ✓</span><br>
+        <span style="color:#4ade80">orzugul事務所: 1本 ✓</span>
+      </div>
+    </div>
+
+    <div class="other-grid">
+
+      <!-- ─── IKIZAMA ─── -->
+      <div class="portal-diagram" style="border-color:#9f123944">
+        <div class="pd-header">
+          <div class="pd-name" style="color:#fca5a5">🏯 IKIZAMA 事務局ポータル</div>
+          <div class="pd-url">portal.edo-castle.com</div>
+          <div class="pd-summary">
+            江戸城サミット事務局の内部管理ポータル。会員管理・申請処理・Todo管理を一元化。<br>
+            データストアは Notion（No-Code DB）。Worker 1本で全APIを処理。
+          </div>
+        </div>
+        <div class="pd-body">
+          <div class="pd-layer">
+            <div class="pd-icon">👤</div>
+            <div class="pd-info">
+              <div class="pd-node">事務局スタッフ / 外部申請者</div>
+              <div class="pd-node-sub">members.html / requests.html / join.html 等から操作</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓</div>
+          <div class="pd-layer">
+            <div class="pd-icon">🔑</div>
+            <div class="pd-info">
+              <div class="pd-node">CF Pages + CF Access</div>
+              <div class="pd-node-sub">Advanced Mode。内部ページはCF Access保護、申請系は公開</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓</div>
+          <div class="pd-layer">
+            <div class="pd-icon">⚡</div>
+            <div class="pd-info">
+              <div class="pd-node" style="color:#fca5a5">_worker.js <span class="pd-tag" style="background:#9f123922;color:#fca5a5;border:1px solid #9f123944">542行・1ファイル</span></div>
+              <div class="pd-node-sub">CF Pages Advanced Mode。全エンドポイントをここで処理。静的ファイルは env.ASSETS.fetch() へ</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓</div>
+          <div class="pd-layer">
+            <div class="pd-icon">📓</div>
+            <div class="pd-info">
+              <div class="pd-node" style="color:#c4b5fd">Notion API</div>
+              <div class="pd-node-sub">メインデータストア。会員DB・申請DB・TodoDB・支援者DB をNotion上で管理</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓</div>
+          <div class="pd-layer">
+            <div class="pd-icon">✉️</div>
+            <div class="pd-info">
+              <div class="pd-node">Email通知</div>
+              <div class="pd-node-sub">ikizama.office@gmail.com へ申請受付・承認通知</div>
+            </div>
+          </div>
+          <div class="pd-routes">
+            <span class="pd-route pub">/api/ikizama/members</span>
+            <span class="pd-route pub">/api/ikizama/stats</span>
+            <span class="pd-route">/api/ikizama/requests</span>
+            <span class="pd-route">/api/ikizama/todos</span>
+            <span class="pd-route pub">/api/ikizama/supporters</span>
+            <span class="pd-route">/api/ikizama/outreach</span>
+          </div>
+        </div>
+        <div class="pd-footer">
+          <span>📄 静的ページ: 13本</span>
+          <span>⚡ API Worker: 1本</span>
+          <span>📓 Notion DB: 5テーブル相当</span>
+        </div>
+      </div>
+
+      <!-- ─── orzugul ─── -->
+      <div class="portal-diagram" style="border-color:#16a34a44">
+        <div class="pd-header">
+          <div class="pd-name" style="color:#86efac">🏢 オルズグル事務所ポータル</div>
+          <div class="pd-url">portal.orzugul.com</div>
+          <div class="pd-summary">
+            オルズグル事務所の政治活動管理ポータル。支持者管理・議事録・陳情・コミュニティ運営を一元化。<br>
+            Vue.js SPA + CF Worker + D1 のモダン構成。
+          </div>
+        </div>
+        <div class="pd-body">
+          <div class="pd-layer">
+            <div class="pd-icon">🌐</div>
+            <div class="pd-info">
+              <div class="pd-node">orzugul.com (WordPress)</div>
+              <div class="pd-node-sub">公開サイト。Slimstat でアクセス計測。Worker がAPIで集計</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓ ↗ (ポータルへ誘導)</div>
+          <div class="pd-layer">
+            <div class="pd-icon">⚛</div>
+            <div class="pd-info">
+              <div class="pd-node">Vue.js SPA</div>
+              <div class="pd-node-sub">portal.orzugul.com。Vite build → CF Pages Deploy。client/ ディレクトリ</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓ fetch /api/*</div>
+          <div class="pd-layer">
+            <div class="pd-icon">⚡</div>
+            <div class="pd-info">
+              <div class="pd-node" style="color:#86efac">orzugul-api Worker <span class="pd-tag" style="background:#16a34a22;color:#86efac;border:1px solid #16a34a44">1本</span></div>
+              <div class="pd-node-sub">worker/src/index.js。17エンドポイントを1ファイルで処理</div>
+            </div>
+          </div>
+          <div class="pd-arrow">↓</div>
+          <div class="pd-layer">
+            <div class="pd-icon">💾</div>
+            <div class="pd-info">
+              <div class="pd-node" style="color:#c4b5fd">D1 (orzugul-db)</div>
+              <div class="pd-node-sub">Cloudflare D1 (SQLite)。支持者・議事録・メディア指標・コミュニティデータ</div>
+            </div>
+          </div>
+          <div class="pd-arrow">+ 外部API連携</div>
+          <div class="pd-layer">
+            <div class="pd-icon">🔗</div>
+            <div class="pd-info">
+              <div class="pd-node">外部サービス</div>
+              <div class="pd-node-sub">Twitter/X API（フォロワー数）・LINE API（フォロワー数）・Slimstat（PV）・Google Map（支持者マップ）</div>
+            </div>
+          </div>
+          <div class="pd-routes">
+            <span class="pd-route pub">/api/supporters</span>
+            <span class="pd-route pub">/api/gijiroku</span>
+            <span class="pd-route pub">/api/petition</span>
+            <span class="pd-route pub">/api/map</span>
+            <span class="pd-route">/api/community</span>
+            <span class="pd-route">/api/koenkai</span>
+            <span class="pd-route">/api/dashboard</span>
+            <span class="pd-route">/api/poster</span>
+            <span class="pd-route">/api/metrics/refresh</span>
+            <span class="pd-route">/api/twitter/stats</span>
+            <span class="pd-route">/api/line/followers</span>
+            <span class="pd-route">/api/morning-news</span>
+          </div>
+        </div>
+        <div class="pd-footer">
+          <span>⚛ Vue.js SPA: 1本</span>
+          <span>⚡ API Worker: 1本</span>
+          <span>💾 D1: 1DB (orzugul-db)</span>
+          <span>🔗 外部API: 4本</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /tab-other -->
+
 <!-- tooltip -->
 <div class="tooltip" id="tooltip"></div>
 
 <script>
 // ── タブ切替 ──
 function switchTab(name) {
+  const tabs = ['flow','repo','other'];
   document.querySelectorAll('.tab').forEach((t,i) => {
-    const id = ['flow','repo'][i];
-    t.classList.toggle('active', id===name);
+    t.classList.toggle('active', tabs[i]===name);
   });
   document.querySelectorAll('.tab-content').forEach(c => {
     c.classList.toggle('active', c.id==='tab-'+name);
