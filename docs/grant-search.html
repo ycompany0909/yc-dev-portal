@@ -143,6 +143,11 @@
     .tag.source-jgrants { background: #3b0764; color: #e9d5ff; }
     .tag.source-canpan  { background: #083344; color: #a5f3fc; }
     .tag.source-hp      { background: #052e16; color: #a7f3d0; }
+    .tag.labor-ok   { background: #14532d; color: #86efac; border-color: #166534; }
+    .tag.labor-no   { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+    .tag.labor-part { background: #1c1917; color: #d6d3d1; border-color: #44403c; }
+    .tag.multi-ok   { background: #1e3a5f; color: #7dd3fc; border-color: #1d4ed8; }
+    .tag.multi-no   { background: #1c1917; color: #a8a29e; border-color: #44403c; }
 
     .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .card-deadline { font-size: 11px; color: #64748b; }
@@ -223,6 +228,17 @@
       <option value="10000000">〜1000万円</option>
       <option value="99999999">1000万円超</option>
     </select>
+    <select class="filter-select" id="labor-filter">
+      <option value="">人件費 すべて</option>
+      <option value="可">人件費 可</option>
+      <option value="一部可">人件費 一部可</option>
+      <option value="不可">人件費 不可</option>
+    </select>
+    <select class="filter-select" id="multiyear-filter">
+      <option value="">年数 すべて</option>
+      <option value="可">複数年 可</option>
+      <option value="不可">単年のみ</option>
+    </select>
   </div>
 </div>
 
@@ -282,11 +298,27 @@ function deadlineStr(r) {
   return '<span style="color:#475569">締切不明</span>';
 }
 
+function laborTag(v) {
+  if (!v || v === '要確認') return '';
+  if (v === '可')    return `<span class="tag labor-ok">人件費○</span>`;
+  if (v === '不可')  return `<span class="tag labor-no">人件費✗</span>`;
+  if (v === '一部可') return `<span class="tag labor-part">人件費△</span>`;
+  return '';
+}
+function multiTag(v, years) {
+  if (!v || v === '要確認') return '';
+  if (v === '可')   return `<span class="tag multi-ok">複数年可${years && years > 1 ? '('+years+'年)' : ''}</span>`;
+  if (v === '不可') return `<span class="tag multi-no">単年</span>`;
+  return '';
+}
+
 function renderCard(r) {
   const issues = (r.target_issues || '').split('|').filter(Boolean);
   const amount = r.amount_max_jpy ? fmt(r.amount_max_jpy) : (r.amount_note || '');
   const src = r.data_source || '';
-  return `<div class="card" data-source="${src.includes('HP') ? src : src}">
+  const lTag = laborTag(r.labor_cost_eligible);
+  const mTag = multiTag(r.multi_year_eligible, parseInt(r.max_grant_years));
+  return `<div class="card" data-source="${src}">
     <div class="card-head">
       <div class="card-main">
         <div class="card-foundation">${r.foundation_name || ''}</div>
@@ -296,7 +328,7 @@ function renderCard(r) {
     </div>
     <div class="card-tags">
       ${issues.map(i => `<span class="tag issue">${i}</span>`).join('')}
-      ${sourceTag(src)}
+      ${sourceTag(src)}${lTag}${mTag}
     </div>
     <div class="card-footer">
       <div class="card-deadline">${deadlineStr(r)}</div>
@@ -311,6 +343,8 @@ function applyFilters() {
   const status = document.getElementById('status-filter').value;
   const month = document.getElementById('month-filter').value;
   const amtMax = document.getElementById('amount-filter').value;
+  const labor = document.getElementById('labor-filter').value;
+  const multiyear = document.getElementById('multiyear-filter').value;
 
   filtered = allData.filter(r => {
     if (q) {
@@ -333,6 +367,8 @@ function applyFilters() {
       const v = parseInt(r.amount_max_jpy);
       if (isNaN(v) || v > parseInt(amtMax)) return false;
     }
+    if (labor && r.labor_cost_eligible !== labor) return false;
+    if (multiyear && r.multi_year_eligible !== multiyear) return false;
     return true;
   });
 
@@ -398,7 +434,7 @@ fetch('grant-data.json')
     document.getElementById('count-badge').textContent = `${data.length} 件`;
     buildIssueChips();
     applyFilters();
-    ['search','source-filter','status-filter','month-filter','amount-filter','sort-select']
+    ['search','source-filter','status-filter','month-filter','amount-filter','sort-select','labor-filter','multiyear-filter']
       .forEach(id => document.getElementById(id).addEventListener('input', applyFilters));
     document.getElementById('load-more').addEventListener('click', () => renderMore(false));
   })
