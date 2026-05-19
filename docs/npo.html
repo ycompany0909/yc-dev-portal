@@ -172,6 +172,31 @@
     /* Table mobile */
     .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
+    /* Progress bar */
+    .check-progress-wrap { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+    .check-progress-track { flex:1; height:8px; background:#d1fae5; border-radius:4px; overflow:hidden; }
+    .check-progress-fill { height:100%; background:#16a34a; border-radius:4px; transition:width 0.3s; }
+    .check-progress-text { font-size:13px; color:#6b7280; white-space:nowrap; }
+
+    /* Axis group */
+    .check-axis-group { background:white; border:1px solid #d1fae5; border-radius:12px; overflow:hidden; margin-bottom:12px; }
+    .check-axis-hd { display:flex; align-items:center; gap:10px; padding:12px 16px; background:#f0fdf4; border-bottom:1px solid #d1fae5; }
+    .check-q { font-size:13px; font-weight:600; color:#374151; margin-bottom:10px; }
+    .check-item { padding:14px 16px; }
+    .check-item + .check-item { border-top:1px dashed #e2e8f0; }
+
+    /* Submit form in check */
+    .check-submit-wrap { margin-top:28px; padding:20px; background:#f0fdf4; border:1px solid #d1fae5; border-radius:12px; }
+    .check-submit-wrap .form-row { margin-bottom:12px; }
+    .check-submit-wrap .form-row label { display:block; font-size:12px; font-weight:600; color:#374151; margin-bottom:5px; }
+    .check-submit-wrap .form-row input,
+    .check-submit-wrap .form-row textarea,
+    .check-submit-wrap .form-row select { width:100%; padding:10px 14px; border:1.5px solid #cbd5e0; border-radius:8px; background:white; color:#1a2e1a; font-size:14px; font-family:inherit; }
+    .check-submit-wrap .form-row input:focus,
+    .check-submit-wrap .form-row textarea:focus,
+    .check-submit-wrap .form-row select:focus { outline:none; border-color:#16a34a; }
+    .check-submit-wrap textarea { min-height:80px; resize:vertical; }
+
     /* Footer */
     footer { background: #0a1a0a; color: rgba(255,255,255,0.35); text-align: center; padding: 20px; font-size: 12px; }
     footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
@@ -303,68 +328,174 @@
 <section class="check-section">
   <div class="check-inner">
     <div class="section-label">セルフ診断</div>
-    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">今すぐ6軸を<br>セルフチェックする</h2>
-    <p style="color:#374151;">各軸について、あなたの団体の現状を選んでください。</p>
+    <h2 style="font-size:clamp(1.3rem,4vw,1.9rem); font-weight:800; color:#052e16; margin-bottom:8px;">6軸 詳細セルフチェック</h2>
+    <p style="color:#374151; margin-bottom:24px;">各軸2問・計12問。全問回答すると診断結果と処方箋が表示されます。そのまま佐々生に送ることができます。</p>
 
-    <div class="check-grid" id="check-grid">
-      <div class="check-item">
-        <div class="check-item-head"><span class="check-axis-badge">AXIS 01</span><span class="check-axis-name">実行体制</span></div>
-        <div class="check-options">
-          <input class="check-opt" type="radio" name="ax1" id="ax1a" value="2"><label for="ax1a">理事・スタッフが専門性をもって機能している</label>
-          <input class="check-opt" type="radio" name="ax1" id="ax1b" value="1"><label for="ax1b">不十分な部分がある</label>
-          <input class="check-opt" type="radio" name="ax1" id="ax1c" value="0"><label for="ax1c">理事が名前だけ、事務局が機能していない</label>
+    <div class="check-progress-wrap">
+      <div class="check-progress-track"><div class="check-progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="check-progress-text"><span id="progress-count">0</span> / 12 回答済み</div>
+    </div>
+
+    <div id="check-grid">
+
+      <div class="check-axis-group">
+        <div class="check-axis-hd"><span class="check-axis-badge">AXIS 01</span><span class="check-axis-name">実行体制</span></div>
+        <div class="check-item">
+          <div class="check-q">① 理事・役員の構成について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q1" id="q1a" value="2"><label for="q1a">専門性のある理事が複数おり、実際の意思決定に関与している</label>
+            <input class="check-opt" type="radio" name="q1" id="q1b" value="1"><label for="q1b">理事はいるが、実質の運営は代表1〜2名に集中している</label>
+            <input class="check-opt" type="radio" name="q1" id="q1c" value="0"><label for="q1c">理事が名前だけで、実質機能していない</label>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-q">② 事務局・スタッフ体制について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q2" id="q2a" value="2"><label for="q2a">専任スタッフがおり、業務が役割分担できている</label>
+            <input class="check-opt" type="radio" name="q2" id="q2b" value="1"><label for="q2b">代表がほぼ全業務を兼任している</label>
+            <input class="check-opt" type="radio" name="q2" id="q2c" value="0"><label for="q2c">ボランティアのみで安定した運営が難しい状態</label>
+          </div>
         </div>
       </div>
-      <div class="check-item">
-        <div class="check-item-head"><span class="check-axis-badge">AXIS 02</span><span class="check-axis-name">審査適合性</span></div>
-        <div class="check-options">
-          <input class="check-opt" type="radio" name="ax2" id="ax2a" value="2"><label for="ax2a">審査員の視点を意識して申請書を書ける</label>
-          <input class="check-opt" type="radio" name="ax2" id="ax2b" value="1"><label for="ax2b">意識はしているが自信がない</label>
-          <input class="check-opt" type="radio" name="ax2" id="ax2c" value="0"><label for="ax2c">審査側の論理がよくわからない</label>
+
+      <div class="check-axis-group">
+        <div class="check-axis-hd"><span class="check-axis-badge">AXIS 02</span><span class="check-axis-name">審査適合性</span></div>
+        <div class="check-item">
+          <div class="check-q">③ 助成プログラムの選び方について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q3" id="q3a" value="2"><label for="q3a">財団のミッション・過去の採択事例を調べてから選んでいる</label>
+            <input class="check-opt" type="radio" name="q3" id="q3b" value="1"><label for="q3b">活動分野が合っていそうなものを選んでいる</label>
+            <input class="check-opt" type="radio" name="q3" id="q3c" value="0"><label for="q3c">金額・締切で選んでいる（または選び方が分からない）</label>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-q">④ 申請書の書き方について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q4" id="q4a" value="2"><label for="q4a">審査員の視点に立ち「なぜこの団体か」を意識して書ける</label>
+            <input class="check-opt" type="radio" name="q4" id="q4b" value="1"><label for="q4b">活動内容は正確に書けるが、採択されるか自信がない</label>
+            <input class="check-opt" type="radio" name="q4" id="q4c" value="0"><label for="q4c">何を書けば通るのか分からない</label>
+          </div>
         </div>
       </div>
-      <div class="check-item">
-        <div class="check-item-head"><span class="check-axis-badge">AXIS 03</span><span class="check-axis-name">インパクト定義</span></div>
-        <div class="check-options">
-          <input class="check-opt" type="radio" name="ax3" id="ax3a" value="2"><label for="ax3a">受益者数・変化量を数字で示せる</label>
-          <input class="check-opt" type="radio" name="ax3" id="ax3b" value="1"><label for="ax3b">言語化はできているが数値化は難しい</label>
-          <input class="check-opt" type="radio" name="ax3" id="ax3c" value="0"><label for="ax3c">活動の社会的価値をうまく説明できない</label>
+
+      <div class="check-axis-group">
+        <div class="check-axis-hd"><span class="check-axis-badge">AXIS 03</span><span class="check-axis-name">インパクト定義</span></div>
+        <div class="check-item">
+          <div class="check-q">⑤ 活動成果の数値化について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q5" id="q5a" value="2"><label for="q5a">受益者数・変化量など、数字で社会的成果を示せる</label>
+            <input class="check-opt" type="radio" name="q5" id="q5b" value="1"><label for="q5b">成果は感じているが、数値化が難しい</label>
+            <input class="check-opt" type="radio" name="q5" id="q5c" value="0"><label for="q5c">「役に立っている」感覚はあるが具体的に説明できない</label>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-q">⑥ 社会課題との接続について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q6" id="q6a" value="2"><label for="q6a">自団体の活動がどの社会課題解決につながるか論理的に説明できる</label>
+            <input class="check-opt" type="radio" name="q6" id="q6b" value="1"><label for="q6b">ざっくりとは言えるが、論理的に接続するのが難しい</label>
+            <input class="check-opt" type="radio" name="q6" id="q6c" value="0"><label for="q6c">社会的意義をうまく言語化できていない</label>
+          </div>
         </div>
       </div>
-      <div class="check-item">
-        <div class="check-item-head"><span class="check-axis-badge">AXIS 04</span><span class="check-axis-name">課題の階層設計</span></div>
-        <div class="check-options">
-          <input class="check-opt" type="radio" name="ax4" id="ax4a" value="2"><label for="ax4a">入口の課題から大きな社会変革の出口まで設計できている</label>
-          <input class="check-opt" type="radio" name="ax4" id="ax4b" value="1"><label for="ax4b">活動の意義は語れるが、出口が曖昧</label>
-          <input class="check-opt" type="radio" name="ax4" id="ax4c" value="0"><label for="ax4c">単発の活動で終わっている</label>
+
+      <div class="check-axis-group">
+        <div class="check-axis-hd"><span class="check-axis-badge">AXIS 04</span><span class="check-axis-name">課題の階層設計</span></div>
+        <div class="check-item">
+          <div class="check-q">⑦ 活動の「入口」と「出口」について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q7" id="q7a" value="2"><label for="q7a">個々の活動から社会変革まで、階層的に設計できている</label>
+            <input class="check-opt" type="radio" name="q7" id="q7b" value="1"><label for="q7b">活動の意義は語れるが、大きな変化との接続が曖昧</label>
+            <input class="check-opt" type="radio" name="q7" id="q7c" value="0"><label for="q7c">目の前の活動で手一杯で、出口まで考える余裕がない</label>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-q">⑧ 他団体・行政・企業との連携について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q8" id="q8a" value="2"><label for="q8a">課題解決に必要なアクターとの連携が戦略的に設計できている</label>
+            <input class="check-opt" type="radio" name="q8" id="q8b" value="1"><label for="q8b">つながりはあるが戦略的な設計はできていない</label>
+            <input class="check-opt" type="radio" name="q8" id="q8c" value="0"><label for="q8c">ほぼ単独で活動している</label>
+          </div>
         </div>
       </div>
-      <div class="check-item">
-        <div class="check-item-head"><span class="check-axis-badge">AXIS 05</span><span class="check-axis-name">自走モデル</span></div>
-        <div class="check-options">
-          <input class="check-opt" type="radio" name="ax5" id="ax5a" value="2"><label for="ax5a">助成終了後の収益・運営計画がある</label>
-          <input class="check-opt" type="radio" name="ax5" id="ax5b" value="1"><label for="ax5b">考えてはいるが具体化できていない</label>
-          <input class="check-opt" type="radio" name="ax5" id="ax5c" value="0"><label for="ax5c">助成に頼り続けるしかない状態</label>
+
+      <div class="check-axis-group">
+        <div class="check-axis-hd"><span class="check-axis-badge">AXIS 05</span><span class="check-axis-name">自走モデル</span></div>
+        <div class="check-item">
+          <div class="check-q">⑨ 助成終了後の財務計画について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q9" id="q9a" value="2"><label for="q9a">助成に依存しない収益源（事業収益・継続寄付・行政委託等）がある</label>
+            <input class="check-opt" type="radio" name="q9" id="q9b" value="1"><label for="q9b">考えてはいるが、具体的な計画になっていない</label>
+            <input class="check-opt" type="radio" name="q9" id="q9c" value="0"><label for="q9c">助成が切れたら活動が止まる可能性が高い</label>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-q">⑩ 寄付・会費収入について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q10" id="q10a" value="2"><label for="q10a">継続的な個人・法人寄付者がおり、安定した収入基盤がある</label>
+            <input class="check-opt" type="radio" name="q10" id="q10b" value="1"><label for="q10b">単発の寄付はあるが継続的な関係になっていない</label>
+            <input class="check-opt" type="radio" name="q10" id="q10c" value="0"><label for="q10c">ほぼ寄付収入がない</label>
+          </div>
         </div>
       </div>
-      <div class="check-item">
-        <div class="check-item-head"><span class="check-axis-badge">AXIS 06</span><span class="check-axis-name">CRM・エコシステム</span></div>
-        <div class="check-options">
-          <input class="check-opt" type="radio" name="ax6" id="ax6a" value="2"><label for="ax6a">支援者・寄付者と継続的な関係を構築できている</label>
-          <input class="check-opt" type="radio" name="ax6" id="ax6b" value="1"><label for="ax6b">つながりはあるが深められていない</label>
-          <input class="check-opt" type="radio" name="ax6" id="ax6c" value="0"><label for="ax6c">支援者管理ができておらず、関係が途切れがち</label>
+
+      <div class="check-axis-group">
+        <div class="check-axis-hd"><span class="check-axis-badge">AXIS 06</span><span class="check-axis-name">CRM・エコシステム</span></div>
+        <div class="check-item">
+          <div class="check-q">⑪ 支援者・関係者の管理について</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q11" id="q11a" value="2"><label for="q11a">支援者・参加者・協力者を一元管理し、継続的にコミュニケーションしている</label>
+            <input class="check-opt" type="radio" name="q11" id="q11b" value="1"><label for="q11b">名簿はあるが定期的なコミュニケーションが取れていない</label>
+            <input class="check-opt" type="radio" name="q11" id="q11c" value="0"><label for="q11c">支援者・関係者の把握ができていない</label>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-q">⑫ 口コミ・紹介の仕組みについて</div>
+          <div class="check-options">
+            <input class="check-opt" type="radio" name="q12" id="q12a" value="2"><label for="q12a">支援者や受益者が自発的に団体を紹介・拡散してくれる仕組みがある</label>
+            <input class="check-opt" type="radio" name="q12" id="q12b" value="1"><label for="q12b">口コミは起きているが仕組みとして設計していない</label>
+            <input class="check-opt" type="radio" name="q12" id="q12c" value="0"><label for="q12c">外部への発信・紹介がほとんど起きていない</label>
+          </div>
         </div>
       </div>
+
     </div>
 
     <div class="check-result-bar" id="check-result">
-      <h3 style="font-size:16px; font-weight:700; color:#052e16; margin-bottom:16px;">診断結果</h3>
+      <h3 style="font-size:16px; font-weight:700; color:#052e16; margin-bottom:16px;">診断結果 <span id="check-total-badge" style="font-weight:400; font-size:14px; color:#16a34a;"></span></h3>
       <div id="score-bars"></div>
       <div class="check-summary" id="check-summary"></div>
       <div id="check-rx"></div>
       <div id="check-share"></div>
-      <div class="check-cta">
-        <a href="#contact" class="btn-primary" style="display:inline-block; margin-top:12px;">この結果をもとに相談する →</a>
+
+      <div class="check-submit-wrap">
+        <h3 style="font-size:15px; font-weight:700; color:#052e16; margin-bottom:6px;">この診断結果を佐々生に送る</h3>
+        <p style="font-size:13px; color:#374151; margin-bottom:16px;">氏名・メールアドレスを入力して送信すると、診断結果に基づいた返信が届きます。</p>
+        <div class="form-row">
+          <label>団体名・お名前 <span style="color:#dc2626">*</span></label>
+          <input type="text" id="cs-name" placeholder="例：NPO法人〇〇・佐藤太郎">
+        </div>
+        <div class="form-row">
+          <label>メールアドレス <span style="color:#dc2626">*</span></label>
+          <input type="email" id="cs-email" placeholder="your@email.com">
+        </div>
+        <div class="form-row">
+          <label>活動分野</label>
+          <select id="cs-field">
+            <option value="">選択してください</option>
+            <option>子ども・青少年</option><option>教育・学習支援</option>
+            <option>環境・気候変動</option><option>地域コミュニティ</option>
+            <option>障害者支援</option><option>国際協力</option>
+            <option>女性・ジェンダー</option><option>貧困・生活困窮</option>
+            <option>文化・芸術</option><option>医療・保健</option>
+            <option>その他・複合</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>補足・コメント（任意）</label>
+          <textarea id="cs-comment" placeholder="特に気になっている軸や、現状をもう少し詳しく"></textarea>
+        </div>
+        <button class="form-submit" id="cs-btn" onclick="submitDiagnosis()">診断結果を送る（無償）</button>
+        <div id="cs-result"></div>
       </div>
     </div>
   </div>
@@ -528,13 +659,6 @@
       <div id="form-result"></div>
     </div>
 
-    <div class="sns-row">
-      <a class="sns-btn sns-x" href="https://x.com/orzugulsetagaya" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.857L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        X でDM
-      </a>
-    </div>
-
     <div class="region-note" style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.45); line-height:1.8;">
       初回ヒアリング（30〜60分）および6軸診断は無償。継続的な伴走が必要な場合は別途ご相談。<br>
       世田谷・東京都内は対面対応可 ／ 全国オンライン対応<br>
@@ -572,34 +696,45 @@ const RX   = [
 
 function calcCheck() {
   const scores = [];
-  for (let i=1; i<=6; i++) {
-    const sel = document.querySelector(`input[name="ax${i}"]:checked`);
-    if (!sel) return;
-    scores.push(parseInt(sel.value));
+  for (let i=1; i<=12; i++) {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    scores.push(sel ? parseInt(sel.value) : null);
   }
+
+  const answered = scores.filter(s => s !== null).length;
+  document.getElementById('progress-count').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / 12 * 100) + '%';
+
+  if (answered < 12) return;
+
+  // 軸スコア (各軸0-4)
+  const axisScores = AXES.map((_, i) => scores[i * 2] + scores[i * 2 + 1]);
+  const total = axisScores.reduce((a, b) => a + b, 0);
+
   const result = document.getElementById('check-result');
   result.classList.add('visible');
+  document.getElementById('check-total-badge').textContent = `${total} / 24点`;
 
   const bars = document.getElementById('score-bars');
-  bars.innerHTML = scores.map((s,i) => {
-    const pct = s===2?100:s===1?50:10;
-    const cls = s===2?'fill-good':s===1?'fill-ok':'fill-bad';
+  bars.innerHTML = axisScores.map((s, i) => {
+    const pct = s / 4 * 100;
+    const cls = s >= 3 ? 'fill-good' : s >= 2 ? 'fill-ok' : 'fill-bad';
+    const lbl = s >= 3 ? '◎' : s >= 2 ? '△' : '✗';
     return `<div class="check-score-row">
       <div class="check-score-label">${AXES[i]}</div>
       <div class="check-score-track"><div class="check-score-fill ${cls}" style="width:${pct}%"></div></div>
-      <div style="font-size:11px;color:#6b7280;width:28px;text-align:right">${s===2?'◎':s===1?'△':'✗'}</div>
+      <div style="font-size:12px;color:#6b7280;width:48px;text-align:right">${s}/4 ${lbl}</div>
     </div>`;
   }).join('');
 
-  const total = scores.reduce((a,b)=>a+b,0);
-  const weakIdxs = scores.map((s,i)=>s===0?i:-1).filter(i=>i>=0);
-  const weakAxes = weakIdxs.map(i=>AXES[i]);
-  const okAxes   = AXES.filter((_,i)=>scores[i]===1);
+  const weakIdxs = axisScores.map((s, i) => s <= 1 ? i : -1).filter(i => i >= 0);
+  const weakAxes = weakIdxs.map(i => AXES[i]);
+  const okIdxs   = axisScores.map((s, i) => s === 2 ? i : -1).filter(i => i >= 0);
 
   let msg = '';
-  if (total>=10) msg = '全体的にバランスが取れています。さらなる強化や外部リソース接続についてご相談ください。';
-  else if (weakAxes.length===0) msg = `概ね機能していますが、${okAxes.join('・')}に改善余地があります。`;
-  else msg = `特に<strong>${weakAxes.join('・')}</strong>に課題があります。ここが助成通過率や活動の持続性に直結している可能性が高いです。`;
+  if (total >= 20) msg = '全体的にバランスが取れています。さらなる強化や外部リソース接続についてご相談ください。';
+  else if (weakAxes.length === 0) msg = `基盤は整っています。${okIdxs.map(i => AXES[i]).join('・')}にさらなる改善余地があります。`;
+  else msg = `特に<strong>${weakAxes.join('・')}</strong>に課題があります。助成通過率や活動の持続性に直結している可能性が高いです。`;
   document.getElementById('check-summary').innerHTML = msg;
 
   // 弱い軸への処方箋
@@ -607,14 +742,14 @@ function calcCheck() {
   if (weakIdxs.length > 0) {
     rxEl.innerHTML = `<div style="margin-top:14px;padding:14px 16px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;">
       <div style="font-size:12px;font-weight:700;color:#9a3412;margin-bottom:8px;">✗ の軸への処方箋</div>
-      ${weakIdxs.map(i=>`<div style="font-size:13px;color:#374151;margin-bottom:6px;line-height:1.6;"><span style="font-weight:700;color:#052e16;">${AXES[i]}：</span>${RX[i]}</div>`).join('')}
+      ${weakIdxs.map(i => `<div style="font-size:13px;color:#374151;margin-bottom:6px;line-height:1.6;"><span style="font-weight:700;color:#052e16;">${AXES[i]}：</span>${RX[i]}</div>`).join('')}
     </div>`;
   } else {
     rxEl.innerHTML = '';
   }
 
   // Xシェアボタン
-  const shareText = `6軸セルフチェック ${total}/12点｜弱い軸: ${weakAxes.length>0?weakAxes.join('・'):'なし'} #NPO #社会変革支援`;
+  const shareText = `6軸詳細診断 ${total}/24点｜弱い軸: ${weakAxes.length > 0 ? weakAxes.join('・') : 'なし'} #NPO #社会変革支援`;
   const shareHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent('https://ycompany0909.github.io/yc-dev-portal/npo.html')}`;
   document.getElementById('check-share').innerHTML =
     `<div style="text-align:center;margin-top:14px;">
@@ -624,10 +759,73 @@ function calcCheck() {
       </a>
     </div>`;
 
-  result.scrollIntoView({behavior:'smooth', block:'nearest'});
+  result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 document.querySelectorAll('.check-opt').forEach(r => r.addEventListener('change', calcCheck));
+
+// ── 診断結果提出 ──
+async function submitDiagnosis() {
+  const name    = document.getElementById('cs-name').value.trim();
+  const email   = document.getElementById('cs-email').value.trim();
+  const field   = document.getElementById('cs-field').value;
+  const comment = document.getElementById('cs-comment').value.trim();
+
+  if (!name || !email) { alert('団体名・お名前とメールアドレスを入力してください'); return; }
+
+  const btn = document.getElementById('cs-btn');
+  const resultEl = document.getElementById('cs-result');
+  btn.disabled = true;
+  btn.textContent = '送信中…';
+  resultEl.innerHTML = '';
+
+  const scores = [];
+  for (let i=1; i<=12; i++) {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    scores.push(sel ? parseInt(sel.value) : 0);
+  }
+  const axisScores = AXES.map((_, i) => scores[i * 2] + scores[i * 2 + 1]);
+  const total = axisScores.reduce((a, b) => a + b, 0);
+  const weakAxes = AXES.filter((_, i) => axisScores[i] <= 1);
+
+  const diagLines = AXES.map((ax, i) => {
+    const s = axisScores[i];
+    return `${ax}: ${s}/4 ${s >= 3 ? '◎' : s >= 2 ? '△' : '✗'}`;
+  });
+
+  const bodyText = [
+    `団体名・お名前: ${name}`,
+    `メールアドレス: ${email}`,
+    `活動分野: ${field || '未選択'}`,
+    '',
+    `■ 診断スコア: ${total}/24点`,
+    `弱い軸: ${weakAxes.length > 0 ? weakAxes.join('・') : 'なし'}`,
+    '',
+    '軸別スコア:',
+    ...diagLines,
+    ...(comment ? ['', `■ コメント:`, comment] : []),
+  ].join('\n');
+
+  try {
+    const res = await fetch('https://yc-npo-contact.ycompany0909.workers.dev/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ org: name, field, body: bodyText }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      btn.textContent = '✓ 送信しました';
+      btn.style.background = '#15803d';
+      resultEl.innerHTML = '<p style="color:#16a34a;margin-top:12px;text-align:center;font-size:14px;">診断結果が届きました。数日以内にご返信します。</p>';
+    } else {
+      throw new Error(data.error || '送信に失敗しました');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = '診断結果を送る（無償）';
+    resultEl.innerHTML = `<p style="color:#dc2626;margin-top:12px;text-align:center;font-size:13px;">${e.message}</p>`;
+  }
+}
 
 // ── 相談フォーム ──
 async function submitForm() {
