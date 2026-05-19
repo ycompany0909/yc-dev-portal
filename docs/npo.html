@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NPO・社会起業家のみなさまへ — Y COMPANY 社会変革支援</title>
   <meta name="description" content="YCは、NPO・社会運動団体・社会起業家の「なぜ行き詰まるか」を診断し、具体的な突破口を示します。6軸フレームによる診断と、1,359件の助成金データベースを無償提供。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ycompany0909.github.io/yc-dev-portal/npo.html">
+  <meta property="og:title" content="NPO・社会起業家のみなさまへ — Y COMPANY 社会変革支援">
+  <meta property="og:description" content="助成金が通らない。支援が広がらない。その根本にある構造的問題を無償診断。6軸フレーム＋1,359件の助成金DB。">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@orzugulsetagaya">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif; background: #f8faf9; color: #1a2e1a; line-height: 1.7; }
@@ -163,6 +169,9 @@
     .sns-line { background: #06c755; color: white; }
     .region-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 20px; }
 
+    /* Table mobile */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
     /* Footer */
     footer { background: #0a1a0a; color: rgba(255,255,255,0.35); text-align: center; padding: 20px; font-size: 12px; }
     footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
@@ -216,7 +225,7 @@
     <div class="section-label">なぜYCなのか</div>
     <h2>既存の支援者では届かない<br>「空白地帯」があります</h2>
     <p>経営コンサル、中間支援組織、弁護士、ファンドレイザー——それぞれに強みがあります。しかし、社会運動固有の課題に対応できるプレイヤーは、まだほとんど存在しません。</p>
-    <table class="gap-table">
+    <div class="table-wrap"><table class="gap-table">
       <thead><tr><th>支援プレイヤー</th><th>提供価値</th><th>届かない領域</th></tr></thead>
       <tbody>
         <tr><td>経営コンサル</td><td>戦略立案・分析</td><td class="gap-cell">社会運動固有の論理・審査側の視点がない</td></tr>
@@ -225,7 +234,7 @@
         <tr><td>ファンドレイザー</td><td>申請書作成代行</td><td class="gap-cell">申請が通る団体構造そのものを作れない</td></tr>
         <tr class="highlight-row"><td>YC（佐々生）</td><td>審査設計 × 人脈 × AI</td><td style="color:#4ade80">── ここが空白地帯</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 </section>
 
@@ -252,7 +261,7 @@
     <div class="section-label">詰まりへの処方箋</div>
     <h2>6軸の「詰まり」に対して<br>YCは何をするか</h2>
     <p>典型的な行き詰まりパターンと、YCが提供する具体的な介入内容です。</p>
-    <table class="rx-table">
+    <div class="table-wrap"><table class="rx-table">
       <thead><tr><th>軸</th><th>典型的な詰まり</th><th>YCの処方箋</th></tr></thead>
       <tbody>
         <tr>
@@ -286,7 +295,7 @@
           <td class="rx-fix">YCコミュニティと接続、支持者拡大の動線設計</td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 </section>
 
@@ -352,6 +361,8 @@
       <h3 style="font-size:16px; font-weight:700; color:#052e16; margin-bottom:16px;">診断結果</h3>
       <div id="score-bars"></div>
       <div class="check-summary" id="check-summary"></div>
+      <div id="check-rx"></div>
+      <div id="check-share"></div>
       <div class="check-cta">
         <a href="#contact" class="btn-primary" style="display:inline-block; margin-top:12px;">この結果をもとに相談する →</a>
       </div>
@@ -523,13 +534,18 @@
       </a>
     </div>
 
-    <div class="region-note">世田谷・東京都内は対面対応可 ／ 全国オンライン対応<br>返信まで数日かかる場合があります。営利目的・政治的プロパガンダ目的のご相談はお断りします。</div>
+    <div class="region-note" style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.45); line-height:1.8;">
+      初回ヒアリング（30〜60分）および6軸診断は無償。継続的な伴走が必要な場合は別途ご相談。<br>
+      世田谷・東京都内は対面対応可 ／ 全国オンライン対応<br>
+      返信まで数日かかる場合があります。営利目的・政治的プロパガンダ目的のご相談はお断りします。
+    </div>
   </div>
 </section>
 
 <footer>
   &copy; 2026 合同会社 Y COMPANY<br>
-  <a href="grant-search.html">助成金データベース</a> ／ <a href="https://x.com/orzugulsetagaya" target="_blank">X @orzugulsetagaya</a>
+  <a href="grant-search.html">助成金データベース</a> ／ <a href="https://x.com/orzugulsetagaya" target="_blank">X @orzugulsetagaya</a><br>
+  <span style="font-size:11px; opacity:0.5;">最終更新: 2026-05-19</span>
 </footer>
 
 <script>
@@ -544,7 +560,14 @@ function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
 
 // ── セルフチェック ──
 const AXES = ['①実行体制','②審査適合性','③インパクト定義','④課題の階層設計','⑤自走モデル','⑥CRM'];
-const COLORS = ['fill-good','fill-ok','fill-bad'];
+const RX   = [
+  '適切な理事候補の紹介・ガバナンス設計テンプレ提供',
+  '審査側経験から「通る申請」の論理を事前レクチャー',
+  'AIで類似事例・受益者規模を試算、一枚資料化',
+  '上位概念への接続設計、共感できる出口の言語化',
+  '企業CSR・サブスク寄付・事業収益の複層化設計',
+  'YCコミュニティと接続、支持者拡大の動線設計',
+];
 
 function calcCheck() {
   const scores = [];
@@ -568,14 +591,38 @@ function calcCheck() {
   }).join('');
 
   const total = scores.reduce((a,b)=>a+b,0);
-  const weakAxes = AXES.filter((_,i)=>scores[i]===0);
-  const okAxes = AXES.filter((_,i)=>scores[i]===1);
+  const weakIdxs = scores.map((s,i)=>s===0?i:-1).filter(i=>i>=0);
+  const weakAxes = weakIdxs.map(i=>AXES[i]);
+  const okAxes   = AXES.filter((_,i)=>scores[i]===1);
+
   let msg = '';
   if (total>=10) msg = '全体的にバランスが取れています。さらなる強化や外部リソース接続についてご相談ください。';
   else if (weakAxes.length===0) msg = `概ね機能していますが、${okAxes.join('・')}に改善余地があります。`;
   else msg = `特に<strong>${weakAxes.join('・')}</strong>に課題があります。ここが助成通過率や活動の持続性に直結している可能性が高いです。`;
-
   document.getElementById('check-summary').innerHTML = msg;
+
+  // 弱い軸への処方箋
+  const rxEl = document.getElementById('check-rx');
+  if (weakIdxs.length > 0) {
+    rxEl.innerHTML = `<div style="margin-top:14px;padding:14px 16px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;">
+      <div style="font-size:12px;font-weight:700;color:#9a3412;margin-bottom:8px;">✗ の軸への処方箋</div>
+      ${weakIdxs.map(i=>`<div style="font-size:13px;color:#374151;margin-bottom:6px;line-height:1.6;"><span style="font-weight:700;color:#052e16;">${AXES[i]}：</span>${RX[i]}</div>`).join('')}
+    </div>`;
+  } else {
+    rxEl.innerHTML = '';
+  }
+
+  // Xシェアボタン
+  const shareText = `6軸セルフチェック ${total}/12点｜弱い軸: ${weakAxes.length>0?weakAxes.join('・'):'なし'} #NPO #社会変革支援`;
+  const shareHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent('https://ycompany0909.github.io/yc-dev-portal/npo.html')}`;
+  document.getElementById('check-share').innerHTML =
+    `<div style="text-align:center;margin-top:14px;">
+      <a href="${shareHref}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#000;color:white;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.857L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        結果をXでシェア
+      </a>
+    </div>`;
+
   result.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
