@@ -52,7 +52,7 @@
 
     /* diagram */
     .diagram-outer { overflow-x:auto; padding-bottom:8px; margin-bottom:16px; }
-    .diagram-wrap  { position:relative; width:960px; height:700px; }
+    .diagram-wrap  { position:relative; width:1130px; height:700px; }
     #svg-lines { position:absolute; top:0; left:0; width:100%; height:100%;
                  pointer-events:none; z-index:1; }
 
@@ -204,6 +204,15 @@
             <marker id="arr-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#a78bfa"/></marker>
             <marker id="arr-slate"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
           </defs>
+          <!-- demoday standalone visual box -->
+          <rect x="970" y="8" width="150" height="555" rx="12"
+                fill="rgba(124,58,237,0.06)" stroke="#7c3aed" stroke-width="1.5"
+                stroke-dasharray="6,4" pointer-events="none"/>
+          <text x="975" y="578" fill="#7c3aed" font-size="9" font-weight="700"
+                font-family="-apple-system,sans-serif">ICJ ESGアクセラ（スタンドアローン）</text>
+          <!-- separator line -->
+          <line x1="955" y1="10" x2="955" y2="690" stroke="#334155" stroke-width="1"
+                stroke-dasharray="4,6" opacity="0.5" pointer-events="none"/>
         </svg>
 
         <!-- 入力 -->
@@ -216,7 +225,7 @@
         <div class="node n-user" id="n-plaud" style="left:590px;top:20px;width:105px" data-tip="Plaudで録音した音声 → Zapier → Google Drive → VPS cronが取得してNocoDB格納">
           <span class="n-icon">🎙</span>Plaud 音声
         </div>
-        <div class="node n-user" id="n-ext-user" style="left:750px;top:20px;width:110px" data-tip="demoday.esgaccelerator.comから申込するICJデモデイ参加者">
+        <div class="node n-user" id="n-ext-user" style="left:980px;top:20px;width:110px" data-tip="demoday.esgaccelerator.comから申込するICJデモデイ参加者">
           <span class="n-icon">🌐</span>外部申込者
         </div>
 
@@ -230,7 +239,7 @@
         <div class="node n-ext" id="n-zapier" style="left:570px;top:145px;width:120px" data-tip="Zapier経由でPlaud文字起こしをGoogle Driveへ保存。VPS cronが定期取得。">
           <span class="n-icon">⚡</span>Zapier→Drive
         </div>
-        <div class="node n-worker" id="n-demoday-w" style="left:745px;top:145px;width:115px" data-tip="demoday-api Worker。CF Workers + D1 + Resend + Google Sheetsで申込管理。">
+        <div class="node n-worker" id="n-demoday-w" style="left:975px;top:145px;width:115px" data-tip="demoday-api Worker。CF Workers + D1 + Resend + Google Sheetsで申込管理。YCシステムとは独立。">
           <span class="n-icon">📋</span>demoday-api<span class="n-sub">CF Worker</span>
         </div>
 
@@ -277,7 +286,7 @@
         <div class="node n-data" id="n-nocodb" style="left:370px;top:555px;width:120px" data-tip="NocoDB — db.ycompany.co.jp。全WorkerとVPS cronが参照するメインデータストア。13,860件の顧客データ含む。">
           <span class="n-icon">🗄</span>NocoDB<span class="n-sub">主データストア</span>
         </div>
-        <div class="node n-data" id="n-d1" style="left:540px;top:555px;width:95px" data-tip="Cloudflare D1 (SQLite) — yc-shift-db（シフト管理）・demoday-db（申込管理）">
+        <div class="node n-data" id="n-d1" style="left:540px;top:555px;width:95px" data-tip="Cloudflare D1 (SQLite) — yc-shift-db（シフト管理）。TimeTree syncとシフトWorkerが参照。">
           <span class="n-icon">💾</span>D1 SQLite
         </div>
 
@@ -288,11 +297,19 @@
         <div class="node n-output" id="n-todoist-out" style="left:490px;top:650px;width:90px" data-tip="Todoistアプリへタスクを同期。VPS noco_to_todoistが書き込む。">
           <span class="n-icon">📌</span>Todoist
         </div>
-        <div class="node n-output" id="n-gsheets" style="left:640px;top:555px;width:110px" data-tip="Google Sheets — demoday申込データを記録。SPREADSHEET_ID管理。">
-          <span class="n-icon">📊</span>Google Sheets
-        </div>
         <div class="node n-output" id="n-timetree-out" style="left:780px;top:555px;width:100px" data-tip="TimeTree予定API。VPS syncが取得してD1・NocoDB・Plaud文字起こしとマッチング。">
           <span class="n-icon">📆</span>TimeTree API
+        </div>
+
+        <!-- demoday standalone outputs (独立・YCシステムと非接続) -->
+        <div class="node n-data" id="n-dd-d1" style="left:975px;top:285px;width:115px" data-tip="demoday-db（D1 SQLite）。YCのyc-shift-dbとは別インスタンス。申込データのみ格納。">
+          <span class="n-icon">💾</span>demoday-db<span class="n-sub">D1 SQLite</span>
+        </div>
+        <div class="node n-output" id="n-dd-resend" style="left:975px;top:415px;width:115px" data-tip="Resend APIでデモデイ申込確認メールを送信。YCのGmail/Resendとは独立した送信経路。">
+          <span class="n-icon">✉️</span>Resend<span class="n-sub">申込確認メール</span>
+        </div>
+        <div class="node n-output" id="n-dd-sheets" style="left:975px;top:530px;width:115px" data-tip="Google Sheets — demoday申込データを記録。SPREADSHEET_ID管理。YC共有シートとは別。">
+          <span class="n-icon">📊</span>Google Sheets<span class="n-sub">申込データ</span>
         </div>
 
       </div>
@@ -677,10 +694,11 @@ const EDGES = [
   ['n-todoist-sync','n-todoist-out','#4ade80','arr-green',false],
   ['n-timetree',  'n-d1',        '#a78bfa','arr-purple', false],
   ['n-timetree',  'n-timetree-out','#4ade80','arr-green',false],
+  // demoday standalone — YCシステムと非接続
   ['n-ext-user',  'n-demoday-w', '#c4b5fd','arr-purple', false],
-  ['n-demoday-w', 'n-d1',        '#a78bfa','arr-purple', false],
-  ['n-demoday-w', 'n-gmail',     '#4ade80','arr-green',  false],
-  ['n-demoday-w', 'n-gsheets',   '#4ade80','arr-green',  false],
+  ['n-demoday-w', 'n-dd-d1',     '#a78bfa','arr-purple', false],
+  ['n-demoday-w', 'n-dd-resend', '#4ade80','arr-green',  false],
+  ['n-demoday-w', 'n-dd-sheets', '#4ade80','arr-green',  false],
 ];
 
 function getCenterInWrap(el) {
