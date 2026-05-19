@@ -9,402 +9,719 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
            background: #080e1a; color: #e2e8f0; min-height: 100vh; }
 
-    /* ── ヘッダー ── */
-    .header { padding: 20px 20px 0; }
-    .header h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; }
+    /* Header */
+    .header { padding: 16px 20px 0; }
+    .header h1 { font-size: 18px; font-weight: 800; color: #f1f5f9; }
     .header p  { font-size: 11px; color: #475569; margin-top: 2px; }
 
-    /* ── ポータルカード（クリッカブル） ── */
-    .portals-section { padding: 16px 20px 0; }
-    .portals-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
-                     text-transform: uppercase; color: #475569; margin-bottom: 10px; }
-    .portals { display: flex; flex-wrap: wrap; gap: 10px; }
-
+    /* Portal Cards */
+    .portals-section { padding: 14px 20px 0; }
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+                     text-transform: uppercase; color: #475569; margin-bottom: 8px; }
+    .portals { display: flex; flex-wrap: wrap; gap: 8px; }
     .portal-card {
       display: flex; flex-direction: column; justify-content: space-between;
-      flex: 1; min-width: 140px; max-width: 220px;
-      border-radius: 12px; padding: 14px; text-decoration: none;
-      transition: transform 0.15s, box-shadow 0.15s;
-      cursor: pointer; position: relative; overflow: hidden;
+      flex: 1; min-width: 130px; max-width: 200px; border-radius: 10px;
+      padding: 12px; text-decoration: none; transition: transform .15s, box-shadow .15s;
+      position: relative; overflow: hidden;
     }
-    .portal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-    .portal-card::after { content: '↗'; position: absolute; top: 10px; right: 12px;
-                          font-size: 14px; opacity: 0.4; }
-    .portal-card .pc-name  { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
-    .portal-card .pc-url   { font-size: 10px; font-family: monospace; opacity: 0.6; margin-bottom: 8px; }
-    .portal-card .pc-tags  { display: flex; flex-wrap: wrap; gap: 4px; }
-    .portal-card .pc-tag   { font-size: 9px; padding: 2px 6px; border-radius: 20px; opacity: 0.85; }
+    .portal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+    .portal-card::after { content:'↗'; position:absolute; top:8px; right:10px;
+                          font-size:13px; opacity:.35; }
+    .pc-name { font-size:12px; font-weight:800; margin-bottom:3px; }
+    .pc-url  { font-size:9px; font-family:monospace; opacity:.55; margin-bottom:6px; }
+    .pc-tags { display:flex; flex-wrap:wrap; gap:3px; }
+    .pc-tag  { font-size:9px; padding:1px 5px; border-radius:20px; }
+    .pc-yc      { background:linear-gradient(135deg,#1e3a5f,#0f2444); border:1px solid #2563eb; color:#93c5fd; }
+    .pc-ikizama { background:linear-gradient(135deg,#3b1f2b,#200f18); border:1px solid #9f1239; color:#fca5a5; }
+    .pc-orzugul { background:linear-gradient(135deg,#1a2e1a,#0d1a0d); border:1px solid #16a34a; color:#86efac; }
+    .pc-demoday { background:linear-gradient(135deg,#2d1f3b,#180f22); border:1px solid #7c3aed; color:#c4b5fd; }
+    .pc-dev     { background:linear-gradient(135deg,#1e2a20,#0f1810); border:1px solid #4ade80; color:#bbf7d0; }
 
-    .pc-yc       { background: linear-gradient(135deg, #1e3a5f, #0f2444); border: 1px solid #2563eb; color: #93c5fd; }
-    .pc-ikizama  { background: linear-gradient(135deg, #3b1f2b, #200f18); border: 1px solid #9f1239; color: #fca5a5; }
-    .pc-orzugul  { background: linear-gradient(135deg, #1a2e1a, #0d1a0d); border: 1px solid #16a34a; color: #86efac; }
-    .pc-demoday  { background: linear-gradient(135deg, #2d1f3b, #180f22); border: 1px solid #7c3aed; color: #c4b5fd; }
-    .pc-dev      { background: linear-gradient(135deg, #1e2a20, #0f1810); border: 1px solid #4ade80; color: #bbf7d0; }
+    /* Tabs */
+    .tabs { display:flex; gap:4px; padding:16px 20px 0; }
+    .tab  { padding:8px 18px; border-radius:8px 8px 0 0; font-size:12px; font-weight:700;
+            cursor:pointer; border:1px solid #1e293b; border-bottom:none;
+            background:#0f172a; color:#64748b; transition:all .15s; }
+    .tab.active { background:#1e293b; color:#f1f5f9; border-color:#334155; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
 
-    /* ── ダイアグラム ── */
-    .diagram-section { padding: 20px 20px 0; }
-    .diagram-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
-                     text-transform: uppercase; color: #475569; margin-bottom: 12px; }
-    .diagram-outer { overflow-x: auto; overflow-y: visible; padding-bottom: 20px; }
-    .diagram-wrap  { position: relative; width: 900px; height: 680px; }
+    /* ===== TAB1: フロー図 ===== */
+    .flow-wrap { padding:0 20px 20px; }
 
-    #svg-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                 pointer-events: none; z-index: 1; }
+    /* diagram */
+    .diagram-outer { overflow-x:auto; padding-bottom:8px; margin-bottom:16px; }
+    .diagram-wrap  { position:relative; width:960px; height:700px; }
+    #svg-lines { position:absolute; top:0; left:0; width:100%; height:100%;
+                 pointer-events:none; z-index:1; }
 
-    /* ── ノード ── */
     .node {
-      position: absolute; border-radius: 10px; padding: 8px 12px;
-      font-size: 11px; font-weight: 600; text-align: center; z-index: 2;
-      transition: box-shadow 0.15s, transform 0.15s;
-      cursor: default; user-select: none; line-height: 1.4;
-      min-width: 90px;
+      position:absolute; border-radius:9px; padding:7px 11px;
+      font-size:11px; font-weight:600; text-align:center; z-index:2;
+      transition:box-shadow .15s, transform .15s; line-height:1.4; min-width:88px;
     }
-    .node:hover { transform: scale(1.05); }
-    .node .n-icon { font-size: 16px; display: block; margin-bottom: 3px; }
-    .node .n-sub  { font-size: 9px; opacity: 0.6; font-weight: 400; display: block; margin-top: 2px; }
+    .node:hover { transform:scale(1.06); z-index:10; }
+    .n-icon { font-size:15px; display:block; margin-bottom:2px; }
+    .n-sub  { font-size:9px; opacity:.6; font-weight:400; display:block; margin-top:1px; }
 
-    /* node colors */
-    .n-user    { background: #1e293b; border: 1px solid #334155; color: #94a3b8; }
-    .n-gateway { background: #1c2a1c; border: 1px solid #166534; color: #86efac; }
-    .n-central { background: #1c1a0a; border: 2px solid #f59e0b; color: #fbbf24;
-                 box-shadow: 0 0 12px rgba(245,158,11,0.3); }
-    .n-portal  { background: #0f1f3b; border: 1.5px solid #3b82f6; color: #93c5fd; }
-    .n-worker  { background: #1c2330; border: 1px solid #1e40af; color: #7dd3fc; }
-    .n-data    { background: #1a1030; border: 2px solid #8b5cf6; color: #c4b5fd;
-                 box-shadow: 0 0 10px rgba(139,92,246,0.25); }
-    .n-vps     { background: #1a1a30; border: 1px solid #6366f1; color: #a5b4fc; }
-    .n-ext     { background: #1a1a1a; border: 1px solid #374151; color: #9ca3af; }
-    .n-output  { background: #0f1a0f; border: 1px solid #15803d; color: #6ee7b7; }
+    .n-user    { background:#1e293b; border:1px solid #334155; color:#94a3b8; }
+    .n-gateway { background:#1c2a1c; border:1px solid #166534; color:#86efac; }
+    .n-central { background:#1c1a08; border:2px solid #f59e0b; color:#fbbf24;
+                 box-shadow:0 0 14px rgba(245,158,11,.35); }
+    .n-portal  { background:#0f1f3b; border:1.5px solid #3b82f6; color:#93c5fd; }
+    .n-worker  { background:#1a2232; border:1px solid #1e40af; color:#7dd3fc; }
+    .n-data    { background:#190f2e; border:2px solid #8b5cf6; color:#c4b5fd;
+                 box-shadow:0 0 10px rgba(139,92,246,.25); }
+    .n-vps     { background:#18182e; border:1px solid #6366f1; color:#a5b4fc; }
+    .n-ext     { background:#1a1a1a; border:1px solid #374151; color:#9ca3af; }
+    .n-output  { background:#0f1a10; border:1px solid #15803d; color:#6ee7b7; }
 
-    /* レーンラベル */
-    .lane-label {
-      position: absolute; font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: #1e293b; z-index: 0;
-      transform: rotate(-90deg); transform-origin: left center;
+    /* Worker Grid */
+    .worker-section { margin-top:4px; }
+    .worker-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:6px; }
+    .wcard {
+      background:#1a2232; border:1px solid #1e3a5f; border-radius:8px;
+      padding:8px 10px; transition:border-color .15s, transform .15s;
     }
+    .wcard:hover { border-color:#3b82f6; transform:translateY(-1px); }
+    .wcard.central { background:#1c1a08; border-color:#f59e0b; }
+    .wcard.trigger { border-color:#22c55e33; }
+    .wcard.form    { border-color:#f59e0b33; }
+    .wcard.api     { border-color:#8b5cf633; }
+    .wcard.util    { border-color:#64748b33; }
+    .wcard-head { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
+    .wcard-dot  { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .wcard-name { font-size:11px; font-weight:700; color:#93c5fd; }
+    .wcard.central .wcard-name { color:#fbbf24; }
+    .wcard-desc { font-size:10px; color:#475569; line-height:1.4; }
+    .wcard-badge { font-size:9px; padding:1px 5px; border-radius:10px;
+                   background:#0f172a; color:#64748b; display:inline-block; margin-top:3px; }
 
-    /* ツールチップ */
-    .tooltip {
-      position: fixed; background: #1e293b; border: 1px solid #334155;
-      border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #cbd5e1;
-      pointer-events: none; z-index: 999; max-width: 200px; line-height: 1.5;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-      opacity: 0; transition: opacity 0.15s;
-    }
-    .tooltip.show { opacity: 1; }
+    /* legend */
+    .legend { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+    .legend-item { display:flex; align-items:center; gap:5px; font-size:10px; color:#64748b; }
+    .legend-dot  { width:9px; height:9px; border-radius:2px; }
 
-    /* ── 凡例 ── */
-    .legend { padding: 16px 20px 32px; display: flex; flex-wrap: wrap; gap: 12px; }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #64748b; }
-    .legend-dot  { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    /* tooltip */
+    .tooltip { position:fixed; background:#1e293b; border:1px solid #334155;
+               border-radius:8px; padding:8px 12px; font-size:11px; color:#cbd5e1;
+               pointer-events:none; z-index:9999; max-width:220px; line-height:1.5;
+               box-shadow:0 4px 16px rgba(0,0,0,.5); opacity:0; transition:opacity .15s; }
+    .tooltip.show { opacity:1; }
+
+    /* ===== TAB2: リポジトリ ===== */
+    .repo-wrap { padding:0 20px 32px; }
+    .repo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:4px; }
+    .repo-card { background:#0f172a; border:1px solid #1e293b; border-radius:12px; overflow:hidden; }
+    .repo-header { padding:12px 16px; display:flex; align-items:center; gap:10px; }
+    .repo-icon   { font-size:20px; }
+    .repo-title  { font-size:13px; font-weight:800; }
+    .repo-url    { font-size:10px; font-family:monospace; opacity:.55; margin-top:1px; }
+    .repo-badge  { margin-left:auto; font-size:9px; padding:2px 7px; border-radius:10px; flex-shrink:0; }
+    .badge-priv  { background:#1f2937; color:#6b7280; border:1px solid #374151; }
+    .badge-pub   { background:#064e3b; color:#6ee7b7; border:1px solid #065f46; }
+    .repo-tree   { padding:0 16px 14px; font-family:monospace; font-size:11px; line-height:1.9; }
+    .tree-line   { display:flex; align-items:center; gap:6px; color:#64748b; }
+    .tree-line.dir  { color:#93c5fd; font-weight:600; }
+    .tree-line.file { color:#64748b; }
+    .tree-line.key  { color:#fbbf24; }
+    .tree-badge { font-size:9px; padding:1px 5px; border-radius:8px; margin-left:4px; font-family:sans-serif; }
+    .tb-pages   { background:#1d4ed8; color:#bfdbfe; }
+    .tb-worker  { background:#d97706; color:#fef3c7; }
+    .tb-python  { background:#1d4ed8aa; color:#bfdbfe; }
+    .tb-ci      { background:#166534; color:#bbf7d0; }
+    .tb-html    { background:#374151; color:#d1d5db; }
+    .tb-data    { background:#7c3aed; color:#ede9fe; }
+
+    .repo-stats { padding:8px 16px; border-top:1px solid #1e293b;
+                  display:flex; gap:12px; font-size:10px; color:#475569; }
+    .stat-item  { display:flex; align-items:center; gap:4px; }
   </style>
 </head>
 <body>
 
 <div class="header">
   <h1>YC システムマップ</h1>
-  <p>2026-05-20 — クリックで各ポータルへ</p>
+  <p>2026-05-20 — タップでポータルへ移動</p>
 </div>
 
-<!-- ── ポータルカード ── -->
+<!-- ── ポータルカード（常時表示） ── -->
 <div class="portals-section">
-  <div class="portals-label">アクセス先ポータル</div>
+  <div class="section-label">アクセス先ポータル</div>
   <div class="portals">
     <a href="https://portal.ycompany.co.jp" target="_blank" class="portal-card pc-yc">
-      <div>
-        <div class="pc-name">Y COMPANY</div>
-        <div class="pc-url">portal.ycompany.co.jp</div>
-      </div>
+      <div><div class="pc-name">Y COMPANY</div><div class="pc-url">portal.ycompany.co.jp</div></div>
       <div class="pc-tags">
         <span class="pc-tag" style="background:#1d4ed8;color:#bfdbfe">CF Pages</span>
         <span class="pc-tag" style="background:#0f766e;color:#99f6e4">NocoDB</span>
+        <span class="pc-tag" style="background:#374151;color:#9ca3af">CF Access</span>
       </div>
     </a>
     <a href="https://portal.edo-castle.com" target="_blank" class="portal-card pc-ikizama">
-      <div>
-        <div class="pc-name">IKIZAMA</div>
-        <div class="pc-url">portal.edo-castle.com</div>
-      </div>
+      <div><div class="pc-name">IKIZAMA</div><div class="pc-url">portal.edo-castle.com</div></div>
       <div class="pc-tags">
         <span class="pc-tag" style="background:#9f1239;color:#fecdd3">CF Pages</span>
         <span class="pc-tag" style="background:#1a1a1a;color:#d1d5db;border:1px solid #444">Notion</span>
       </div>
     </a>
     <a href="https://portal.orzugul.com" target="_blank" class="portal-card pc-orzugul">
-      <div>
-        <div class="pc-name">オルズグル事務所</div>
-        <div class="pc-url">portal.orzugul.com</div>
-      </div>
-      <div class="pc-tags">
-        <span class="pc-tag" style="background:#166534;color:#bbf7d0">CF Pages</span>
-      </div>
+      <div><div class="pc-name">オルズグル事務所</div><div class="pc-url">portal.orzugul.com</div></div>
+      <div class="pc-tags"><span class="pc-tag" style="background:#166534;color:#bbf7d0">CF Pages</span></div>
     </a>
     <a href="https://demoday.esgaccelerator.com" target="_blank" class="portal-card pc-demoday">
-      <div>
-        <div class="pc-name">ICJ ESGアクセラ</div>
-        <div class="pc-url">demoday.esgaccelerator.com</div>
-      </div>
+      <div><div class="pc-name">ICJ ESGアクセラ</div><div class="pc-url">demoday.esgaccelerator.com</div></div>
       <div class="pc-tags">
-        <span class="pc-tag" style="background:#6d28d9;color:#ede9fe">Workers</span>
+        <span class="pc-tag" style="background:#6d28d9;color:#ede9fe">CF Worker</span>
         <span class="pc-tag" style="background:#dc2626;color:#fee2e2">Resend</span>
       </div>
     </a>
     <a href="https://ycompany0909.github.io/yc-dev-portal/" target="_blank" class="portal-card pc-dev">
-      <div>
-        <div class="pc-name">Dev Portal</div>
-        <div class="pc-url">yc-dev-portal (公開)</div>
-      </div>
-      <div class="pc-tags">
-        <span class="pc-tag" style="background:#166534;color:#bbf7d0">GitHub Pages</span>
-      </div>
+      <div><div class="pc-name">Dev Portal</div><div class="pc-url">yc-dev-portal (公開)</div></div>
+      <div class="pc-tags"><span class="pc-tag" style="background:#166534;color:#bbf7d0">GitHub Pages</span></div>
     </a>
   </div>
 </div>
 
-<!-- ── ダイアグラム ── -->
-<div class="diagram-section">
-  <div class="diagram-label">データフロー・依存関係図</div>
-  <div class="diagram-outer">
-    <div class="diagram-wrap" id="diagram-wrap">
-      <svg id="svg-lines" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker id="arr-green"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4ade80"/></marker>
-          <marker id="arr-blue"   markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#60a5fa"/></marker>
-          <marker id="arr-amber"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker>
-          <marker id="arr-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#a78bfa"/></marker>
-          <marker id="arr-slate"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
-        </defs>
-      </svg>
+<!-- ── タブ ── -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('flow')">⚡ データフロー</div>
+  <div class="tab" onclick="switchTab('repo')">📁 リポジトリ構成</div>
+</div>
 
-      <!-- ── 入力層 ── -->
-      <div class="node n-user" id="n-line-users" style="left:30px;top:20px;width:100px">
-        <span class="n-icon">📱</span>LINEユーザー
-      </div>
-      <div class="node n-user" id="n-staff" style="left:290px;top:20px;width:110px"
-           data-tip="スタッフ・管理者がブラウザからポータルにアクセス">
-        <span class="n-icon">👤</span>スタッフ/管理者
-      </div>
-      <div class="node n-user" id="n-plaud" style="left:610px;top:20px;width:110px"
-           data-tip="Plaud音声 → Zapier → Google Drive → VPS">
-        <span class="n-icon">🎙</span>Plaud 音声
-      </div>
-      <div class="node n-user" id="n-external-user" style="left:760px;top:20px;width:110px"
-           data-tip="外部ユーザーがデモデイ申込フォームに入力">
-        <span class="n-icon">🌐</span>外部申込者
-      </div>
+<!-- ═══ TAB1: フロー ═══ -->
+<div class="tab-content active" id="tab-flow">
+  <div class="flow-wrap">
 
-      <!-- ── ゲートウェイ層 ── -->
-      <div class="node n-gateway" id="n-line-api" style="left:40px;top:140px;width:90px"
-           data-tip="LINE Messaging API — Webhookでyc-line-webhookへ転送">
-        <span class="n-icon">💬</span>LINE API
-      </div>
-      <div class="node n-gateway" id="n-cf-access" style="left:280px;top:140px;width:130px"
-           data-tip="CF Access 3層認証 — メール許可リスト18名">
-        <span class="n-icon">🔑</span>CF Access 認証
-      </div>
-      <div class="node n-ext" id="n-zapier" style="left:590px;top:140px;width:130px"
-           data-tip="Zapier経由でGoogle DriveへPlaud文字起こしを保存 → VPS cronが取得">
-        <span class="n-icon">⚡</span>Zapier → Drive
-      </div>
-      <div class="node n-ext" id="n-demoday-w" style="left:760px;top:140px;width:110px"
-           data-tip="demoday-api Worker — CF Workers + D1 + Resend + Google Sheets">
-        <span class="n-icon">📋</span>demoday-api<span class="n-sub">CF Worker</span>
-      </div>
+    <!-- フロー図 -->
+    <div class="diagram-outer">
+      <div class="diagram-wrap" id="diagram-wrap">
+        <svg id="svg-lines" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr-green"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4ade80"/></marker>
+            <marker id="arr-blue"   markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#60a5fa"/></marker>
+            <marker id="arr-amber"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker>
+            <marker id="arr-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#a78bfa"/></marker>
+            <marker id="arr-slate"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
+          </defs>
+        </svg>
 
-      <!-- ── コアサービス層 ── -->
-      <div class="node n-central" id="n-webhook" style="left:20px;top:270px;width:130px"
-           data-tip="全LINEイベントの中枢。Service Bindingで各Workerへ振り分け">
-        <span class="n-icon">⚡</span>yc-line-webhook<span class="n-sub">中枢 Worker</span>
-      </div>
-      <div class="node n-portal" id="n-portal-yc" style="left:270px;top:270px;width:150px"
-           data-tip="portal.ycompany.co.jp — CF Pages + Pages Functions /api/*">
-        <span class="n-icon">🏢</span>YC Portal<span class="n-sub">CF Pages (yc-manual-v13)</span>
-      </div>
-      <div class="node n-vps" id="n-vps" style="left:590px;top:270px;width:130px"
-           data-tip="VPS 162.43.36.173 — Pythonスクリプト群がcronで定期実行">
-        <span class="n-icon">🖥</span>VPS<span class="n-sub">cron / Python</span>
-      </div>
+        <!-- 入力 -->
+        <div class="node n-user" id="n-line-users" style="left:20px;top:20px;width:95px" data-tip="LINEアプリからYC公式アカウントにメッセージを送るユーザー（スタッフ・お客様）">
+          <span class="n-icon">📱</span>LINEユーザー
+        </div>
+        <div class="node n-user" id="n-staff" style="left:290px;top:20px;width:110px" data-tip="スタッフ・管理者がブラウザからportal.ycompany.co.jpにアクセス。CF Accessで認証。">
+          <span class="n-icon">👤</span>スタッフ/管理者
+        </div>
+        <div class="node n-user" id="n-plaud" style="left:590px;top:20px;width:105px" data-tip="Plaudで録音した音声 → Zapier → Google Drive → VPS cronが取得してNocoDB格納">
+          <span class="n-icon">🎙</span>Plaud 音声
+        </div>
+        <div class="node n-user" id="n-ext-user" style="left:750px;top:20px;width:110px" data-tip="demoday.esgaccelerator.comから申込するICJデモデイ参加者">
+          <span class="n-icon">🌐</span>外部申込者
+        </div>
 
-      <!-- ── Worker・サービス層 ── -->
-      <div class="node n-worker" id="n-faq" style="left:10px;top:400px;width:90px"
-           data-tip="FAQ自動応答。Service Bindingでwebhookから呼ばれる">
-        <span class="n-icon">🤖</span>faq-bot
-      </div>
-      <div class="node n-worker" id="n-todo" style="left:110px;top:400px;width:105px"
-           data-tip="Todoタスクの承認フロー管理">
-        <span class="n-icon">✅</span>todo-approval
-      </div>
-      <div class="node n-worker" id="n-attendance" style="left:225px;top:400px;width:100px"
-           data-tip="出勤・勤怠フォームの受信処理">
-        <span class="n-icon">🕐</span>attendance
-      </div>
-      <div class="node n-worker" id="n-notta" style="left:335px;top:400px;width:105px"
-           data-tip="Notta議事録のWebhook受信 → Todo抽出">
-        <span class="n-icon">📝</span>notta-webhook
-      </div>
-      <div class="node n-worker" id="n-pages-api" style="left:270px;top:530px;width:150px"
-           data-tip="Pages Functions /api/* — asakai/bouzu/zaiko/permissions 等25エンドポイント">
-        <span class="n-icon">⚙️</span>Pages Functions<span class="n-sub">/api/* (25 endpoints)</span>
-      </div>
-      <div class="node n-vps" id="n-daily-brief" style="left:520px;top:390px;width:110px"
-           data-tip="毎朝9:00 JST。NocoDB案件 → Claude API要約 → Gmail送信">
-        <span class="n-icon">📧</span>daily_brief<span class="n-sub">毎朝9:00 JST</span>
-      </div>
-      <div class="node n-vps" id="n-todoist-sync" style="left:645px;top:390px;width:110px"
-           data-tip="NocoDB Todoを定期的にTodoistと同期">
-        <span class="n-icon">🔄</span>noco→Todoist
-      </div>
-      <div class="node n-vps" id="n-timetree" style="left:770px;top:390px;width:110px"
-           data-tip="TimeTree予定をD1 DBと同期。Plaud文字起こしとのマッチングも">
-        <span class="n-icon">📅</span>TimeTree sync
-      </div>
+        <!-- ゲートウェイ -->
+        <div class="node n-gateway" id="n-line-api" style="left:30px;top:145px;width:90px" data-tip="LINE Messaging API。Webhookイベントをyc-line-webhookへ転送する。">
+          <span class="n-icon">💬</span>LINE API
+        </div>
+        <div class="node n-gateway" id="n-cf-access" style="left:270px;top:145px;width:140px" data-tip="Cloudflare Access 3層認証。18名のメール許可リストで管理。公開ページはバイパスapp設定。">
+          <span class="n-icon">🔑</span>CF Access 認証
+        </div>
+        <div class="node n-ext" id="n-zapier" style="left:570px;top:145px;width:120px" data-tip="Zapier経由でPlaud文字起こしをGoogle Driveへ保存。VPS cronが定期取得。">
+          <span class="n-icon">⚡</span>Zapier→Drive
+        </div>
+        <div class="node n-worker" id="n-demoday-w" style="left:745px;top:145px;width:115px" data-tip="demoday-api Worker。CF Workers + D1 + Resend + Google Sheetsで申込管理。">
+          <span class="n-icon">📋</span>demoday-api<span class="n-sub">CF Worker</span>
+        </div>
 
-      <!-- ── データ層 ── -->
-      <div class="node n-data" id="n-nocodb" style="left:450px;top:530px;width:120px"
-           data-tip="db.ycompany.co.jp — メインDB。全WorkerとVPS cronが参照">
-        <span class="n-icon">🗄</span>NocoDB<span class="n-sub">主データストア</span>
-      </div>
-      <div class="node n-data" id="n-d1" style="left:620px;top:530px;width:90px"
-           data-tip="Cloudflare D1 — シフトDB・デモデイDB">
-        <span class="n-icon">💾</span>D1 (SQLite)
-      </div>
-      <div class="node n-ext" id="n-notion" style="left:140px;top:400px;width:0px;opacity:0" id="n-notion-hidden"></div>
+        <!-- コア -->
+        <div class="node n-central" id="n-webhook" style="left:15px;top:285px;width:135px" data-tip="yc-line-webhook — LINEイベント受信の中枢。Service Bindingで各Workerへ振り分け。2,000行超のメインWorker。">
+          <span class="n-icon">⚡</span>yc-line-webhook<span class="n-sub">LINE中枢 Worker</span>
+        </div>
+        <div class="node n-portal" id="n-portal-yc" style="left:265px;top:285px;width:155px" data-tip="portal.ycompany.co.jp — CF Pages (yc-manual-v13)。25のPages Functions /api/*がNocoDB・D1を操作。">
+          <span class="n-icon">🏢</span>YC Portal<span class="n-sub">CF Pages + 25 Functions</span>
+        </div>
+        <div class="node n-vps" id="n-vps" style="left:575px;top:285px;width:125px" data-tip="VPS 162.43.36.173。Pythonスクリプト群がcronで定期実行。feedback_serverは常駐。">
+          <span class="n-icon">🖥</span>VPS<span class="n-sub">Python / cron</span>
+        </div>
 
-      <!-- ── 出力層 ── -->
-      <div class="node n-output" id="n-gmail" style="left:520px;top:620px;width:100px"
-           data-tip="Gmail / Resend経由でメール送信">
-        <span class="n-icon">✉️</span>Gmail / Resend
-      </div>
-      <div class="node n-output" id="n-todoist-out" style="left:640px;top:620px;width:90px"
-           data-tip="Todoistへタスクを同期">
-        <span class="n-icon">📌</span>Todoist
-      </div>
-      <div class="node n-output" id="n-gsheets" style="left:760px;top:620px;width:100px"
-           data-tip="demoday申込をGoogle Sheetsに記録">
-        <span class="n-icon">📊</span>Google Sheets
-      </div>
+        <!-- Workerサブ -->
+        <div class="node n-worker" id="n-faq" style="left:5px;top:415px;width:95px" data-tip="yc-faq-bot — FAQ自動応答。Service Binding経由でwebhookから呼ばれる。NocoDB FAQ参照。">
+          <span class="n-icon">🤖</span>faq-bot
+        </div>
+        <div class="node n-worker" id="n-todo" style="left:105px;top:415px;width:105px" data-tip="yc-todo-approval — Todoタスク承認フロー。LINE通知 → 承認/却下 → NocoDB更新。">
+          <span class="n-icon">✅</span>todo-approval
+        </div>
+        <div class="node n-worker" id="n-attendance" style="left:215px;top:415px;width:105px" data-tip="yc-attendance-form — 出勤・勤怠フォームの受信処理。NocoDB勤怠テーブルへ書き込み。">
+          <span class="n-icon">🕐</span>attendance-form
+        </div>
+        <div class="node n-worker" id="n-notta" style="left:325px;top:415px;width:110px" data-tip="yc-notta-webhook — Notta議事録Webhook受信。Todo項目を抽出してNocoDB登録。">
+          <span class="n-icon">📝</span>notta-webhook
+        </div>
+        <div class="node n-worker" id="n-watchdog" style="left:440px;top:415px;width:105px" data-tip="yc-todo-watchdog — Todo期限監視。cron実行でNocoDB確認 → 期限切れをLINE通知。">
+          <span class="n-icon">👁</span>todo-watchdog
+        </div>
 
-    </div><!-- /diagram-wrap -->
+        <!-- VPS jobs -->
+        <div class="node n-vps" id="n-daily-brief" style="left:510px;top:415px;width:110px" data-tip="daily_brief.py — 毎朝9:00 JST。NocoDB案件 → Claude API要約 → Gmail送信。">
+          <span class="n-icon">📧</span>daily_brief<span class="n-sub">毎朝9:00 JST</span>
+        </div>
+        <div class="node n-vps" id="n-todoist-sync" style="left:635px;top:415px;width:110px" data-tip="yc_noco_to_todoist.py — NocoDB Todoを定期的にTodoistへ同期。">
+          <span class="n-icon">🔄</span>noco→Todoist<span class="n-sub">定期 cron</span>
+        </div>
+        <div class="node n-vps" id="n-timetree" style="left:760px;top:415px;width:110px" data-tip="yc_timetree_sync_v2.py — TimeTree予定をD1 DBと同期。Plaud文字起こしとのマッチングも実施。">
+          <span class="n-icon">📅</span>TimeTree sync<span class="n-sub">定期 cron</span>
+        </div>
+
+        <!-- データ -->
+        <div class="node n-data" id="n-nocodb" style="left:370px;top:555px;width:120px" data-tip="NocoDB — db.ycompany.co.jp。全WorkerとVPS cronが参照するメインデータストア。13,860件の顧客データ含む。">
+          <span class="n-icon">🗄</span>NocoDB<span class="n-sub">主データストア</span>
+        </div>
+        <div class="node n-data" id="n-d1" style="left:540px;top:555px;width:95px" data-tip="Cloudflare D1 (SQLite) — yc-shift-db（シフト管理）・demoday-db（申込管理）">
+          <span class="n-icon">💾</span>D1 SQLite
+        </div>
+
+        <!-- 出力 -->
+        <div class="node n-output" id="n-gmail" style="left:370px;top:650px;width:100px" data-tip="Gmail / Resend経由でスタッフ・お客様へメール送信。daily_brief・npo-contact等が利用。">
+          <span class="n-icon">✉️</span>Gmail/Resend
+        </div>
+        <div class="node n-output" id="n-todoist-out" style="left:490px;top:650px;width:90px" data-tip="Todoistアプリへタスクを同期。VPS noco_to_todoistが書き込む。">
+          <span class="n-icon">📌</span>Todoist
+        </div>
+        <div class="node n-output" id="n-gsheets" style="left:640px;top:555px;width:110px" data-tip="Google Sheets — demoday申込データを記録。SPREADSHEET_ID管理。">
+          <span class="n-icon">📊</span>Google Sheets
+        </div>
+        <div class="node n-output" id="n-timetree-out" style="left:780px;top:555px;width:100px" data-tip="TimeTree予定API。VPS syncが取得してD1・NocoDB・Plaud文字起こしとマッチング。">
+          <span class="n-icon">📆</span>TimeTree API
+        </div>
+
+      </div>
+    </div><!-- /diagram-outer -->
+
+    <!-- 凡例 -->
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;box-shadow:0 0 5px #f59e0b55"></div>中枢Worker</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>CF Pages / Portal</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1e40af"></div>CF Worker</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>データストア</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>VPS / cron</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#15803d"></div>出力先</div>
+      <div class="legend-item"><span style="font-size:10px;color:#4ade80">━━</span> 実線=主フロー</div>
+      <div class="legend-item"><span style="font-size:10px;color:#60a5fa">╌╌</span> 破線=補助フロー</div>
+    </div>
+
+    <!-- ── Worker全一覧 ── -->
+    <div class="worker-section" style="margin-top:20px">
+      <div class="section-label" style="margin-bottom:10px">CF Workers 全27本（yc-workers リポジトリ）</div>
+      <div class="worker-grid">
+
+        <div class="wcard central">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-line-webhook</div></div>
+          <div class="wcard-desc">LINE受信の中枢。全LINEイベントを振り分け。Service Bindingで各Workerへ委譲。</div>
+          <span class="wcard-badge">中枢・2000行超</span>
+        </div>
+
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-faq-bot</div></div>
+          <div class="wcard-desc">FAQ自動応答。NocoDB FAQ参照。</div>
+          <span class="wcard-badge">LINE連動</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-todo-approval</div></div>
+          <div class="wcard-desc">Todoタスク承認フロー。LINE → 承認/却下 → NocoDB更新。</div>
+          <span class="wcard-badge">LINE連動</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-todo-watchdog</div></div>
+          <div class="wcard-desc">Todo期限監視。cron実行で期限切れをLINE通知。</div>
+          <span class="wcard-badge">cron</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-notta-webhook</div></div>
+          <div class="wcard-desc">Notta議事録Webhook受信 → Todo抽出 → NocoDB登録。</div>
+          <span class="wcard-badge">Webhook</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-failure-notifier</div></div>
+          <div class="wcard-desc">Worker/cronエラー通知をLINE/メールで送信。</div>
+          <span class="wcard-badge">通知</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-morning-report</div></div>
+          <div class="wcard-desc">朝次レポート自動送信。</div>
+          <span class="wcard-badge">cron</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-bot</div></div>
+          <div class="wcard-desc">汎用ボット処理。</div>
+          <span class="wcard-badge">LINE連動</span>
+        </div>
+        <div class="wcard trigger">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#22c55e"></div><div class="wcard-name">yc-customer-line</div></div>
+          <div class="wcard-desc">お客様向けLINE応答処理。</div>
+          <span class="wcard-badge">LINE連動</span>
+        </div>
+
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-attendance-form</div></div>
+          <div class="wcard-desc">勤怠表提出フォーム受信 → NocoDB書き込み。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-shift-form</div></div>
+          <div class="wcard-desc">シフト希望HTML配信 + 提出受信。LINE tokenで本人確認。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-daily-report-form</div></div>
+          <div class="wcard-desc">日報提出フォーム受信 → NocoDB書き込み。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-drink-form</div></div>
+          <div class="wcard-desc">ドリンク注文フォーム。drink-form.ycompany.co.jpカスタムドメイン。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-template-form</div></div>
+          <div class="wcard-desc">汎用フォームテンプレート。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#f59e0b"></div><div class="wcard-name">yc-template-meeting</div></div>
+          <div class="wcard-desc">会議テンプレートWorker。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+        <div class="wcard form">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#ef4444"></div><div class="wcard-name">yc-npo-contact</div></div>
+          <div class="wcard-desc">NPO相談フォーム受信 → Resend経由でメール送信。社会変革支援サービス用。</div>
+          <span class="wcard-badge">フォーム</span>
+        </div>
+
+        <div class="wcard api">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#8b5cf6"></div><div class="wcard-name">yc-portal</div></div>
+          <div class="wcard-desc">/meetings・/executive 専用Worker。portal.ycompany.co.jpにルーティング。</div>
+          <span class="wcard-badge">API</span>
+        </div>
+        <div class="wcard api">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#8b5cf6"></div><div class="wcard-name">yc-shift-admin</div></div>
+          <div class="wcard-desc">シフト管理者画面Worker。D1シフトDBを操作。</div>
+          <span class="wcard-badge">API</span>
+        </div>
+        <div class="wcard api">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#8b5cf6"></div><div class="wcard-name">yc-glossary-api</div></div>
+          <div class="wcard-desc">用語集API。glossary.htmlのバックエンド。NocoDB参照。</div>
+          <span class="wcard-badge">API</span>
+        </div>
+        <div class="wcard api">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#8b5cf6"></div><div class="wcard-name">yc-members-editor</div></div>
+          <div class="wcard-desc">メンバー編集UI。members-editor.ycompany.co.jpカスタムドメイン。</div>
+          <span class="wcard-badge">API</span>
+        </div>
+        <div class="wcard api">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#8b5cf6"></div><div class="wcard-name">yc-faq-editor</div></div>
+          <div class="wcard-desc">FAQ編集UI。faq-editor.ycompany.co.jpカスタムドメイン。</div>
+          <span class="wcard-badge">API</span>
+        </div>
+        <div class="wcard api">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#8b5cf6"></div><div class="wcard-name">yc-subscription-admin</div></div>
+          <div class="wcard-desc">サブスク・会費管理API。</div>
+          <span class="wcard-badge">API</span>
+        </div>
+
+        <div class="wcard util">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#64748b"></div><div class="wcard-name">yc-drink-info</div></div>
+          <div class="wcard-desc">ドリンク情報取得API。</div>
+          <span class="wcard-badge">ユーティリティ</span>
+        </div>
+        <div class="wcard util">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#64748b"></div><div class="wcard-name">yc-manual-feedback</div></div>
+          <div class="wcard-desc">マニュアルへのフィードバック受信。GitHub Issue作成連携。</div>
+          <span class="wcard-badge">ユーティリティ</span>
+        </div>
+        <div class="wcard util">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#64748b"></div><div class="wcard-name">yc-dev-memo</div></div>
+          <div class="wcard-desc">開発メモ管理Worker。</div>
+          <span class="wcard-badge">ユーティリティ</span>
+        </div>
+        <div class="wcard util">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#64748b"></div><div class="wcard-name">yc-daily-brief</div></div>
+          <div class="wcard-desc">デイリーブリーフ配信（Worker版）。VPSのdaily_brief.pyと連携。</div>
+          <span class="wcard-badge">ユーティリティ</span>
+        </div>
+        <div class="wcard util">
+          <div class="wcard-head"><div class="wcard-dot" style="background:#64748b"></div><div class="wcard-name">yc-healthcheck</div></div>
+          <div class="wcard-desc">システムヘルスチェック専用Worker。GitHub Actions監視から呼ばれる。</div>
+          <span class="wcard-badge">監視</span>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-</div>
+</div><!-- /tab-flow -->
 
-<!-- ── 凡例 ── -->
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;box-shadow:0 0 6px #f59e0b55"></div>中枢 Worker</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>ポータル / Pages</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#1e40af"></div>CF Worker</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6;box-shadow:0 0 6px #8b5cf655"></div>データストア</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>VPS / cron</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#374151"></div>外部サービス</div>
-</div>
+<!-- ═══ TAB2: リポジトリ構成 ═══ -->
+<div class="tab-content" id="tab-repo">
+  <div class="repo-wrap">
+    <div class="section-label" style="margin-bottom:10px">GitHub: ycompany0909 — 全リポジトリ物理構成</div>
+    <div class="repo-grid">
 
-<!-- ツールチップ -->
+      <!-- ycompany-portal -->
+      <div class="repo-card" style="border-color:#2563eb44">
+        <div class="repo-header">
+          <div class="repo-icon">🏢</div>
+          <div><div class="repo-title" style="color:#93c5fd">ycompany-portal</div><div class="repo-url">portal.ycompany.co.jp</div></div>
+          <span class="repo-badge badge-priv">🔒 private</span>
+        </div>
+        <div class="repo-tree">
+          <div class="tree-line dir">📁 manual_v1.3_html/ <span class="tree-badge tb-pages">CF Pages ソース</span></div>
+          <div class="tree-line" style="padding-left:16px">📁 functions/api/ <span class="tree-badge tb-pages">25 Pages Functions</span></div>
+          <div class="tree-line" style="padding-left:32px;color:#475569">asakai/ bouzu/ zaiko/ permissions/ contacts/ …</div>
+          <div class="tree-line" style="padding-left:16px">📁 assets/ <span class="tree-badge tb-html">permission-badge.js</span></div>
+          <div class="tree-line" style="padding-left:16px">🌐 index.html <span class="tree-badge tb-html">統合ポータル TOP</span></div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">+ 30本以上のHTML</div>
+          <div class="tree-line dir" style="margin-top:6px">📁 vps/</div>
+          <div class="tree-line" style="padding-left:16px">📁 yc-asakai/ <span class="tree-badge tb-python">Python cron</span></div>
+          <div class="tree-line" style="padding-left:32px;color:#475569">daily_brief.py / feedback_server.py</div>
+          <div class="tree-line" style="padding-left:32px;color:#475569">yc_noco_to_todoist.py / send_report.py</div>
+          <div class="tree-line" style="padding-left:16px">📁 yc-timetree-sync/ <span class="tree-badge tb-python">Python cron</span></div>
+          <div class="tree-line dir" style="margin-top:6px">📁 scripts/</div>
+          <div class="tree-line key" style="padding-left:16px">🔧 deploy-pages-with-smoke.sh <span class="tree-badge tb-ci">13件スモーク</span></div>
+          <div class="tree-line dir" style="margin-top:6px">📁 .github/workflows/</div>
+          <div class="tree-line" style="padding-left:16px">⚙️ deploy.yml <span class="tree-badge tb-ci">構文チェック→deploy</span></div>
+          <div class="tree-line" style="padding-left:16px">⚙️ healthcheck.yml <span class="tree-badge tb-ci">毎日JST5:00</span></div>
+          <div class="tree-line" style="padding-left:16px">⚙️ workers-healthcheck.yml <span class="tree-badge tb-ci">毎日JST5:10</span></div>
+          <div class="tree-line" style="padding-left:16px">⚙️ vps-healthcheck.yml <span class="tree-badge tb-ci">毎日JST5:20</span></div>
+        </div>
+        <div class="repo-stats">
+          <div class="stat-item">📄 HTML 30+</div>
+          <div class="stat-item">⚙️ Functions 25</div>
+          <div class="stat-item">🔁 CI 4本</div>
+        </div>
+      </div>
+
+      <!-- yc-workers -->
+      <div class="repo-card" style="border-color:#d97706aa">
+        <div class="repo-header">
+          <div class="repo-icon">⚡</div>
+          <div><div class="repo-title" style="color:#fbbf24">yc-workers</div><div class="repo-url">Cloudflare Workers 群</div></div>
+          <span class="repo-badge badge-priv">🔒 private</span>
+        </div>
+        <div class="repo-tree">
+          <div class="tree-line key">📁 yc-line-webhook/ <span class="tree-badge tb-worker">中枢</span></div>
+          <div class="tree-line dir">📁 yc-faq-bot/</div>
+          <div class="tree-line dir">📁 yc-todo-approval/</div>
+          <div class="tree-line dir">📁 yc-todo-watchdog/</div>
+          <div class="tree-line dir">📁 yc-notta-webhook/</div>
+          <div class="tree-line dir">📁 yc-failure-notifier/</div>
+          <div class="tree-line dir">📁 yc-attendance-form/</div>
+          <div class="tree-line dir">📁 yc-shift-form/</div>
+          <div class="tree-line dir">📁 yc-shift-admin/</div>
+          <div class="tree-line dir">📁 yc-daily-report-form/</div>
+          <div class="tree-line dir">📁 yc-npo-contact/</div>
+          <div class="tree-line dir">📁 yc-glossary-api/</div>
+          <div class="tree-line dir">📁 yc-portal/</div>
+          <div class="tree-line dir">📁 yc-members-editor/</div>
+          <div class="tree-line dir">📁 yc-faq-editor/</div>
+          <div class="tree-line dir">📁 yc-subscription-admin/</div>
+          <div class="tree-line dir" style="color:#475569">📁 yc-morning-report/ / yc-bot/ / yc-customer-line/</div>
+          <div class="tree-line dir" style="color:#475569">📁 yc-drink-form/ / yc-drink-info/ / yc-dev-memo/</div>
+          <div class="tree-line dir" style="color:#475569">📁 yc-manual-feedback/ / yc-healthcheck/ / yc-daily-brief/</div>
+          <div class="tree-line" style="margin-top:4px;color:#475569">各Worker: src/worker.js + wrangler.jsonc</div>
+        </div>
+        <div class="repo-stats">
+          <div class="stat-item">⚡ Workers 27本</div>
+          <div class="stat-item">🌐 カスタムドメイン 3</div>
+        </div>
+      </div>
+
+      <!-- ikizama-portal -->
+      <div class="repo-card" style="border-color:#9f123944">
+        <div class="repo-header">
+          <div class="repo-icon">🏯</div>
+          <div><div class="repo-title" style="color:#fca5a5">ikizama-portal</div><div class="repo-url">portal.edo-castle.com</div></div>
+          <span class="repo-badge badge-priv">🔒 private</span>
+        </div>
+        <div class="repo-tree">
+          <div class="tree-line key">📄 _worker.js <span class="tree-badge tb-pages">CF Pages Advanced</span></div>
+          <div class="tree-line dir">📁 functions/api/ikizama/</div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">[[path]].js — Notion API連携</div>
+          <div class="tree-line dir">📁 data/ <span class="tree-badge tb-data">メンバーデータ</span></div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">members_master.json / people_master.json</div>
+          <div class="tree-line dir" style="margin-top:6px">📁 scripts/</div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">import_members.js / import_todos.js</div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">generate_people_master.py</div>
+          <div class="tree-line dir" style="margin-top:6px">🌐 HTMLページ群</div>
+          <div class="tree-line" style="color:#475569">index / members / todos / sponsor / supporters</div>
+          <div class="tree-line" style="color:#475569">join / outreach / requests / meishi / sankaku…</div>
+        </div>
+        <div class="repo-stats">
+          <div class="stat-item">📄 HTML 15+</div>
+          <div class="stat-item">💡 Notion API</div>
+        </div>
+      </div>
+
+      <!-- orzugul-portal -->
+      <div class="repo-card" style="border-color:#16a34a44">
+        <div class="repo-header">
+          <div class="repo-icon">🏛</div>
+          <div><div class="repo-title" style="color:#86efac">orzugul-portal</div><div class="repo-url">portal.orzugul.com</div></div>
+          <span class="repo-badge badge-priv">🔒 private</span>
+        </div>
+        <div class="repo-tree">
+          <div class="tree-line dir">📁 CF Pages ソース</div>
+          <div class="tree-line dir">📁 .github/workflows/ <span class="tree-badge tb-ci">GitHub Actions</span></div>
+          <div class="tree-line" style="color:#475569;margin-top:8px">オルズグル個人事務所ポータル</div>
+          <div class="tree-line" style="color:#475569">posta・ミーティングログを iframe 埋め込み</div>
+        </div>
+        <div class="repo-stats">
+          <div class="stat-item">🌐 CF Pages</div>
+          <div class="stat-item">🔁 GitHub Actions</div>
+        </div>
+      </div>
+
+      <!-- demoday-2026 -->
+      <div class="repo-card" style="border-color:#7c3aed44">
+        <div class="repo-header">
+          <div class="repo-icon">🎯</div>
+          <div><div class="repo-title" style="color:#c4b5fd">demoday-2026</div><div class="repo-url">demoday.esgaccelerator.com</div></div>
+          <span class="repo-badge badge-priv">🔒 private</span>
+        </div>
+        <div class="repo-tree">
+          <div class="tree-line key">📄 src/worker.js <span class="tree-badge tb-worker">CF Worker</span></div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">POST /register → D1 + Resend + GSheets</div>
+          <div class="tree-line dir" style="margin-top:4px">📁 frontend/</div>
+          <div class="tree-line" style="padding-left:16px;color:#475569">index.html — 申込フォーム</div>
+          <div class="tree-line dir" style="margin-top:4px">📄 schema.sql <span class="tree-badge tb-data">D1スキーマ</span></div>
+          <div class="tree-line dir">📄 wrangler.toml</div>
+          <div class="tree-line" style="color:#475569;margin-top:8px">MUFG ICJ ESG ACCELERATOR 2026</div>
+          <div class="tree-line" style="color:#475569">デモデイ: 2026-06-11 ベルサール虎ノ門</div>
+        </div>
+        <div class="repo-stats">
+          <div class="stat-item">⚡ CF Worker</div>
+          <div class="stat-item">💾 D1</div>
+          <div class="stat-item">📊 Google Sheets</div>
+        </div>
+      </div>
+
+      <!-- yc-dev-portal -->
+      <div class="repo-card" style="border-color:#4ade8044">
+        <div class="repo-header">
+          <div class="repo-icon">🗺</div>
+          <div><div class="repo-title" style="color:#bbf7d0">yc-dev-portal</div><div class="repo-url">ycompany0909.github.io/yc-dev-portal</div></div>
+          <span class="repo-badge badge-pub">🌐 public</span>
+        </div>
+        <div class="repo-tree">
+          <div class="tree-line dir">📁 docs/ <span class="tree-badge tb-html">GitHub Pages ソース</span></div>
+          <div class="tree-line" style="padding-left:16px">📄 index.html — ダッシュボード</div>
+          <div class="tree-line" style="padding-left:16px">📄 map.html — このページ</div>
+          <div class="tree-line" style="padding-left:16px">📄 npo.html — 社会変革支援サービス</div>
+          <div class="tree-line" style="padding-left:16px">📄 grant-search.html — 助成金DB</div>
+          <div class="tree-line" style="padding-left:16px">📄 grant-data.json — 1,359件</div>
+          <div class="tree-line dir" style="margin-top:4px">📁 grant-db/scripts/</div>
+          <div class="tree-line" style="color:#475569;padding-left:16px">add_foundation_fields.py</div>
+          <div class="tree-line" style="color:#475569;padding-left:16px">output/foundations.csv</div>
+        </div>
+        <div class="repo-stats">
+          <div class="stat-item">🌐 公開サイト</div>
+          <div class="stat-item">📊 助成金 1,359件</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /tab-repo -->
+
+<!-- tooltip -->
 <div class="tooltip" id="tooltip"></div>
 
 <script>
-// ── エッジ定義 [from, to, color, marker, dash] ──
+// ── タブ切替 ──
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const id = ['flow','repo'][i];
+    t.classList.toggle('active', id===name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.toggle('active', c.id==='tab-'+name);
+  });
+  if (name==='flow') setTimeout(drawEdges, 50);
+}
+
+// ── エッジ定義 ──
 const EDGES = [
-  // LINE flow
-  ['n-line-users', 'n-line-api',    '#4ade80','arr-green',  false],
-  ['n-line-api',   'n-webhook',     '#4ade80','arr-green',  false],
-  ['n-webhook',    'n-faq',         '#60a5fa','arr-blue',   true],
-  ['n-webhook',    'n-todo',        '#60a5fa','arr-blue',   true],
-  ['n-webhook',    'n-attendance',  '#60a5fa','arr-blue',   true],
-  ['n-webhook',    'n-notta',       '#60a5fa','arr-blue',   true],
-
-  // Staff flow
-  ['n-staff',      'n-cf-access',   '#86efac','arr-green',  false],
-  ['n-cf-access',  'n-portal-yc',   '#86efac','arr-green',  false],
-  ['n-portal-yc',  'n-pages-api',   '#60a5fa','arr-blue',   false],
-  ['n-pages-api',  'n-nocodb',      '#a78bfa','arr-purple', false],
-
-  // Workers → NocoDB
-  ['n-faq',        'n-nocodb',      '#a78bfa','arr-purple', true],
-  ['n-todo',       'n-nocodb',      '#a78bfa','arr-purple', true],
-  ['n-attendance', 'n-nocodb',      '#a78bfa','arr-purple', true],
-
-  // Plaud/VPS flow
-  ['n-plaud',      'n-zapier',      '#94a3b8','arr-slate',  false],
-  ['n-zapier',     'n-vps',         '#94a3b8','arr-slate',  false],
-  ['n-vps',        'n-daily-brief', '#818cf8','arr-blue',   false],
-  ['n-vps',        'n-todoist-sync','#818cf8','arr-blue',   false],
-  ['n-vps',        'n-timetree',    '#818cf8','arr-blue',   false],
-  ['n-daily-brief','n-nocodb',      '#a78bfa','arr-purple', true],
-  ['n-daily-brief','n-gmail',       '#4ade80','arr-green',  false],
-  ['n-todoist-sync','n-nocodb',     '#a78bfa','arr-purple', true],
-  ['n-todoist-sync','n-todoist-out','#4ade80','arr-green',  false],
-  ['n-timetree',   'n-d1',          '#a78bfa','arr-purple', false],
-
-  // demoday
-  ['n-external-user','n-demoday-w', '#c4b5fd','arr-purple', false],
-  ['n-demoday-w',  'n-d1',          '#a78bfa','arr-purple', false],
-  ['n-demoday-w',  'n-gmail',       '#4ade80','arr-green',  false],
-  ['n-demoday-w',  'n-gsheets',     '#4ade80','arr-green',  false],
+  ['n-line-users','n-line-api',   '#4ade80','arr-green', false],
+  ['n-line-api',  'n-webhook',    '#4ade80','arr-green', false],
+  ['n-webhook',   'n-faq',        '#60a5fa','arr-blue',  true],
+  ['n-webhook',   'n-todo',       '#60a5fa','arr-blue',  true],
+  ['n-webhook',   'n-attendance', '#60a5fa','arr-blue',  true],
+  ['n-webhook',   'n-notta',      '#60a5fa','arr-blue',  true],
+  ['n-webhook',   'n-watchdog',   '#60a5fa','arr-blue',  true],
+  ['n-staff',     'n-cf-access',  '#86efac','arr-green', false],
+  ['n-cf-access', 'n-portal-yc', '#86efac','arr-green', false],
+  ['n-portal-yc', 'n-nocodb',    '#a78bfa','arr-purple',false],
+  ['n-faq',       'n-nocodb',    '#a78bfa','arr-purple',true],
+  ['n-todo',      'n-nocodb',    '#a78bfa','arr-purple',true],
+  ['n-attendance','n-nocodb',    '#a78bfa','arr-purple',true],
+  ['n-notta',     'n-nocodb',    '#a78bfa','arr-purple',true],
+  ['n-watchdog',  'n-nocodb',    '#a78bfa','arr-purple',true],
+  ['n-plaud',     'n-zapier',    '#94a3b8','arr-slate',  false],
+  ['n-zapier',    'n-vps',       '#94a3b8','arr-slate',  false],
+  ['n-vps',       'n-daily-brief','#818cf8','arr-blue',  false],
+  ['n-vps',       'n-todoist-sync','#818cf8','arr-blue', false],
+  ['n-vps',       'n-timetree',  '#818cf8','arr-blue',   false],
+  ['n-daily-brief','n-nocodb',   '#a78bfa','arr-purple', true],
+  ['n-daily-brief','n-gmail',    '#4ade80','arr-green',  false],
+  ['n-todoist-sync','n-nocodb',  '#a78bfa','arr-purple', true],
+  ['n-todoist-sync','n-todoist-out','#4ade80','arr-green',false],
+  ['n-timetree',  'n-d1',        '#a78bfa','arr-purple', false],
+  ['n-timetree',  'n-timetree-out','#4ade80','arr-green',false],
+  ['n-ext-user',  'n-demoday-w', '#c4b5fd','arr-purple', false],
+  ['n-demoday-w', 'n-d1',        '#a78bfa','arr-purple', false],
+  ['n-demoday-w', 'n-gmail',     '#4ade80','arr-green',  false],
+  ['n-demoday-w', 'n-gsheets',   '#4ade80','arr-green',  false],
 ];
 
-function cx(el) {
+function getCenterInWrap(el) {
   const wrap = document.getElementById('diagram-wrap');
   const wr = wrap.getBoundingClientRect();
   const er = el.getBoundingClientRect();
-  return er.left - wr.left + er.width / 2;
-}
-function cy(el) {
-  const wrap = document.getElementById('diagram-wrap');
-  const wr = wrap.getBoundingClientRect();
-  const er = el.getBoundingClientRect();
-  return er.top - wr.top + er.height / 2;
+  return { x: er.left - wr.left + er.width/2, y: er.top - wr.top + er.height/2 };
 }
 
 function drawEdges() {
   const svg = document.getElementById('svg-lines');
-  // clear old paths
   svg.querySelectorAll('path.edge').forEach(p => p.remove());
-
   EDGES.forEach(([fid, tid, color, marker, dashed]) => {
     const from = document.getElementById(fid);
     const to   = document.getElementById(tid);
     if (!from || !to) return;
-
-    const x1 = cx(from), y1 = cy(from);
-    const x2 = cx(to),   y2 = cy(to);
-
-    // cubic bezier: control points bend toward center
-    const dx = x2 - x1, dy = y2 - y1;
-    const cx1 = x1 + dx * 0.1;
-    const cy1 = y1 + dy * 0.6;
-    const cx2 = x2 - dx * 0.1;
-    const cy2 = y2 - dy * 0.4;
-
+    const {x:x1, y:y1} = getCenterInWrap(from);
+    const {x:x2, y:y2} = getCenterInWrap(to);
+    const dy = y2 - y1, dx = x2 - x1;
     const path = document.createElementNS('http://www.w3.org/2000/svg','path');
     path.setAttribute('class','edge');
-    path.setAttribute('d', `M${x1},${y1} C${cx1},${cy1} ${cx2},${cy2} ${x2},${y2}`);
+    path.setAttribute('d',`M${x1},${y1} C${x1+dx*.1},${y1+dy*.6} ${x2-dx*.1},${y2-dy*.4} ${x2},${y2}`);
     path.setAttribute('stroke', color);
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke-width', '1.5');
-    path.setAttribute('stroke-opacity', '0.6');
-    path.setAttribute('marker-end', `url(#${marker})`);
-    if (dashed) path.setAttribute('stroke-dasharray', '5 3');
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-opacity','0.55');
+    path.setAttribute('marker-end',`url(#${marker})`);
+    if (dashed) path.setAttribute('stroke-dasharray','5 3');
     svg.appendChild(path);
   });
 }
 
 // ── ツールチップ ──
 const tooltip = document.getElementById('tooltip');
-document.querySelectorAll('.node[data-tip]').forEach(node => {
-  node.style.cursor = 'help';
-  node.addEventListener('mouseenter', e => {
-    tooltip.textContent = node.dataset.tip;
-    tooltip.classList.add('show');
-  });
-  node.addEventListener('mousemove', e => {
-    tooltip.style.left = (e.clientX + 12) + 'px';
-    tooltip.style.top  = (e.clientY + 12) + 'px';
-  });
-  node.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+document.querySelectorAll('[data-tip]').forEach(el => {
+  el.addEventListener('mouseenter', () => { tooltip.textContent = el.dataset.tip; tooltip.classList.add('show'); });
+  el.addEventListener('mousemove', e => { tooltip.style.left=(e.clientX+14)+'px'; tooltip.style.top=(e.clientY+14)+'px'; });
+  el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
 });
 
-// ── 初期描画 + リサイズ対応 ──
-window.addEventListener('load',   drawEdges);
+window.addEventListener('load', drawEdges);
 window.addEventListener('resize', drawEdges);
 </script>
 </body>
