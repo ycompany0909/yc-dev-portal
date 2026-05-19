@@ -6,301 +6,406 @@
   <title>YC システムマップ</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; background: #0f172a; color: #e2e8f0; font-size: 13px; padding: 16px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+           background: #080e1a; color: #e2e8f0; min-height: 100vh; }
 
-    h1 { font-size: 18px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px; }
-    .subtitle { font-size: 11px; color: #64748b; margin-bottom: 20px; }
+    /* ── ヘッダー ── */
+    .header { padding: 20px 20px 0; }
+    .header h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; }
+    .header p  { font-size: 11px; color: #475569; margin-top: 2px; }
 
-    /* レイヤー */
-    .layer { margin-bottom: 12px; }
-    .layer-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #475569; margin-bottom: 8px; padding-left: 4px; }
+    /* ── ポータルカード（クリッカブル） ── */
+    .portals-section { padding: 16px 20px 0; }
+    .portals-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+                     text-transform: uppercase; color: #475569; margin-bottom: 10px; }
+    .portals { display: flex; flex-wrap: wrap; gap: 10px; }
 
-    /* カード共通 */
-    .cards { display: flex; flex-wrap: wrap; gap: 8px; }
-    .card { border-radius: 10px; padding: 10px 12px; flex: 1; min-width: 140px; max-width: 260px; }
-    .card-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
-    .card-url { font-size: 10px; opacity: 0.65; margin-bottom: 6px; font-family: monospace; }
-    .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-    .tag { font-size: 10px; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+    .portal-card {
+      display: flex; flex-direction: column; justify-content: space-between;
+      flex: 1; min-width: 140px; max-width: 220px;
+      border-radius: 12px; padding: 14px; text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer; position: relative; overflow: hidden;
+    }
+    .portal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .portal-card::after { content: '↗'; position: absolute; top: 10px; right: 12px;
+                          font-size: 14px; opacity: 0.4; }
+    .portal-card .pc-name  { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+    .portal-card .pc-url   { font-size: 10px; font-family: monospace; opacity: 0.6; margin-bottom: 8px; }
+    .portal-card .pc-tags  { display: flex; flex-wrap: wrap; gap: 4px; }
+    .portal-card .pc-tag   { font-size: 9px; padding: 2px 6px; border-radius: 20px; opacity: 0.85; }
 
-    /* ポータル */
-    .card.portal-yc       { background: #1e3a5f; border: 1px solid #2563eb; }
-    .card.portal-ikizama  { background: #3b1f2b; border: 1px solid #9f1239; }
-    .card.portal-orzugul  { background: #1a2e1a; border: 1px solid #16a34a; }
-    .card.portal-demoday  { background: #2d1f3b; border: 1px solid #7c3aed; }
-    .card.portal-dev      { background: #1e2a1e; border: 1px solid #4ade80; }
+    .pc-yc       { background: linear-gradient(135deg, #1e3a5f, #0f2444); border: 1px solid #2563eb; color: #93c5fd; }
+    .pc-ikizama  { background: linear-gradient(135deg, #3b1f2b, #200f18); border: 1px solid #9f1239; color: #fca5a5; }
+    .pc-orzugul  { background: linear-gradient(135deg, #1a2e1a, #0d1a0d); border: 1px solid #16a34a; color: #86efac; }
+    .pc-demoday  { background: linear-gradient(135deg, #2d1f3b, #180f22); border: 1px solid #7c3aed; color: #c4b5fd; }
+    .pc-dev      { background: linear-gradient(135deg, #1e2a20, #0f1810); border: 1px solid #4ade80; color: #bbf7d0; }
 
-    /* Workers */
-    .card.worker-central  { background: #1c2330; border: 1px solid #f59e0b; }
-    .card.worker-normal   { background: #1c2330; border: 1px solid #334155; }
+    /* ── ダイアグラム ── */
+    .diagram-section { padding: 20px 20px 0; }
+    .diagram-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+                     text-transform: uppercase; color: #475569; margin-bottom: 12px; }
+    .diagram-outer { overflow-x: auto; overflow-y: visible; padding-bottom: 20px; }
+    .diagram-wrap  { position: relative; width: 900px; height: 680px; }
 
-    /* インフラ */
-    .card.infra           { background: #1e1e2e; border: 1px solid #4f46e5; }
-    .card.external        { background: #1e2020; border: 1px solid #0891b2; }
+    #svg-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                 pointer-events: none; z-index: 1; }
 
-    /* tag colors */
-    .tag.cf   { background: #f97316; color: #fff; }
-    .tag.gh   { background: #334155; color: #94a3b8; }
-    .tag.vps  { background: #7c3aed; color: #fff; }
-    .tag.line { background: #16a34a; color: #fff; }
-    .tag.db   { background: #0891b2; color: #fff; }
-    .tag.mail { background: #dc2626; color: #fff; }
-    .tag.ai   { background: #d97706; color: #fff; }
-    .tag.py   { background: #3b82f6; color: #fff; }
-    .tag.d1   { background: #6366f1; color: #fff; }
-    .tag.notion { background: #1a1a1a; color: #fff; border: 1px solid #555; }
-    .tag.pub  { background: #064e3b; color: #6ee7b7; }
+    /* ── ノード ── */
+    .node {
+      position: absolute; border-radius: 10px; padding: 8px 12px;
+      font-size: 11px; font-weight: 600; text-align: center; z-index: 2;
+      transition: box-shadow 0.15s, transform 0.15s;
+      cursor: default; user-select: none; line-height: 1.4;
+      min-width: 90px;
+    }
+    .node:hover { transform: scale(1.05); }
+    .node .n-icon { font-size: 16px; display: block; margin-bottom: 3px; }
+    .node .n-sub  { font-size: 9px; opacity: 0.6; font-weight: 400; display: block; margin-top: 2px; }
 
-    /* Workers grid */
-    .workers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
-    .wcard { background: #1c2330; border: 1px solid #1e40af; border-radius: 8px; padding: 8px 10px; }
-    .wcard.central { border-color: #f59e0b; background: #1c1a10; }
-    .wcard-name { font-size: 11px; font-weight: 700; color: #93c5fd; margin-bottom: 3px; }
-    .wcard.central .wcard-name { color: #fbbf24; }
-    .wcard-desc { font-size: 10px; color: #64748b; line-height: 1.4; }
+    /* node colors */
+    .n-user    { background: #1e293b; border: 1px solid #334155; color: #94a3b8; }
+    .n-gateway { background: #1c2a1c; border: 1px solid #166534; color: #86efac; }
+    .n-central { background: #1c1a0a; border: 2px solid #f59e0b; color: #fbbf24;
+                 box-shadow: 0 0 12px rgba(245,158,11,0.3); }
+    .n-portal  { background: #0f1f3b; border: 1.5px solid #3b82f6; color: #93c5fd; }
+    .n-worker  { background: #1c2330; border: 1px solid #1e40af; color: #7dd3fc; }
+    .n-data    { background: #1a1030; border: 2px solid #8b5cf6; color: #c4b5fd;
+                 box-shadow: 0 0 10px rgba(139,92,246,0.25); }
+    .n-vps     { background: #1a1a30; border: 1px solid #6366f1; color: #a5b4fc; }
+    .n-ext     { background: #1a1a1a; border: 1px solid #374151; color: #9ca3af; }
+    .n-output  { background: #0f1a0f; border: 1px solid #15803d; color: #6ee7b7; }
 
-    /* 矢印セクション */
-    .flows { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
-    .flow { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #94a3b8; background: #1e293b; border-radius: 8px; padding: 8px 12px; }
-    .flow-from { color: #cbd5e1; font-weight: 600; min-width: 120px; }
-    .flow-arrow { color: #475569; }
-    .flow-to { color: #7dd3fc; }
+    /* レーンラベル */
+    .lane-label {
+      position: absolute; font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #1e293b; z-index: 0;
+      transform: rotate(-90deg); transform-origin: left center;
+    }
 
-    .divider { height: 1px; background: #1e293b; margin: 16px 0; }
+    /* ツールチップ */
+    .tooltip {
+      position: fixed; background: #1e293b; border: 1px solid #334155;
+      border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #cbd5e1;
+      pointer-events: none; z-index: 999; max-width: 200px; line-height: 1.5;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .tooltip.show { opacity: 1; }
 
-    .section-title { font-size: 14px; font-weight: 700; color: #cbd5e1; margin-bottom: 10px; margin-top: 20px; }
+    /* ── 凡例 ── */
+    .legend { padding: 16px 20px 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #64748b; }
+    .legend-dot  { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
   </style>
 </head>
 <body>
 
-<h1>YC システムマップ</h1>
-<p class="subtitle">最終更新: 2026-05-20 — ycompany0909</p>
+<div class="header">
+  <h1>YC システムマップ</h1>
+  <p>2026-05-20 — クリックで各ポータルへ</p>
+</div>
 
-<!-- ── ポータル層 ── -->
-<div class="layer">
-  <div class="layer-label">🌐 ポータル（公開エンドポイント）</div>
-  <div class="cards">
-
-    <div class="card portal-yc">
-      <div class="card-title">Y COMPANY ポータル</div>
-      <div class="card-url">portal.ycompany.co.jp</div>
-      <div class="card-tags">
-        <span class="tag cf">CF Pages</span>
-        <span class="tag cf">CF Access</span>
-        <span class="tag db">NocoDB</span>
-        <span class="tag d1">D1</span>
+<!-- ── ポータルカード ── -->
+<div class="portals-section">
+  <div class="portals-label">アクセス先ポータル</div>
+  <div class="portals">
+    <a href="https://portal.ycompany.co.jp" target="_blank" class="portal-card pc-yc">
+      <div>
+        <div class="pc-name">Y COMPANY</div>
+        <div class="pc-url">portal.ycompany.co.jp</div>
       </div>
-    </div>
-
-    <div class="card portal-ikizama">
-      <div class="card-title">IKIZAMA ポータル</div>
-      <div class="card-url">portal.edo-castle.com</div>
-      <div class="card-tags">
-        <span class="tag cf">CF Pages</span>
-        <span class="tag notion">Notion</span>
+      <div class="pc-tags">
+        <span class="pc-tag" style="background:#1d4ed8;color:#bfdbfe">CF Pages</span>
+        <span class="pc-tag" style="background:#0f766e;color:#99f6e4">NocoDB</span>
       </div>
-    </div>
-
-    <div class="card portal-orzugul">
-      <div class="card-title">オルズグル事務所</div>
-      <div class="card-url">portal.orzugul.com</div>
-      <div class="card-tags">
-        <span class="tag cf">CF Pages</span>
-        <span class="tag gh">GitHub Actions</span>
+    </a>
+    <a href="https://portal.edo-castle.com" target="_blank" class="portal-card pc-ikizama">
+      <div>
+        <div class="pc-name">IKIZAMA</div>
+        <div class="pc-url">portal.edo-castle.com</div>
       </div>
-    </div>
-
-    <div class="card portal-demoday">
-      <div class="card-title">ICJ ESGアクセラ</div>
-      <div class="card-url">demoday.esgaccelerator.com</div>
-      <div class="card-tags">
-        <span class="tag cf">CF Workers</span>
-        <span class="tag d1">D1</span>
-        <span class="tag mail">Resend</span>
+      <div class="pc-tags">
+        <span class="pc-tag" style="background:#9f1239;color:#fecdd3">CF Pages</span>
+        <span class="pc-tag" style="background:#1a1a1a;color:#d1d5db;border:1px solid #444">Notion</span>
       </div>
-    </div>
-
-    <div class="card portal-dev">
-      <div class="card-title">YC Dev Portal</div>
-      <div class="card-url">ycompany0909.github.io/yc-dev-portal</div>
-      <div class="card-tags">
-        <span class="tag gh">GitHub Pages</span>
-        <span class="tag pub">公開</span>
+    </a>
+    <a href="https://portal.orzugul.com" target="_blank" class="portal-card pc-orzugul">
+      <div>
+        <div class="pc-name">オルズグル事務所</div>
+        <div class="pc-url">portal.orzugul.com</div>
       </div>
-    </div>
-
+      <div class="pc-tags">
+        <span class="pc-tag" style="background:#166534;color:#bbf7d0">CF Pages</span>
+      </div>
+    </a>
+    <a href="https://demoday.esgaccelerator.com" target="_blank" class="portal-card pc-demoday">
+      <div>
+        <div class="pc-name">ICJ ESGアクセラ</div>
+        <div class="pc-url">demoday.esgaccelerator.com</div>
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag" style="background:#6d28d9;color:#ede9fe">Workers</span>
+        <span class="pc-tag" style="background:#dc2626;color:#fee2e2">Resend</span>
+      </div>
+    </a>
+    <a href="https://ycompany0909.github.io/yc-dev-portal/" target="_blank" class="portal-card pc-dev">
+      <div>
+        <div class="pc-name">Dev Portal</div>
+        <div class="pc-url">yc-dev-portal (公開)</div>
+      </div>
+      <div class="pc-tags">
+        <span class="pc-tag" style="background:#166534;color:#bbf7d0">GitHub Pages</span>
+      </div>
+    </a>
   </div>
 </div>
 
-<!-- ── Workers層 ── -->
-<div class="section-title">⚡ Cloudflare Workers（27本）</div>
-<div class="workers-grid">
-  <div class="wcard central">
-    <div class="wcard-name">yc-line-webhook</div>
-    <div class="wcard-desc">LINE受信の中枢。全LINEイベントの振り分け</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-faq-bot</div>
-    <div class="wcard-desc">FAQ自動応答（Service Binding受信）</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-todo-approval</div>
-    <div class="wcard-desc">Todoタスク承認フロー</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-todo-watchdog</div>
-    <div class="wcard-desc">Todo期限監視・cron実行</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-attendance-form</div>
-    <div class="wcard-desc">出勤フォーム受信</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-notta-webhook</div>
-    <div class="wcard-desc">Notta議事録→Todo抽出</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-failure-notifier</div>
-    <div class="wcard-desc">エラー通知</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-shift-form</div>
-    <div class="wcard-desc">シフト希望入力フォーム</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-shift-admin</div>
-    <div class="wcard-desc">シフト管理API</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-glossary-api</div>
-    <div class="wcard-desc">用語集API</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-portal</div>
-    <div class="wcard-desc">/meetings・/executive 専用Worker</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-npo-contact</div>
-    <div class="wcard-desc">NPO相談フォーム→Resend</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-morning-report</div>
-    <div class="wcard-desc">朝次レポート送信</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-daily-report-form</div>
-    <div class="wcard-desc">日報フォーム</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-drink-form / info</div>
-    <div class="wcard-desc">ドリンク注文フォーム</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-members-editor</div>
-    <div class="wcard-desc">メンバー編集UI</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-faq-editor</div>
-    <div class="wcard-desc">FAQ編集UI</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-subscription-admin</div>
-    <div class="wcard-desc">サブスク管理</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">yc-healthcheck</div>
-    <div class="wcard-desc">ヘルスチェック専用</div>
-  </div>
-  <div class="wcard">
-    <div class="wcard-name">その他 8本</div>
-    <div class="wcard-desc">bot / customer-line / dev-memo / template-form / template-meeting / manual-feedback / daily-brief / bot</div>
+<!-- ── ダイアグラム ── -->
+<div class="diagram-section">
+  <div class="diagram-label">データフロー・依存関係図</div>
+  <div class="diagram-outer">
+    <div class="diagram-wrap" id="diagram-wrap">
+      <svg id="svg-lines" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr-green"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4ade80"/></marker>
+          <marker id="arr-blue"   markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#60a5fa"/></marker>
+          <marker id="arr-amber"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker>
+          <marker id="arr-purple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#a78bfa"/></marker>
+          <marker id="arr-slate"  markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
+        </defs>
+      </svg>
+
+      <!-- ── 入力層 ── -->
+      <div class="node n-user" id="n-line-users" style="left:30px;top:20px;width:100px">
+        <span class="n-icon">📱</span>LINEユーザー
+      </div>
+      <div class="node n-user" id="n-staff" style="left:290px;top:20px;width:110px"
+           data-tip="スタッフ・管理者がブラウザからポータルにアクセス">
+        <span class="n-icon">👤</span>スタッフ/管理者
+      </div>
+      <div class="node n-user" id="n-plaud" style="left:610px;top:20px;width:110px"
+           data-tip="Plaud音声 → Zapier → Google Drive → VPS">
+        <span class="n-icon">🎙</span>Plaud 音声
+      </div>
+      <div class="node n-user" id="n-external-user" style="left:760px;top:20px;width:110px"
+           data-tip="外部ユーザーがデモデイ申込フォームに入力">
+        <span class="n-icon">🌐</span>外部申込者
+      </div>
+
+      <!-- ── ゲートウェイ層 ── -->
+      <div class="node n-gateway" id="n-line-api" style="left:40px;top:140px;width:90px"
+           data-tip="LINE Messaging API — Webhookでyc-line-webhookへ転送">
+        <span class="n-icon">💬</span>LINE API
+      </div>
+      <div class="node n-gateway" id="n-cf-access" style="left:280px;top:140px;width:130px"
+           data-tip="CF Access 3層認証 — メール許可リスト18名">
+        <span class="n-icon">🔑</span>CF Access 認証
+      </div>
+      <div class="node n-ext" id="n-zapier" style="left:590px;top:140px;width:130px"
+           data-tip="Zapier経由でGoogle DriveへPlaud文字起こしを保存 → VPS cronが取得">
+        <span class="n-icon">⚡</span>Zapier → Drive
+      </div>
+      <div class="node n-ext" id="n-demoday-w" style="left:760px;top:140px;width:110px"
+           data-tip="demoday-api Worker — CF Workers + D1 + Resend + Google Sheets">
+        <span class="n-icon">📋</span>demoday-api<span class="n-sub">CF Worker</span>
+      </div>
+
+      <!-- ── コアサービス層 ── -->
+      <div class="node n-central" id="n-webhook" style="left:20px;top:270px;width:130px"
+           data-tip="全LINEイベントの中枢。Service Bindingで各Workerへ振り分け">
+        <span class="n-icon">⚡</span>yc-line-webhook<span class="n-sub">中枢 Worker</span>
+      </div>
+      <div class="node n-portal" id="n-portal-yc" style="left:270px;top:270px;width:150px"
+           data-tip="portal.ycompany.co.jp — CF Pages + Pages Functions /api/*">
+        <span class="n-icon">🏢</span>YC Portal<span class="n-sub">CF Pages (yc-manual-v13)</span>
+      </div>
+      <div class="node n-vps" id="n-vps" style="left:590px;top:270px;width:130px"
+           data-tip="VPS 162.43.36.173 — Pythonスクリプト群がcronで定期実行">
+        <span class="n-icon">🖥</span>VPS<span class="n-sub">cron / Python</span>
+      </div>
+
+      <!-- ── Worker・サービス層 ── -->
+      <div class="node n-worker" id="n-faq" style="left:10px;top:400px;width:90px"
+           data-tip="FAQ自動応答。Service Bindingでwebhookから呼ばれる">
+        <span class="n-icon">🤖</span>faq-bot
+      </div>
+      <div class="node n-worker" id="n-todo" style="left:110px;top:400px;width:105px"
+           data-tip="Todoタスクの承認フロー管理">
+        <span class="n-icon">✅</span>todo-approval
+      </div>
+      <div class="node n-worker" id="n-attendance" style="left:225px;top:400px;width:100px"
+           data-tip="出勤・勤怠フォームの受信処理">
+        <span class="n-icon">🕐</span>attendance
+      </div>
+      <div class="node n-worker" id="n-notta" style="left:335px;top:400px;width:105px"
+           data-tip="Notta議事録のWebhook受信 → Todo抽出">
+        <span class="n-icon">📝</span>notta-webhook
+      </div>
+      <div class="node n-worker" id="n-pages-api" style="left:270px;top:530px;width:150px"
+           data-tip="Pages Functions /api/* — asakai/bouzu/zaiko/permissions 等25エンドポイント">
+        <span class="n-icon">⚙️</span>Pages Functions<span class="n-sub">/api/* (25 endpoints)</span>
+      </div>
+      <div class="node n-vps" id="n-daily-brief" style="left:520px;top:390px;width:110px"
+           data-tip="毎朝9:00 JST。NocoDB案件 → Claude API要約 → Gmail送信">
+        <span class="n-icon">📧</span>daily_brief<span class="n-sub">毎朝9:00 JST</span>
+      </div>
+      <div class="node n-vps" id="n-todoist-sync" style="left:645px;top:390px;width:110px"
+           data-tip="NocoDB Todoを定期的にTodoistと同期">
+        <span class="n-icon">🔄</span>noco→Todoist
+      </div>
+      <div class="node n-vps" id="n-timetree" style="left:770px;top:390px;width:110px"
+           data-tip="TimeTree予定をD1 DBと同期。Plaud文字起こしとのマッチングも">
+        <span class="n-icon">📅</span>TimeTree sync
+      </div>
+
+      <!-- ── データ層 ── -->
+      <div class="node n-data" id="n-nocodb" style="left:450px;top:530px;width:120px"
+           data-tip="db.ycompany.co.jp — メインDB。全WorkerとVPS cronが参照">
+        <span class="n-icon">🗄</span>NocoDB<span class="n-sub">主データストア</span>
+      </div>
+      <div class="node n-data" id="n-d1" style="left:620px;top:530px;width:90px"
+           data-tip="Cloudflare D1 — シフトDB・デモデイDB">
+        <span class="n-icon">💾</span>D1 (SQLite)
+      </div>
+      <div class="node n-ext" id="n-notion" style="left:140px;top:400px;width:0px;opacity:0" id="n-notion-hidden"></div>
+
+      <!-- ── 出力層 ── -->
+      <div class="node n-output" id="n-gmail" style="left:520px;top:620px;width:100px"
+           data-tip="Gmail / Resend経由でメール送信">
+        <span class="n-icon">✉️</span>Gmail / Resend
+      </div>
+      <div class="node n-output" id="n-todoist-out" style="left:640px;top:620px;width:90px"
+           data-tip="Todoistへタスクを同期">
+        <span class="n-icon">📌</span>Todoist
+      </div>
+      <div class="node n-output" id="n-gsheets" style="left:760px;top:620px;width:100px"
+           data-tip="demoday申込をGoogle Sheetsに記録">
+        <span class="n-icon">📊</span>Google Sheets
+      </div>
+
+    </div><!-- /diagram-wrap -->
   </div>
 </div>
 
-<!-- ── VPS層 ── -->
-<div class="section-title">🖥 VPS（162.43.36.173）— cron ジョブ</div>
-<div class="cards">
-  <div class="card infra">
-    <div class="card-title">daily_brief.py</div>
-    <div class="card-url">毎朝9:00 JST</div>
-    <div class="card-tags"><span class="tag py">Python</span><span class="tag ai">Claude API</span><span class="tag mail">Gmail</span></div>
-  </div>
-  <div class="card infra">
-    <div class="card-title">feedback_server.py</div>
-    <div class="card-url">常駐 port:8090</div>
-    <div class="card-tags"><span class="tag py">Python</span><span class="tag db">NocoDB</span></div>
-  </div>
-  <div class="card infra">
-    <div class="card-title">yc_noco_to_todoist.py</div>
-    <div class="card-url">定期 cron</div>
-    <div class="card-tags"><span class="tag py">Python</span><span class="tag db">NocoDB</span></div>
-  </div>
-  <div class="card infra">
-    <div class="card-title">TimeTree Sync</div>
-    <div class="card-url">yc-timetree-sync/*</div>
-    <div class="card-tags"><span class="tag py">Python</span><span class="tag db">D1</span></div>
-  </div>
+<!-- ── 凡例 ── -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;box-shadow:0 0 6px #f59e0b55"></div>中枢 Worker</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>ポータル / Pages</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1e40af"></div>CF Worker</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6;box-shadow:0 0 6px #8b5cf655"></div>データストア</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>VPS / cron</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#374151"></div>外部サービス</div>
 </div>
 
-<!-- ── データ層 ── -->
-<div class="section-title">🗄 データ・外部連携</div>
-<div class="cards">
-  <div class="card external">
-    <div class="card-title">NocoDB</div>
-    <div class="card-url">db.ycompany.co.jp</div>
-    <div class="card-tags"><span class="tag db">主DB</span></div>
-  </div>
-  <div class="card external">
-    <div class="card-title">Cloudflare D1</div>
-    <div class="card-url">yc-shift-db / demoday-db</div>
-    <div class="card-tags"><span class="tag d1">SQLite</span></div>
-  </div>
-  <div class="card external">
-    <div class="card-title">LINE Messaging API</div>
-    <div class="card-url">→ yc-line-webhook</div>
-    <div class="card-tags"><span class="tag line">LINE</span></div>
-  </div>
-  <div class="card external">
-    <div class="card-title">Resend</div>
-    <div class="card-url">メール送信</div>
-    <div class="card-tags"><span class="tag mail">Email</span></div>
-  </div>
-  <div class="card external">
-    <div class="card-title">Plaud → Zapier → Drive</div>
-    <div class="card-url">→ VPS → NocoDB</div>
-    <div class="card-tags"><span class="tag ai">音声録音</span></div>
-  </div>
-  <div class="card external">
-    <div class="card-title">Notion API</div>
-    <div class="card-url">IKIZAMAポータル専用</div>
-    <div class="card-tags"><span class="tag notion">Notion</span></div>
-  </div>
-</div>
+<!-- ツールチップ -->
+<div class="tooltip" id="tooltip"></div>
 
-<!-- ── CI/CD ── -->
-<div class="section-title">🔁 CI / 監視（GitHub Actions）</div>
-<div class="flows">
-  <div class="flow">
-    <span class="flow-from">push → manual_v1.3_html/</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-to">JS構文チェック → デプロイ → スモークテスト13件</span>
-  </div>
-  <div class="flow">
-    <span class="flow-from">毎日 JST 05:00</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-to">本番10エンドポイント確認（portal.ycompany.co.jp）</span>
-  </div>
-  <div class="flow">
-    <span class="flow-from">毎日 JST 05:10</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-to">全27Worker生存確認</span>
-  </div>
-  <div class="flow">
-    <span class="flow-from">毎日 JST 05:20</span>
-    <span class="flow-arrow">→</span>
-    <span class="flow-to">VPS cron・feedback_server・NocoDB疎通確認</span>
-  </div>
-</div>
+<script>
+// ── エッジ定義 [from, to, color, marker, dash] ──
+const EDGES = [
+  // LINE flow
+  ['n-line-users', 'n-line-api',    '#4ade80','arr-green',  false],
+  ['n-line-api',   'n-webhook',     '#4ade80','arr-green',  false],
+  ['n-webhook',    'n-faq',         '#60a5fa','arr-blue',   true],
+  ['n-webhook',    'n-todo',        '#60a5fa','arr-blue',   true],
+  ['n-webhook',    'n-attendance',  '#60a5fa','arr-blue',   true],
+  ['n-webhook',    'n-notta',       '#60a5fa','arr-blue',   true],
 
+  // Staff flow
+  ['n-staff',      'n-cf-access',   '#86efac','arr-green',  false],
+  ['n-cf-access',  'n-portal-yc',   '#86efac','arr-green',  false],
+  ['n-portal-yc',  'n-pages-api',   '#60a5fa','arr-blue',   false],
+  ['n-pages-api',  'n-nocodb',      '#a78bfa','arr-purple', false],
+
+  // Workers → NocoDB
+  ['n-faq',        'n-nocodb',      '#a78bfa','arr-purple', true],
+  ['n-todo',       'n-nocodb',      '#a78bfa','arr-purple', true],
+  ['n-attendance', 'n-nocodb',      '#a78bfa','arr-purple', true],
+
+  // Plaud/VPS flow
+  ['n-plaud',      'n-zapier',      '#94a3b8','arr-slate',  false],
+  ['n-zapier',     'n-vps',         '#94a3b8','arr-slate',  false],
+  ['n-vps',        'n-daily-brief', '#818cf8','arr-blue',   false],
+  ['n-vps',        'n-todoist-sync','#818cf8','arr-blue',   false],
+  ['n-vps',        'n-timetree',    '#818cf8','arr-blue',   false],
+  ['n-daily-brief','n-nocodb',      '#a78bfa','arr-purple', true],
+  ['n-daily-brief','n-gmail',       '#4ade80','arr-green',  false],
+  ['n-todoist-sync','n-nocodb',     '#a78bfa','arr-purple', true],
+  ['n-todoist-sync','n-todoist-out','#4ade80','arr-green',  false],
+  ['n-timetree',   'n-d1',          '#a78bfa','arr-purple', false],
+
+  // demoday
+  ['n-external-user','n-demoday-w', '#c4b5fd','arr-purple', false],
+  ['n-demoday-w',  'n-d1',          '#a78bfa','arr-purple', false],
+  ['n-demoday-w',  'n-gmail',       '#4ade80','arr-green',  false],
+  ['n-demoday-w',  'n-gsheets',     '#4ade80','arr-green',  false],
+];
+
+function cx(el) {
+  const wrap = document.getElementById('diagram-wrap');
+  const wr = wrap.getBoundingClientRect();
+  const er = el.getBoundingClientRect();
+  return er.left - wr.left + er.width / 2;
+}
+function cy(el) {
+  const wrap = document.getElementById('diagram-wrap');
+  const wr = wrap.getBoundingClientRect();
+  const er = el.getBoundingClientRect();
+  return er.top - wr.top + er.height / 2;
+}
+
+function drawEdges() {
+  const svg = document.getElementById('svg-lines');
+  // clear old paths
+  svg.querySelectorAll('path.edge').forEach(p => p.remove());
+
+  EDGES.forEach(([fid, tid, color, marker, dashed]) => {
+    const from = document.getElementById(fid);
+    const to   = document.getElementById(tid);
+    if (!from || !to) return;
+
+    const x1 = cx(from), y1 = cy(from);
+    const x2 = cx(to),   y2 = cy(to);
+
+    // cubic bezier: control points bend toward center
+    const dx = x2 - x1, dy = y2 - y1;
+    const cx1 = x1 + dx * 0.1;
+    const cy1 = y1 + dy * 0.6;
+    const cx2 = x2 - dx * 0.1;
+    const cy2 = y2 - dy * 0.4;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('class','edge');
+    path.setAttribute('d', `M${x1},${y1} C${cx1},${cy1} ${cx2},${cy2} ${x2},${y2}`);
+    path.setAttribute('stroke', color);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-opacity', '0.6');
+    path.setAttribute('marker-end', `url(#${marker})`);
+    if (dashed) path.setAttribute('stroke-dasharray', '5 3');
+    svg.appendChild(path);
+  });
+}
+
+// ── ツールチップ ──
+const tooltip = document.getElementById('tooltip');
+document.querySelectorAll('.node[data-tip]').forEach(node => {
+  node.style.cursor = 'help';
+  node.addEventListener('mouseenter', e => {
+    tooltip.textContent = node.dataset.tip;
+    tooltip.classList.add('show');
+  });
+  node.addEventListener('mousemove', e => {
+    tooltip.style.left = (e.clientX + 12) + 'px';
+    tooltip.style.top  = (e.clientY + 12) + 'px';
+  });
+  node.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+});
+
+// ── 初期描画 + リサイズ対応 ──
+window.addEventListener('load',   drawEdges);
+window.addEventListener('resize', drawEdges);
+</script>
 </body>
 </html>
