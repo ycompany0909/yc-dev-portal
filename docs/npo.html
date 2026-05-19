@@ -186,7 +186,7 @@
   <p>助成金が通らない。支援が広がらない。資金調達の壁。<br>その根本にある構造的な問題を、Y COMPANYが無償で診断します。</p>
   <div class="hero-region">🗺 世田谷・東京都内は対面対応可 ／ 全国オンライン対応</div>
   <div class="hero-buttons">
-    <a href="grant-search.html" class="btn-primary">📊 助成金データベースを検索する</a>
+    <a href="grant-search.html" target="_blank" rel="noopener" class="btn-primary">📊 助成金データベースを検索する</a>
     <a href="#contact" class="btn-ghost">相談を申し込む</a>
   </div>
 </section>
@@ -385,7 +385,7 @@
           <span class="db-tag">子ども・青少年</span><span class="db-tag">環境・気候変動</span><span class="db-tag">障害者支援</span>
           <span class="db-tag">国際協力</span><span class="db-tag">地域コミュニティ</span><span class="db-tag">+ 15分野</span>
         </div>
-        <a href="grant-search.html" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">データベースを検索する →</a>
+        <a href="grant-search.html" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">データベースを検索する →</a>
       </div>
     </div>
   </div>
@@ -524,7 +524,8 @@
         <label>主なお悩み・相談内容</label>
         <textarea id="f-body" placeholder="例：助成金に3回落ちた。審査に何が足りないのか知りたい。&#10;例：理事会の機能が弱く、申請書を書ける人がいない。"></textarea>
       </div>
-      <button class="form-submit" onclick="submitForm()">相談を送る（無償）</button>
+      <button class="form-submit" id="form-btn" onclick="submitForm()">相談を送る（無償）</button>
+      <div id="form-result"></div>
     </div>
 
     <div class="sns-row">
@@ -544,7 +545,7 @@
 
 <footer>
   &copy; 2026 合同会社 Y COMPANY<br>
-  <a href="grant-search.html">助成金データベース</a> ／ <a href="https://x.com/orzugulsetagaya" target="_blank">X @orzugulsetagaya</a><br>
+  <a href="grant-search.html" target="_blank" rel="noopener">助成金データベース</a> ／ <a href="https://x.com/orzugulsetagaya" target="_blank">X @orzugulsetagaya</a><br>
   <span style="font-size:11px; opacity:0.5;">最終更新: 2026-05-19</span>
 </footer>
 
@@ -629,14 +630,40 @@ function calcCheck() {
 document.querySelectorAll('.check-opt').forEach(r => r.addEventListener('change', calcCheck));
 
 // ── 相談フォーム ──
-function submitForm() {
-  const org  = document.getElementById('f-org').value.trim();
+async function submitForm() {
+  const org   = document.getElementById('f-org').value.trim();
   const field = document.getElementById('f-field').value;
   const body  = document.getElementById('f-body').value.trim();
   if (!org || !body) { alert('団体名とご相談内容を入力してください'); return; }
-  const subject = encodeURIComponent('社会変革支援サービス相談申込');
-  const bodyText = encodeURIComponent(`団体名・お名前: ${org}\n活動分野: ${field}\n\nご相談内容:\n${body}`);
-  window.location.href = `mailto:orzugulsetagaya@gmail.com?subject=${subject}&body=${bodyText}`;
+
+  const btn = document.getElementById('form-btn');
+  const result = document.getElementById('form-result');
+  btn.disabled = true;
+  btn.textContent = '送信中…';
+  result.innerHTML = '';
+
+  try {
+    const res = await fetch('https://yc-npo-contact.ycompany0909.workers.dev/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ org, field, body }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      btn.textContent = '✓ 送信しました';
+      btn.style.background = '#15803d';
+      document.getElementById('f-org').value = '';
+      document.getElementById('f-field').value = '';
+      document.getElementById('f-body').value = '';
+      result.innerHTML = '<p style="color:#4ade80;margin-top:12px;text-align:center;font-size:14px;">相談が届きました。数日以内にご返信します。</p>';
+    } else {
+      throw new Error(data.error || '送信に失敗しました');
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = '相談を送る（無償）';
+    result.innerHTML = `<p style="color:#fca5a5;margin-top:12px;text-align:center;font-size:13px;">${e.message}<br><a href="https://x.com/orzugulsetagaya" target="_blank" style="color:#fca5a5;">X (@orzugulsetagaya) でDMをお送りください</a></p>`;
+  }
 }
 </script>
 </body>
