@@ -7,6 +7,8 @@
 > **作成**: 2026-05-23 / 棚卸し責任者: オルズグル
 >
 > ⚠️ **このファイルに値を書かない** — 名前・用途・場所・漏えい影響度のみ。値は CF Dashboard / GitHub Secrets / `~/.local-secrets/` で管理。
+>
+> 🔗 **外部システム接続方法**は `~/.claude/CLAUDE.md` の「外部システム連携手順」セクション参照（TimeTree / Plaud / Notta / Get Your Guide）。このファイルは「環境変数の棚卸し」、CLAUDE.md は「接続経路のマップ」と分業。
 
 ---
 
