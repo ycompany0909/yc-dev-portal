@@ -1,12 +1,122 @@
 {
-  "updated_at": "2026-05-23T15:00:00+09:00",
-  "note": "エンジニア力強化計画のマイルストーン。strict format: { date, type(learning/milestone/practice), title, detail? }",
+  "updated_at": "2026-05-23T16:30:00+09:00",
+  "note": "戦闘力 85→90→100 突破ロードマップ。0502to0523.md と skill-assessment.md から策定 (2026-05-23)。type: learning=文書化系, practice=実装系, milestone=節目",
+  "current_score": 91,
+  "target_score": 100,
   "plans": [
     {
+      "date": "2026-05-24",
+      "type": "learning",
+      "title": "評価シート v1 作成",
+      "detail": "AI 出力の品質を 5 観点 × 5 段階で評価するテンプレ Markdown。OS: 正確性 / 網羅性 / 速度 / 文体 / 再利用可能性。+1pt"
+    },
+    {
       "date": "2026-05-25",
+      "type": "learning",
+      "title": "環境変数一覧 マスター化",
+      "detail": "全 wrangler.toml の vars / GitHub Secrets / VPS env / CF Pages env variables を 1 つのマトリクスに。+0.5pt"
+    },
+    {
+      "date": "2026-05-26",
+      "type": "learning",
+      "title": "データ分類表 作成",
+      "detail": "D1 全テーブル × (個人情報レベル / 公開可否 / 必要権限 / 漏えい時影響度) のマトリクス。+0.5pt"
+    },
+    {
+      "date": "2026-05-27",
+      "type": "learning",
+      "title": "リポジトリ README 整備 (1/2)",
+      "detail": "ycompany-portal / yc-workers の README を整備。技術スタック・セットアップ・デプロイ手順・依存関係。+0.5pt"
+    },
+    {
+      "date": "2026-05-28",
+      "type": "learning",
+      "title": "リポジトリ README 整備 (2/2)",
+      "detail": "yc-dev-portal / orzugul-portal / yc-dotfiles の README を整備。+0.5pt"
+    },
+    {
+      "date": "2026-05-29",
+      "type": "learning",
+      "title": "AI 利用マニュアル v1 (1/2)",
+      "detail": "社内向け「Claude をこう使え」ガイド前半。基本操作・スラッシュコマンド・メモリ運用・コンテキストの渡し方"
+    },
+    {
+      "date": "2026-05-30",
       "type": "milestone",
-      "title": "実装力診断レポート初版完成",
-      "detail": "skill-assessment.md で現状把握。次フェーズの方向性を確定"
+      "title": "🎯 文書化スプリント完了 → 93-94pt 到達",
+      "detail": "AI 利用マニュアル v1 後半 + 全体レビュー。22→8 本統合 / D1 移行 / CI/CD に並ぶレベルで「人に渡せる状態」を達成"
+    },
+    {
+      "date": "2026-05-31",
+      "type": "practice",
+      "title": "テンプレート 10 本 着手",
+      "detail": "10 種類: 議事録 / 提案書 / 営業資料 / 案件カルテ / 日報サマリ / 月次報告 / 採用面談 / 1on1 / ふりかえり / KPI ダッシュボード"
+    },
+    {
+      "date": "2026-06-02",
+      "type": "milestone",
+      "title": "🎯 テンプレート 10 本 完成",
+      "detail": "再利用可能なテンプレ集として整備完了。+1.5pt"
+    },
+    {
+      "date": "2026-06-03",
+      "type": "practice",
+      "title": "AI 秘書「凛」「政宗」MVP 着手",
+      "detail": "既存のボタン型 UI から対話型 + コンテキスト保持型へ実運用化。Claude API + D1 連携"
+    },
+    {
+      "date": "2026-06-09",
+      "type": "milestone",
+      "title": "🎯 AI 秘書 MVP 完成",
+      "detail": "凛 (YC) / 政宗 (オルズグル) を実運用へ。+1.5pt"
+    },
+    {
+      "date": "2026-06-10",
+      "type": "practice",
+      "title": "案件管理 AI 秘書 MVP 着手",
+      "detail": "お客様DB (13,860件) と接続。ナーチャリング自動提案・声かけタイミング判定・関係値スコアリング"
+    },
+    {
+      "date": "2026-06-13",
+      "type": "milestone",
+      "title": "🎯 案件管理 AI 秘書 MVP 完成 → 96-97pt 到達",
+      "detail": "AI 秘書 3 体制 (凛・政宗・案件管理) で実運用化。テンプレ・秘書スプリント完了"
+    },
+    {
+      "date": "2026-06-14",
+      "type": "practice",
+      "title": "AI 事務局サービスメニュー v1 着手",
+      "detail": "外販パッケージの値付け・LP・サンプル成果物。AI 事務局アウトソース型サービス"
+    },
+    {
+      "date": "2026-06-20",
+      "type": "milestone",
+      "title": "🎯 サービスメニュー v1 完成",
+      "detail": "外販可能な形にパッケージ化。+0.5pt"
+    },
+    {
+      "date": "2026-06-21",
+      "type": "practice",
+      "title": "外販 1 号案件 商談開始",
+      "detail": "既存ネットワークから 1 号顧客にアプローチ・提案・契約"
+    },
+    {
+      "date": "2026-06-30",
+      "type": "milestone",
+      "title": "🎯 外販 1 号案件 納品",
+      "detail": "実需対応で「AI 業務システム設計者」として外部承認獲得。+2pt"
+    },
+    {
+      "date": "2026-07-01",
+      "type": "learning",
+      "title": "引き継ぎ可能な文書化 着手",
+      "detail": "後継者が読めば 1 週間で運用に入れる状態へ。アーキテクチャ図・運用手順書・障害対応プレイブック"
+    },
+    {
+      "date": "2026-07-05",
+      "type": "milestone",
+      "title": "🏆 100pt 節目突破",
+      "detail": "AI 実務家 → AI 業務システム設計者 への変態完了。85→100 完全達成 (74 日間)"
     }
   ]
 }
