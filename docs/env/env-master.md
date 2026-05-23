@@ -108,26 +108,105 @@
 ### 2.2 secrets (wrangler secret put で設定)
 
 🔴 **値は wrangler dashboard / Worker 個別 secret 経由でのみ確認可能。コードからは見えない。**
+**2026-05-23 `wrangler secret list` で 8 Worker 全部の secret 名を取得済み (51 件)。**
 
-#### yc-line-webhook
+#### yc-ai (5)
 | 名前 | 影響度 | 用途 |
 |---|---|---|
-| `LINE_CHANNEL_SECRET` | 🔴 高 | LINE Messaging API 署名検証 |
-| `LINE_CHANNEL_ACCESS_TOKEN` | 🔴 高 | LINE Messaging API アクセストークン |
-| `PUSH_API_SECRET` | 🔴 高 | 外部 push 送信 / cron キック 保護 |
+| `ADMIN_SECRET` | 🔴 高 | 管理 API 保護 |
+| `ANTHROPIC_API_KEY` | 🔴 高 | Claude API |
+| `ANTHROPIC_API_KEY_PRESENTER` | 🔴 高 | プレゼンター用 Claude API (別キー) |
+| `NOTIFY_API_SECRET` | 🔴 高 | yc-infra 経由通知の認証 |
+| `NOTTA_WEBHOOK_SECRET` | 🔴 高 | Notta Webhook 署名検証 |
+
+#### yc-content (2)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | 🔴 高 | Claude API |
+| `ONEN_SYNC_SECRET` | 🔴 高 | 1on1 sync 認証 |
+
+#### yc-forms (4)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | 🔴 高 | Claude API |
+| `GITHUB_TOKEN` | 🔴 高 | フォーム feedback の GitHub commit |
+| `LINE_CHANNEL_ACCESS_TOKEN` | 🔴 高 | LINE Bot 通知 |
+| `SASAKI_LINE_USER_ID` | 🟡 中 | 佐々生さんの LINE User ID |
+
+#### yc-infra (11)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `EMAIL_RELAY_SECRET` | 🔴 高 | メール送信 relay 認証 |
+| `EM_RUN_KEY` | 🔴 高 | event-meeting-log cron 認証 |
+| `EVENT_SCANNER_SECRET` | 🔴 高 | イベントスキャナー認証 |
+| `LINE_CHANNEL_ACCESS_TOKEN` | 🔴 高 | LINE Bot 通知 |
+| `MORNING_TOKEN_SECRET` | 🔴 高 | 朝会トークン生成 |
+| `NOTIFY_API_SECRET` | 🔴 高 | 通知 API 認証 |
+| `RESEND_API_KEY` | 🔴 高 | Resend メール送信 |
+| `SASAKI_LINE_USER_ID` | 🟡 中 | 佐々生さんの LINE User ID |
+| `TODOIST_API_TOKEN` | 🔴 高 | Todoist 同期 |
+| `WATCHDOG_RUN_KEY` | 🔴 高 | watchdog cron 認証 |
+| `WEBHOOK_PUSH_SECRET` | 🔴 高 | webhook push 認証 |
+
+#### yc-line-webhook (14)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | 🔴 高 | Claude API |
 | `COCKPIT_SECRET` | 🔴 高 | Pages Function との共有シークレット |
-| `MONTHLY_REMINDER_START` | 🟢 低 | "5" (シフトリマインダー開始日) |
-| `MONTHLY_REMINDER_END` | 🟢 低 | "15" |
-| `NOCODB_API_TOKEN` | — | ⚠️ 廃止済み。secret 削除推奨 |
+| `CONTACT_SCORING_KEY` | 🔴 高 | お客様関係値スコアリング cron 認証 |
+| `DAILY_TOKEN_KEY` | 🔴 高 | 日報トークン生成 |
+| `GAS_WEBAPP_URL` | 🟡 中 | JIDAI 売上 GAS WebApp URL |
+| `HEALTHCHECK_CRON_SECRET` | 🔴 高 | ヘルスチェック cron 認証 |
+| `IMPRESSIVE_CUSTOMERS_TID` | 🟡 中 | 印象お客様 NocoDB table ID (廃止候補?) |
+| `LINE_CHANNEL_ACCESS_TOKEN` | 🔴 高 | LINE Messaging API |
+| `NOCODB_TOKEN` | — | ⚠️ 廃止済み。secret 削除推奨 |
+| `NOTIFY_API_SECRET` | 🔴 高 | 通知 API 認証 |
+| `PUSH_API_SECRET` | 🔴 高 | 外部 push / cron キック保護 |
+| `SHIFT_TOKEN_SECRET` | 🔴 高 | シフトトークン生成 |
+| `SQUARE_TOKEN` | 🔴 高 | Square 決済 API |
+| `SYNC_SECRET` | 🔴 高 | 各種 sync API 認証 |
 
-#### 他 Worker 想定（要確認・TBD）
+⚠️ **`LINE_CHANNEL_SECRET` がリストに無い** — Webhook 署名検証に必要だが現状未設定の可能性。要確認。
 
-各 Worker `cloudflare/workers/yc-*/` で `wrangler secret list` を実行して棚卸し必要：
-```
-cd cloudflare/workers/yc-ops && wrangler secret list
-cd cloudflare/workers/yc-ai && wrangler secret list
-... (8本分)
-```
+#### yc-ops (7)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | 🔴 高 | Claude API |
+| `APPROVAL_API_KEY` | 🔴 高 | 承認 API 認証 |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | 🔴 高 | Google Drive アクセス用 SA JSON |
+| `NOTIFY_API_SECRET` | 🔴 高 | 通知 API 認証 |
+| `NOTTA_SYNC_SECRET` | 🔴 高 | Notta sync 認証 |
+| `SCAN_SECRET` | 🔴 高 | スキャナー認証 |
+| `WATCHDOG_RUN_KEY` | 🔴 高 | watchdog cron 認証 |
+
+#### yc-portal (4)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | 🔴 高 | Claude API |
+| `NOCODB_API_TOKEN` | — | ⚠️ 廃止済み。削除推奨 |
+| `NOCODB_TOKEN` | — | ⚠️ 廃止済み (重複)。削除推奨 |
+| `PIPELINE_TRIGGER_SECRET` | 🔴 高 | パイプラインキック認証 |
+
+#### yc-shortcut (4)
+| 名前 | 影響度 | 用途 |
+|---|---|---|
+| `CF_ACCESS_CLIENT_ID` | 🟡 中 | CF Access Service Token (旧用途) |
+| `CF_ACCESS_CLIENT_SECRET` | 🔴 高 | 同上の secret 側 |
+| `NURTURING_ADMIN_SECRET` | 🔴 高 | ナーチャリング管理画面認証 |
+| `SHORTCUT_TOKEN` | 🔴 高 | OTP バイパストークン |
+
+### 2.3 集約候補・観察
+
+- **`ANTHROPIC_API_KEY` が 5 Worker に散在** (yc-ai, content, forms, line-webhook, ops, portal の 6 つ)
+  → Service Binding 経由で 1 Worker に集約すれば管理コスト削減
+- **`LINE_CHANNEL_ACCESS_TOKEN` が 3 Worker に散在** (yc-forms, infra, line-webhook)
+  → 同じ Channel を共有しているなら集約候補
+- **`NOTIFY_API_SECRET` が 5 Worker に散在** (yc-ai, infra, line-webhook, ops, portal)
+  → 通知共通 secret として運用ルール化
+- **`SASAKI_LINE_USER_ID` が 2 Worker に散在** → plaintext vars 化を検討
+- **NocoDB 残骸** (`NOCODB_API_TOKEN`, `NOCODB_TOKEN`) が **yc-line-webhook, yc-portal** に残存
+  → 2026-05-20 移行完了済み、即削除可能
+- **`LINE_CHANNEL_SECRET` 未設定？** yc-line-webhook で発見できず。Webhook 署名検証が動いているか要確認
 
 ---
 
@@ -218,12 +297,14 @@ ssh root@162.43.36.173 'for d in /opt/yc-*/; do echo "=== $d ==="; cat "$d.env" 
 
 ## 9. 棚卸し漏れチェックリスト
 
-- [ ] 各 Worker で `wrangler secret list` 実行 (8本)
-- [ ] CF Pages Dashboard で「Environment Variables」を確認
+- [x] **各 Worker で `wrangler secret list` 実行 (8本)** ✅ 2026-05-23
+- [ ] CF Pages Dashboard で「Environment Variables」を確認 (API では空判定)
 - [ ] VPS の `/opt/yc-*/.env` を全部確認
 - [ ] GAS の Script Properties（clasp 経由）を確認
 - [ ] LINE Developers Console の Channel Secret/Token 一覧と突き合わせ
-- [ ] 廃止済み env (`NOCODB_API_TOKEN`, `NOCODB_HOST`, `MEMBERS_TABLE_ID`) を実際に削除
+- [ ] **`LINE_CHANNEL_SECRET` が yc-line-webhook に未設定 → Webhook 署名検証が動いているか確認**
+- [ ] 廃止済み env (`NOCODB_API_TOKEN` x2, `NOCODB_TOKEN`, `NOCODB_HOST`, `MEMBERS_TABLE_ID`, `IMPRESSIVE_CUSTOMERS_TID`) を実際に削除
+- [ ] **集約候補**: ANTHROPIC_API_KEY (5箇所) / LINE_CHANNEL_ACCESS_TOKEN (3箇所) / NOTIFY_API_SECRET (5箇所)
 - [ ] `~/yc-ip-auto-update.py` の hardcode を環境変数化
 
 ---
