@@ -1,122 +1,102 @@
 {
-  "updated_at": "2026-05-23T16:30:00+09:00",
-  "note": "戦闘力 85→90→100 突破ロードマップ。0502to0523.md と skill-assessment.md から策定 (2026-05-23)。type: learning=文書化系, practice=実装系, milestone=節目",
-  "current_score": 91,
+  "updated_at": "2026-05-24T07:50:00+09:00",
+  "version": "v3-interim",
+  "based_on": "docs/proposals/yc-lv6-proposal-v2.md",
+  "pending_review": "世界先進エンジニア AI 活用 Deep Research の結果が届き次第、本 plan を v4 に改訂予定。新しい示唆が出れば優先順位・タイムライン・アクション追加を行う",
+  "note": "戦闘力 85→100 突破ロードマップ。yc-lv6-proposal-v2.md (Lv6到達提言書) ベースに、Lv4基盤整備とLv6輸出準備を並行。type: learning=文書化系, practice=実装系, milestone=節目, externalize=外に出す",
+  "current_score": 92,
+  "current_level": "Lv4 中盤 (v1.8 観測性スタック稼働、5層中4層動作、Lv5 萌芽あり)",
   "target_score": 100,
+  "target_level": "Lv6 = AI 組織方法論を外に輸出できる組織",
+
+  "completed_archive": {
+    "note": "Week 1 (5/24-30) 文書化スプリントは 5/23-24 で完遂済み (当初 7 日想定 → 1.5 日)",
+    "items": [
+      "AI 出力評価シート v1 (docs/eval/)",
+      "環境変数マスター (docs/env/, 51 secrets)",
+      "外部システム連携手順 (CLAUDE.md)",
+      "D1 データ分類表 v1 (docs/data/, 64 テーブル)",
+      "全リポジトリ README 整備 (5 件)",
+      "AI 利用マニュアル v1 (docs/ai-manual/)",
+      "法体系 v1.6 → v1.8 観測性スタック導入 (Tier 1.12 + 事例研究)"
+    ]
+  },
+
   "plans": [
     {
-      "date": "2026-05-24",
-      "type": "learning",
-      "title": "評価シート v1 作成",
-      "detail": "AI 出力の品質を 5 観点 × 5 段階で評価するテンプレ Markdown。OS: 正確性 / 網羅性 / 速度 / 文体 / 再利用可能性。+1pt"
-    },
-    {
-      "date": "2026-05-25",
-      "type": "learning",
-      "title": "環境変数一覧 マスター化",
-      "detail": "全 wrangler.toml の vars / GitHub Secrets / VPS env / CF Pages env variables を 1 つのマトリクスに。+0.5pt"
-    },
-    {
-      "date": "2026-05-26",
-      "type": "learning",
-      "title": "データ分類表 作成",
-      "detail": "D1 全テーブル × (個人情報レベル / 公開可否 / 必要権限 / 漏えい時影響度) のマトリクス。+0.5pt"
-    },
-    {
-      "date": "2026-05-27",
-      "type": "learning",
-      "title": "リポジトリ README 整備 (1/2)",
-      "detail": "ycompany-portal / yc-workers の README を整備。技術スタック・セットアップ・デプロイ手順・依存関係。+0.5pt"
-    },
-    {
-      "date": "2026-05-28",
-      "type": "learning",
-      "title": "リポジトリ README 整備 (2/2)",
-      "detail": "yc-dev-portal / orzugul-portal / yc-dotfiles の README を整備。+0.5pt"
-    },
-    {
-      "date": "2026-05-29",
-      "type": "learning",
-      "title": "AI 利用マニュアル v1 (1/2)",
-      "detail": "社内向け「Claude をこう使え」ガイド前半。基本操作・スラッシュコマンド・メモリ運用・コンテキストの渡し方"
-    },
-    {
-      "date": "2026-05-30",
-      "type": "milestone",
-      "title": "🎯 文書化スプリント完了 → 93-94pt 到達",
-      "detail": "AI 利用マニュアル v1 後半 + 全体レビュー。22→8 本統合 / D1 移行 / CI/CD に並ぶレベルで「人に渡せる状態」を達成"
-    },
-    {
-      "date": "2026-05-31",
-      "type": "practice",
-      "title": "テンプレート 10 本 着手",
-      "detail": "10 種類: 議事録 / 提案書 / 営業資料 / 案件カルテ / 日報サマリ / 月次報告 / 採用面談 / 1on1 / ふりかえり / KPI ダッシュボード"
-    },
-    {
       "date": "2026-06-02",
-      "type": "milestone",
-      "title": "🎯 テンプレート 10 本 完成",
-      "detail": "再利用可能なテンプレ集として整備完了。+1.5pt"
+      "type": "externalize",
+      "title": "🌍 アクション 1: 法体系テンプレート化 (Lv6 直結・最優先)",
+      "detail": "YC法体系→「小規模AI組織の標準法体系」へ抽象化。Part 0 (原則4個) + Part 1 (Tier序列7ルール) をYC固有情報除去版テンプレートに切り出し、ai-org-legal-framework-template リポジトリとして公開。Tier 1.12 事例研究を実証として添付。工数: 6-8時間 (提言書 3h は楽観的修正)。Lv6 到達の最大インパクト",
+      "level_target": "Lv6"
     },
     {
-      "date": "2026-06-03",
+      "date": "2026-06-08",
       "type": "practice",
-      "title": "AI 秘書「凛」「政宗」MVP 着手",
-      "detail": "既存のボタン型 UI から対話型 + コンテキスト保持型へ実運用化。Claude API + D1 連携"
+      "title": "🎯 アクション 4: 障害訓練 → コンテンツ化",
+      "detail": "Worker 1本を意図的に壊す → スモーク検知 → ロールバック → エスカレーション → 復旧の全過程を実施。observability スタックが訓練中エラーを自動収集。法体系 Tier 1.9/1.10 の実証 + 公開コンテンツ化 (日本語初の AI 組織障害訓練ドキュメンタリー)。工数: 1.5h",
+      "level_target": "Lv4 完成 + Lv6 素材"
     },
     {
-      "date": "2026-06-09",
+      "date": "2026-06-15",
+      "type": "externalize",
+      "title": "📜 アクション 2: 公開失敗ログ作成 (Lv6 直結)",
+      "detail": "docs/failure-log.md として、shift-cockpit事件・deploy.yml並行事故・読み込み中放置事故・NocoDB→D1判断・Workers 22→8統合判断・法体系 v1.0→v1.8 改善サイクルを時系列で記録。⚠️個人情報/売上はマスキング運用。今後は error_log から自動追加フロー。工数: 6h",
+      "level_target": "Lv6"
+    },
+    {
+      "date": "2026-06-22",
       "type": "milestone",
-      "title": "🎯 AI 秘書 MVP 完成",
-      "detail": "凛 (YC) / 政宗 (オルズグル) を実運用へ。+1.5pt"
+      "title": "🏔️ Lv6 着手フェーズ完了 → 戦闘力 94 想定",
+      "detail": "アクション 1 (法体系OSS) + アクション 4 (訓練) + アクション 2 (失敗ログ) で「外に出す素材」が3点揃う"
     },
     {
-      "date": "2026-06-10",
-      "type": "practice",
-      "title": "案件管理 AI 秘書 MVP 着手",
-      "detail": "お客様DB (13,860件) と接続。ナーチャリング自動提案・声かけタイミング判定・関係値スコアリング"
-    },
-    {
-      "date": "2026-06-13",
-      "type": "milestone",
-      "title": "🎯 案件管理 AI 秘書 MVP 完成 → 96-97pt 到達",
-      "detail": "AI 秘書 3 体制 (凛・政宗・案件管理) で実運用化。テンプレ・秘書スプリント完了"
-    },
-    {
-      "date": "2026-06-14",
-      "type": "practice",
-      "title": "AI 事務局サービスメニュー v1 着手",
-      "detail": "外販パッケージの値付け・LP・サンプル成果物。AI 事務局アウトソース型サービス"
-    },
-    {
-      "date": "2026-06-20",
-      "type": "milestone",
-      "title": "🎯 サービスメニュー v1 完成",
-      "detail": "外販可能な形にパッケージ化。+0.5pt"
-    },
-    {
-      "date": "2026-06-21",
-      "type": "practice",
-      "title": "外販 1 号案件 商談開始",
-      "detail": "既存ネットワークから 1 号顧客にアプローチ・提案・契約"
-    },
-    {
-      "date": "2026-06-30",
-      "type": "milestone",
-      "title": "🎯 外販 1 号案件 納品",
-      "detail": "実需対応で「AI 業務システム設計者」として外部承認獲得。+2pt"
-    },
-    {
-      "date": "2026-07-01",
+      "date": "2026-07-06",
       "type": "learning",
-      "title": "引き継ぎ可能な文書化 着手",
-      "detail": "後継者が読めば 1 週間で運用に入れる状態へ。アーキテクチャ図・運用手順書・障害対応プレイブック"
+      "title": "🏗 アクション 6: ARCHITECTURE.md + 暗黙知変換 (Lv5)",
+      "detail": "Workers 8本の役割 / D1 テーブル分類 / env 取得先 / VPS cron 一覧を 1 図にまとめた ARCHITECTURE.md 作成。佐々生さんの暗黙知 → 組織資産への変換ドキュメンタリー。山川/田貝さん向け AI オンボーディング制度原案。工数: 9h",
+      "level_target": "Lv5"
     },
     {
-      "date": "2026-07-05",
+      "date": "2026-07-20",
+      "type": "externalize",
+      "title": "📦 アクション 3 Phase 1: AI 事務局パッケージ素材整理",
+      "detail": "法体系テンプレート + GAS シフト/日報テンプレ + auth.js/yc-api-loader.js + 観測性テンプレ + セットアップ手順書 を「小規模団体向けAI組織化キット」として組成。価格モデル: 月額5万 × 10社 = 月50万 目標。工数: 6h (Phase 1 のみ)",
+      "level_target": "Lv6"
+    },
+    {
+      "date": "2026-08-03",
+      "type": "practice",
+      "title": "🤖 アクション 5: マルチエージェント組織図 (Lv5)",
+      "detail": "AI 秘書 (凛・政宗・案件管理) を組織OS 5層に再マッピング、各エージェントに権限境界 (Stripe scoped credentials思想)、権限台帳作成。⚠️ AI 秘書 MVP が動いてから着手 (時期尚早リスクあり、要再評価)。工数: 6h",
+      "level_target": "Lv5"
+    },
+    {
+      "date": "2026-08-17",
+      "type": "externalize",
+      "title": "🚀 アクション 3 Phase 2: IKIZAMA で試験適用 (最初の外部顧客)",
+      "detail": "AI 事務局パッケージを IKIZAMA で実証導入。1ヶ月の本番運用 → フィードバック → パッケージ改善。Lv6 到達の最初の対外実証",
+      "level_target": "Lv6"
+    },
+    {
+      "date": "2026-09-15",
       "type": "milestone",
-      "title": "🏆 100pt 節目突破",
-      "detail": "AI 実務家 → AI 業務システム設計者 への変態完了。85→100 完全達成 (74 日間)"
+      "title": "🏆 Lv6 到達 → 戦闘力 100+ (組織の戦闘力)",
+      "detail": "個人の戦闘力ではなく組織の戦闘力として計測される段階。Lv6 判定基準: ①法体系 外部利用 1組織以上 ②公開失敗ログ 外部参照あり ③AI事務局 問い合わせ 1件以上 ④山川/田貝が Claude Code で開発 ⑤法体系ルール検証率 33% 以上"
     }
+  ],
+
+  "next_revision_triggers": [
+    "世界先進エンジニア AI 活用 Deep Research の結果が届く",
+    "アクション 1 (法体系テンプレート化) の実装着手後、想定外の難所が見つかる",
+    "AI 秘書 MVP の進捗 (凛・政宗・案件管理) で構想が変わる",
+    "IKIZAMA 以外の外部顧客候補が現れる"
+  ],
+
+  "open_questions": [
+    "アクション 2 公開失敗ログのマスキング基準: お客様氏名・売上数値・スタッフ実名 をどこまで匿名化するか",
+    "アクション 3 価格設定: 月額5万 × 10社 が現実的か、それとも一括 50-100 万円買い切り型か",
+    "アクション 5 「10 エージェント」は将来構想 (現状 3 体)、いつ拡張するか",
+    "戦闘力 100 突破後の指標は何か (Lv7 概念の必要性)"
   ]
 }
