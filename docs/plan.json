@@ -1,0 +1,12 @@
+{
+  "updated_at": "2026-05-23T15:00:00+09:00",
+  "note": "エンジニア力強化計画のマイルストーン。strict format: { date, type(learning/milestone/practice), title, detail? }",
+  "plans": [
+    {
+      "date": "2026-05-25",
+      "type": "milestone",
+      "title": "実装力診断レポート初版完成",
+      "detail": "skill-assessment.md で現状把握。次フェーズの方向性を確定"
+    }
+  ]
+}

@@ -48,137 +48,193 @@
     }
     .month-nav button:active { background: #334155; }
     .month-title { font-size: 16px; font-weight: 700; color: #f1f5f9; }
-    .calendar { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
-    .cal-header { display: grid; grid-template-columns: repeat(7, 1fr); background: #0f172a; }
-    .cal-header span { text-align: center; font-size: 11px; font-weight: 600; color: #475569; padding: 8px 0; }
-    .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); }
-    .cal-cell { min-height: 52px; padding: 6px; border-top: 1px solid #334155; border-right: 1px solid #334155; cursor: default; }
-    .cal-cell:nth-child(7n) { border-right: none; }
-    .cal-cell.has-entry { cursor: pointer; }
-    .cal-cell.has-entry:active { background: #334155; }
-    .cal-cell.today .day-num { background: #2563eb; color: #fff; border-radius: 50%; }
-    .cal-cell.selected { background: #1e3a5f; }
-    .day-num { font-size: 12px; font-weight: 600; color: #475569; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
-    .cal-cell.has-entry .day-num { color: #e2e8f0; }
-    .cal-cell.other-month .day-num { color: #1e293b; }
-    .dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; }
+
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;
+    }
+    .stat-card {
+      background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+      padding: 10px; text-align: center;
+    }
+    .stat-num { font-size: 20px; font-weight: 700; color: #f1f5f9; }
+    .stat-label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;
+      font-size: 11px; color: #94a3b8;
+    }
+    .legend-item { display: flex; align-items: center; gap: 4px; }
+    .legend-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .legend-icon { font-size: 13px; }
+
+    .calendar { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 8px; }
+    .cal-header {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      text-align: center; padding: 6px 0; font-size: 11px; color: #94a3b8;
+    }
+    .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .cal-cell {
+      aspect-ratio: 1; padding: 4px; position: relative;
+      background: #0f172a; border-radius: 6px; cursor: default;
+    }
+    .cal-cell.other-month { opacity: 0.3; }
+    .cal-cell.has-entry { background: #1e3a5f; cursor: pointer; }
+    .cal-cell.has-plan { background: #3a1f5e; cursor: pointer; }
+    .cal-cell.has-entry.has-plan {
+      background: linear-gradient(135deg, #1e3a5f 50%, #3a1f5e 50%);
+    }
+    .cal-cell.today { outline: 2px solid #fbbf24; }
+    .cal-cell.selected { outline: 2px solid #60a5fa; }
+    .day-num { font-size: 12px; color: #e2e8f0; }
+    .dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 2px; }
     .dot { width: 5px; height: 5px; border-radius: 50%; }
-    .dot-op { background: #3b82f6; } .dot-workers { background: #a855f7; }
-    .dot-portal { background: #22c55e; } .dot-other { background: #f59e0b; }
-    .entry-panel { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; display: none; }
+    .dot-op { background: #3b82f6; }
+    .dot-workers { background: #a855f7; }
+    .dot-portal { background: #22c55e; }
+    .dot-other { background: #f59e0b; }
+    .dot-learning { background: #06b6d4; }
+    .dot-milestone { background: #ef4444; }
+
+    .entry-panel {
+      background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+      padding: 14px; margin-top: 14px; display: none;
+    }
     .entry-panel.visible { display: block; }
-    .entry-date { padding: 12px 16px; background: #0f172a; border-bottom: 1px solid #334155; font-size: 14px; font-weight: 700; color: #f1f5f9; }
-    .entry-date span { font-size: 12px; font-weight: 400; color: #64748b; margin-left: 8px; }
-    .entry-section { padding: 12px 16px; border-bottom: 1px solid #1e293b; }
-    .entry-section:last-child { border-bottom: none; }
-    .repo-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; margin-bottom: 8px; }
-    .tag-op { background: #1d4ed8; color: #bfdbfe; } .tag-workers { background: #6d28d9; color: #ddd6fe; }
-    .tag-portal { background: #166534; color: #bbf7d0; } .tag-accounting { background: #92400e; color: #fde68a; }
-    .tag-dotfiles { background: #1e3a5f; color: #7dd3fc; } .tag-setagaya { background: #4d7c0f; color: #d9f99d; }
-    .tag-other { background: #374151; color: #d1d5db; }
+    .entry-date {
+      font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .entry-date span { font-size: 11px; color: #94a3b8; font-weight: 400; }
+    .entry-section { margin-bottom: 12px; }
+    .repo-tag {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 600; margin-bottom: 6px;
+    }
+    .tag-op { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    .tag-workers { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+    .tag-portal { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+    .tag-other { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+    .tag-dotfiles { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+    .tag-setagaya { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+    .tag-accounting { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+    .tag-learning { background: rgba(6, 182, 212, 0.2); color: #67e8f9; }
+    .tag-milestone { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
     .feat-list { list-style: none; }
-    .feat-item { font-size: 13px; color: #cbd5e1; padding: 3px 0; display: flex; gap: 8px; align-items: baseline; line-height: 1.5; }
-    .feat-item::before { content: "—"; color: #475569; flex-shrink: 0; }
-    .feat-type { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; flex-shrink: 0; }
-    .type-feat { background: #1d4ed8; color: #bfdbfe; } .type-fix { background: #7f1d1d; color: #fca5a5; }
-    .type-docs { background: #374151; color: #9ca3af; } .type-refactor { background: #4c1d95; color: #c4b5fd; }
-    .type-init { background: #166534; color: #86efac; }
-    .no-entry { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
-    .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
-    .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; text-align: center; }
-    .stat-num { font-size: 22px; font-weight: 800; color: #f1f5f9; }
-    .stat-label { font-size: 11px; color: #64748b; margin-top: 2px; }
-    .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #94a3b8; }
-    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .feat-item {
+      padding: 6px 0; font-size: 13px; color: #cbd5e1;
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .feat-type {
+      flex-shrink: 0; padding: 1px 6px; border-radius: 3px;
+      font-size: 10px; font-weight: 600; min-width: 38px; text-align: center;
+    }
+    .type-feat { background: rgba(34, 197, 94, 0.15); color: #86efac; }
+    .type-fix { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+    .type-docs { background: rgba(156, 163, 175, 0.15); color: #d1d5db; }
+    .type-refactor { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; }
+    .type-init { background: rgba(251, 191, 36, 0.15); color: #fde68a; }
+    .type-learning { background: rgba(6, 182, 212, 0.15); color: #67e8f9; }
+    .type-milestone { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+    .type-practice { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; }
+    .no-entry { text-align: center; color: #64748b; padding: 30px; font-size: 13px; }
 
-    /* ── Memo tab ── */
-    .memo-form {
-      background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-      padding: 16px; margin-bottom: 20px;
+    /* ── Quick Memo tab ── */
+    .quick-memo-input {
+      background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+      padding: 14px; margin-bottom: 16px;
     }
-    .memo-form h2 { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 12px; }
-    .memo-textarea {
-      width: 100%; min-height: 100px; background: #0f172a; border: 1px solid #334155;
-      border-radius: 8px; color: #e2e8f0; font-size: 14px; padding: 10px 12px;
-      resize: vertical; font-family: inherit;
+    .quick-memo-input textarea {
+      width: 100%; min-height: 70px; padding: 10px;
+      background: #0f172a; border: 1px solid #334155; border-radius: 8px;
+      color: #f1f5f9; font-size: 14px; font-family: inherit; resize: vertical;
     }
-    .memo-textarea:focus { outline: none; border-color: #2563eb; }
-    .tag-input-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
-    .tag-chip {
-      padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
-      border: 1px solid #334155; background: #0f172a; color: #94a3b8; cursor: pointer;
+    .quick-memo-input textarea:focus { outline: none; border-color: #2563eb; }
+    .quick-memo-actions {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 8px;
     }
-    .tag-chip.selected { background: #1d4ed8; border-color: #2563eb; color: #bfdbfe; }
-    .memo-pw-row { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
-    .memo-pw-input {
-      flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 8px;
-      color: #e2e8f0; font-size: 13px; padding: 8px 12px;
+    .quick-memo-hint { font-size: 11px; color: #64748b; }
+    .quick-memo-add {
+      padding: 8px 18px; background: #2563eb; color: white; border: none;
+      border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;
     }
-    .memo-pw-input:focus { outline: none; border-color: #2563eb; }
-    .memo-submit {
-      background: #2563eb; color: #fff; border: none; border-radius: 8px;
-      padding: 8px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
-    }
-    .memo-submit:active { background: #1d4ed8; }
-    .memo-submit:disabled { background: #334155; color: #64748b; cursor: default; }
-    .memo-status { font-size: 12px; color: #64748b; margin-top: 8px; min-height: 18px; }
-    .memo-status.ok { color: #22c55e; }
-    .memo-status.err { color: #ef4444; }
+    .quick-memo-add:active { background: #1d4ed8; }
 
-    .memo-list { display: flex; flex-direction: column; gap: 10px; }
     .memo-card {
-      background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 14px 16px;
+      background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+      padding: 12px; margin-bottom: 8px;
     }
-    .memo-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-    .memo-date { font-size: 11px; color: #64748b; }
-    .memo-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: #1d4ed8; color: #bfdbfe; }
-    .memo-text { font-size: 14px; color: #e2e8f0; line-height: 1.6; white-space: pre-wrap; }
-    .memo-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
+    .memo-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px;
+    }
+    .memo-date { font-size: 11px; color: #94a3b8; }
+    .memo-del {
+      background: none; border: none; color: #64748b; font-size: 16px;
+      cursor: pointer; padding: 0 4px; line-height: 1;
+    }
+    .memo-del:hover { color: #ef4444; }
+    .memo-text { font-size: 14px; color: #e2e8f0; line-height: 1.5; word-break: break-word; }
+    .memo-empty { text-align: center; color: #64748b; padding: 30px; font-size: 13px; }
 
-    /* ── Tasks tab ── */
-    .tasks-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    /* ── Plan tab ── */
+    .plan-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .plan-header h2 { font-size: 17px; color: #f1f5f9; }
+    .plan-updated { font-size: 11px; color: #94a3b8; }
+    .plan-empty {
+      text-align: center; color: #64748b; padding: 30px; font-size: 13px;
+      background: #1e293b; border: 1px dashed #334155; border-radius: 10px;
     }
-    .tasks-header h2 { font-size: 14px; font-weight: 700; color: #f1f5f9; }
-    .tasks-updated { font-size: 11px; color: #475569; }
-    .task-card {
-      background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-      padding: 14px 16px; margin-bottom: 10px;
+    .plan-card {
+      background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+      padding: 12px; margin-bottom: 8px;
     }
-    .task-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
-    .task-priority {
-      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+    .plan-card-header {
+      display: flex; gap: 10px; align-items: center; margin-bottom: 4px;
     }
-    .pri-high { background: #7f1d1d; color: #fca5a5; }
-    .pri-medium { background: #78350f; color: #fcd34d; }
-    .pri-low { background: #1e3a5f; color: #7dd3fc; }
-    .task-title { font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.4; }
-    .task-detail { font-size: 13px; color: #94a3b8; line-height: 1.5; }
-    .task-blocker {
-      margin-top: 6px; font-size: 12px; color: #fca5a5;
-      background: #450a0a; border-radius: 6px; padding: 4px 8px; display: inline-block;
+    .plan-date {
+      font-size: 11px; color: #94a3b8;
+      padding: 2px 8px; background: #0f172a; border-radius: 4px;
     }
-    .task-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
-    .task-hint { font-size: 12px; color: #334155; margin-top: 8px; }
-    /* ── Context tab ── */
-    .ctx-box {
-      background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-      padding: 16px; margin-bottom: 14px; position: relative;
+    .plan-type {
+      padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
     }
-    .ctx-label { font-size: 11px; color: #64748b; margin-bottom: 8px; }
-    .ctx-copy-btn {
-      position: absolute; top: 12px; right: 12px;
-      background: #2563eb; color: #fff; border: none; border-radius: 8px;
-      padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer;
+    .plan-title { font-size: 14px; color: #f1f5f9; font-weight: 600; margin-top: 4px; }
+    .plan-detail { font-size: 12px; color: #cbd5e1; margin-top: 4px; line-height: 1.5; }
+
+    /* ── Assessment tab ── */
+    .assessment-content {
+      background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+      padding: 18px; font-size: 14px; color: #e2e8f0; line-height: 1.7;
     }
-    .ctx-copy-btn.done { background: #16a34a; }
-    .ctx-content {
-      font-size: 12px; color: #94a3b8; white-space: pre-wrap; line-height: 1.6;
-      max-height: 55vh; overflow-y: auto;
+    .assessment-content h1 { font-size: 20px; color: #f8fafc; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #334155; }
+    .assessment-content h2 { font-size: 17px; color: #f1f5f9; margin: 18px 0 10px; }
+    .assessment-content h3 { font-size: 15px; color: #f1f5f9; margin: 14px 0 8px; }
+    .assessment-content p { margin: 8px 0; }
+    .assessment-content ul, .assessment-content ol { padding-left: 22px; margin: 8px 0; }
+    .assessment-content li { margin: 4px 0; }
+    .assessment-content code {
+      background: #0f172a; padding: 2px 6px; border-radius: 3px; font-size: 12px; color: #fbbf24;
     }
-    .ctx-empty { text-align: center; padding: 40px 20px; color: #475569; font-size: 14px; }
-    .ctx-updated { font-size: 11px; color: #475569; margin-bottom: 12px; }
+    .assessment-content pre {
+      background: #0f172a; padding: 10px; border-radius: 6px; overflow-x: auto;
+      margin: 8px 0; font-size: 12px;
+    }
+    .assessment-content pre code { background: none; padding: 0; color: #cbd5e1; }
+    .assessment-content table {
+      width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px;
+    }
+    .assessment-content th, .assessment-content td {
+      border: 1px solid #334155; padding: 6px 10px; text-align: left;
+    }
+    .assessment-content th { background: #0f172a; color: #f1f5f9; }
+    .assessment-content blockquote {
+      border-left: 3px solid #2563eb; padding: 4px 12px; margin: 8px 0;
+      color: #94a3b8; font-style: italic;
+    }
+    .assessment-content a { color: #60a5fa; }
+    .assessment-content hr { border: 0; border-top: 1px solid #334155; margin: 16px 0; }
   </style>
 </head>
 <body>
@@ -191,8 +247,8 @@
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('calendar', this)">📅 カレンダー</button>
     <button class="tab-btn" onclick="switchTab('memo', this)">📝 メモ</button>
-    <button class="tab-btn" onclick="switchTab('tasks', this)">📋 残タスク</button>
-    <button class="tab-btn" onclick="switchTab('context', this)">🔗 壁打ち</button>
+    <button class="tab-btn" onclick="switchTab('plan', this)">🎯 強化計画</button>
+    <button class="tab-btn" onclick="switchTab('assessment', this)">📊 診断</button>
   </div>
 
   <!-- ===== CALENDAR TAB ===== -->
@@ -201,13 +257,15 @@
       <div class="stats-bar">
         <div class="stat-card"><div class="stat-num" id="stat-days">—</div><div class="stat-label">開発日数</div></div>
         <div class="stat-card"><div class="stat-num" id="stat-commits">—</div><div class="stat-label">総コミット</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-repos">—</div><div class="stat-label">リポジトリ</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-plans">—</div><div class="stat-label">予定イベント</div></div>
       </div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Operation-Mgmt</div>
         <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>yc-workers</div>
         <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>各種ポータル</div>
         <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>その他</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>📚 学習</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>🎯 マイルストーン</div>
       </div>
       <div class="month-nav">
         <button onclick="prevMonth()">‹</button>
@@ -224,228 +282,162 @@
         <div class="entry-date" id="entry-date-label"></div>
         <div id="entry-content"></div>
       </div>
-      <div class="no-entry" id="no-entry-msg" style="display:none">この日は開発記録がありません</div>
+      <div class="no-entry" id="no-entry-msg" style="display:none">この日は記録がありません</div>
     </div>
   </div>
 
-  <!-- ===== MEMO TAB ===== -->
+  <!-- ===== MEMO TAB (Quick local-only memo) ===== -->
   <div id="tab-memo" class="tab-pane">
     <div class="container">
-      <div class="memo-form">
-        <h2>📝 開発メモを追加</h2>
-        <textarea class="memo-textarea" id="memo-text" placeholder="アイデア・気づき・TODO など自由に&#10;&#10;例: Square決済の返金フローをBotで自動化できそう"></textarea>
-        <div class="tag-input-row" id="tag-chips">
-          <div class="tag-chip" data-tag="#アイデア" onclick="toggleTag(this)">#アイデア</div>
-          <div class="tag-chip" data-tag="#TODO" onclick="toggleTag(this)">#TODO</div>
-          <div class="tag-chip" data-tag="#バグ" onclick="toggleTag(this)">#バグ</div>
-          <div class="tag-chip" data-tag="#調査" onclick="toggleTag(this)">#調査</div>
-          <div class="tag-chip" data-tag="#デザイン" onclick="toggleTag(this)">#デザイン</div>
+      <div class="quick-memo-input">
+        <textarea id="quick-memo-text" placeholder="思いついたことをサクッと書く"></textarea>
+        <div class="quick-memo-actions">
+          <span class="quick-memo-hint">Cmd+Enter / Ctrl+Enter で追加 · 端末ローカル保存のみ</span>
+          <button class="quick-memo-add" onclick="addQuickMemo()">+ 追加</button>
         </div>
-        <div class="memo-pw-row">
-          <input class="memo-pw-input" id="memo-pw" type="password" placeholder="パスワード" oninput="savePw()">
-          <button class="memo-submit" id="memo-btn" onclick="submitMemo()">送信</button>
-        </div>
-        <div class="memo-status" id="memo-status"></div>
       </div>
-      <div class="memo-list" id="memo-list">
-        <div class="memo-empty">読み込み中...</div>
-      </div>
+      <div id="quick-memo-list"></div>
     </div>
   </div>
 
-  <!-- ===== TASKS TAB ===== -->
-  <div id="tab-tasks" class="tab-pane">
+  <!-- ===== PLAN TAB ===== -->
+  <div id="tab-plan" class="tab-pane">
     <div class="container">
-      <div class="tasks-header">
-        <h2>📋 残タスク</h2>
-        <div class="tasks-updated" id="tasks-updated"></div>
+      <div class="plan-header">
+        <h2>🎯 エンジニア力強化計画</h2>
+        <span class="plan-updated" id="plan-updated"></span>
       </div>
-      <div id="task-list">
-        <div class="task-empty">
-          読み込み中...
-          <div class="task-hint">Claude Terminal で /push-tasks を唱えると更新されます</div>
-        </div>
-      </div>
+      <div id="plan-list"></div>
     </div>
   </div>
 
-  <!-- ===== CONTEXT TAB ===== -->
-  <div id="tab-context" class="tab-pane">
+  <!-- ===== ASSESSMENT TAB ===== -->
+  <div id="tab-assessment" class="tab-pane">
     <div class="container">
-      <div class="ctx-updated" id="ctx-updated"></div>
-      <div class="ctx-box" id="ctx-box" style="display:none">
-        <div class="ctx-label">このテキストをコピーして Claude.ai の最初のメッセージに貼ると、開発文脈を即共有できます</div>
-        <button class="ctx-copy-btn" id="ctx-copy-btn" onclick="copyContext()">コピー</button>
-        <div class="ctx-content" id="ctx-content"></div>
-      </div>
-      <div class="ctx-empty" id="ctx-empty">
-        読み込み中...
-        <div class="task-hint">Claude Terminal で /sync-context を唱えると更新されます</div>
-      </div>
+      <div class="assessment-content" id="assessment-content">読込中...</div>
     </div>
   </div>
 
 <script>
-const WORKER_URL = 'https://yc-dev-memo.ycompany0909.workers.dev';
-
 // ===== TAB SWITCH =====
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'memo') loadMemos();
-  if (name === 'tasks') loadTasks();
-  if (name === 'context') loadContext();
+  if (name === 'memo') renderQuickMemos();
+  if (name === 'plan') loadPlan();
+  if (name === 'assessment') loadAssessment();
 }
 
-// ===== MEMO =====
-function savePw() {
-  const pw = document.getElementById('memo-pw').value;
-  if (pw) localStorage.setItem('yc_memo_pw', pw);
-}
-window.addEventListener('load', () => {
-  const saved = localStorage.getItem('yc_memo_pw');
-  if (saved) document.getElementById('memo-pw').value = saved;
-});
+// ===== QUICK MEMO (localStorage only) =====
+const MEMO_KEY = 'yc_quick_memos';
 
-function toggleTag(el) {
-  el.classList.toggle('selected');
+function getQuickMemos() {
+  try { return JSON.parse(localStorage.getItem(MEMO_KEY) || '[]'); }
+  catch { return []; }
 }
-
-async function submitMemo() {
-  const text = document.getElementById('memo-text').value.trim();
+function saveQuickMemos(memos) {
+  localStorage.setItem(MEMO_KEY, JSON.stringify(memos));
+}
+function addQuickMemo() {
+  const ta = document.getElementById('quick-memo-text');
+  const text = ta.value.trim();
   if (!text) return;
-  const pw = document.getElementById('memo-pw').value;
-  if (!pw) { setStatus('パスワードを入力してください', 'err'); return; }
-  const tags = [...document.querySelectorAll('.tag-chip.selected')].map(c => c.dataset.tag);
-
-  const btn = document.getElementById('memo-btn');
-  btn.disabled = true;
-  setStatus('送信中...');
-
-  try {
-    const res = await fetch(`${WORKER_URL}/memo`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: pw, text, tags }),
-    });
-    if (res.ok) {
-      setStatus('✅ 保存しました（数分で反映）', 'ok');
-      document.getElementById('memo-text').value = '';
-      document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
-      localStorage.setItem('yc_memo_pw', pw);
-      setTimeout(loadMemos, 1000);
-    } else if (res.status === 401) {
-      setStatus('❌ パスワードが違います', 'err');
-    } else {
-      setStatus('❌ エラーが発生しました', 'err');
-    }
-  } catch {
-    setStatus('❌ 通信エラー', 'err');
+  const memos = getQuickMemos();
+  memos.unshift({ ts: Date.now(), text });
+  saveQuickMemos(memos);
+  ta.value = '';
+  renderQuickMemos();
+}
+function deleteQuickMemo(ts) {
+  if (!confirm('このメモを削除しますか？')) return;
+  const memos = getQuickMemos().filter(m => m.ts !== ts);
+  saveQuickMemos(memos);
+  renderQuickMemos();
+}
+function renderQuickMemos() {
+  const memos = getQuickMemos();
+  const list = document.getElementById('quick-memo-list');
+  if (!memos.length) {
+    list.innerHTML = '<div class="memo-empty">まだメモがありません</div>';
+    return;
   }
-  btn.disabled = false;
+  list.innerHTML = memos.map(m => {
+    const d = new Date(m.ts);
+    const mm = d.getMonth() + 1, dd = d.getDate();
+    const HH = String(d.getHours()).padStart(2,'0'), MM = String(d.getMinutes()).padStart(2,'0');
+    const ymd = d.getFullYear() === new Date().getFullYear() ? `${mm}/${dd}` : `${d.getFullYear()}/${mm}/${dd}`;
+    const safe = m.text.replace(/</g,'&lt;').replace(/\n/g,'<br>');
+    return `<div class="memo-card">
+      <div class="memo-meta">
+        <span class="memo-date">${ymd} ${HH}:${MM}</span>
+        <button class="memo-del" onclick="deleteQuickMemo(${m.ts})" title="削除">×</button>
+      </div>
+      <div class="memo-text">${safe}</div>
+    </div>`;
+  }).join('');
 }
 
-function setStatus(msg, cls = '') {
-  const el = document.getElementById('memo-status');
-  el.textContent = msg;
-  el.className = 'memo-status' + (cls ? ' ' + cls : '');
-}
+// ===== PLAN =====
+const PLAN_TYPE_LABEL = { learning: '📚 学習', milestone: '🎯 マイルストーン', practice: '🛠 実践' };
+const PLAN_TYPE_CLS = { learning: 'tag-learning', milestone: 'tag-milestone', practice: 'tag-workers' };
 
-async function loadMemos() {
+async function loadPlan() {
+  const list = document.getElementById('plan-list');
+  const updated = document.getElementById('plan-updated');
   try {
-    const res = await fetch('memos.json?t=' + Date.now());
-    const memos = await res.json();
-    const list = document.getElementById('memo-list');
-    if (!memos.length) {
-      list.innerHTML = '<div class="memo-empty">まだメモがありません</div>';
-      return;
-    }
-    list.innerHTML = memos.map(m => {
-      const date = new Date(m.created_at).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-      const tags = (m.tags || []).map(t => `<span class="memo-tag">${t}</span>`).join('');
-      return `<div class="memo-card">
-        <div class="memo-meta"><span class="memo-date">${date}</span>${tags}</div>
-        <div class="memo-text">${m.text.replace(/</g,'&lt;')}</div>
-      </div>`;
-    }).join('');
-  } catch {
-    document.getElementById('memo-list').innerHTML = '<div class="memo-empty">読み込みエラー</div>';
-  }
-}
-
-// ===== TASKS =====
-async function loadTasks() {
-  try {
-    const res = await fetch('tasks.json?t=' + Date.now());
+    const res = await fetch('plan.json?t=' + Date.now());
+    if (!res.ok) throw new Error('not found');
     const data = await res.json();
-    const list = document.getElementById('task-list');
-    const updated = document.getElementById('tasks-updated');
-
     if (data.updated_at) {
       const d = new Date(data.updated_at);
       updated.textContent = `更新: ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
     }
-
-    if (!data.tasks || !data.tasks.length) {
-      list.innerHTML = `<div class="task-empty">
-        タスクがありません
-        <div class="task-hint">Claude Terminal で /push-tasks を唱えると更新されます</div>
-      </div>`;
+    if (!data.plans || !data.plans.length) {
+      list.innerHTML = '<div class="plan-empty">プラン未策定。plan.json を更新してください。</div>';
       return;
     }
-
-    const priLabel = { high: '高', medium: '中', low: '低' };
-    const priCls = { high: 'pri-high', medium: 'pri-medium', low: 'pri-low' };
-    list.innerHTML = data.tasks.map(t => {
-      const pri = t.priority || 'medium';
-      const blocker = t.blocker ? `<div class="task-blocker">🚧 ${t.blocker}</div>` : '';
-      return `<div class="task-card">
-        <div class="task-header">
-          <span class="task-priority ${priCls[pri] || 'pri-medium'}">${priLabel[pri] || pri}</span>
-          <div class="task-title">${t.title}</div>
+    const sorted = data.plans.slice().sort((a,b) => a.date.localeCompare(b.date));
+    list.innerHTML = sorted.map(p => {
+      const typeCls = PLAN_TYPE_CLS[p.type] || 'tag-other';
+      const typeLabel = PLAN_TYPE_LABEL[p.type] || p.type;
+      return `<div class="plan-card">
+        <div class="plan-card-header">
+          <span class="plan-date">${p.date}</span>
+          <span class="plan-type ${typeCls}">${typeLabel}</span>
         </div>
-        ${t.detail ? `<div class="task-detail">${t.detail}</div>` : ''}
-        ${blocker}
+        <div class="plan-title">${(p.title||'').replace(/</g,'&lt;')}</div>
+        ${p.detail ? `<div class="plan-detail">${p.detail.replace(/</g,'&lt;')}</div>` : ''}
       </div>`;
     }).join('');
   } catch {
-    document.getElementById('task-list').innerHTML = '<div class="task-empty">読み込みエラー</div>';
+    list.innerHTML = '<div class="plan-empty">plan.json が読み込めませんでした</div>';
   }
 }
 
-// ===== CONTEXT =====
-async function loadContext() {
-  const empty = document.getElementById('ctx-empty');
-  const box = document.getElementById('ctx-box');
-  const content = document.getElementById('ctx-content');
-  const updated = document.getElementById('ctx-updated');
+// ===== ASSESSMENT (markdown render) =====
+async function loadAssessment() {
+  const content = document.getElementById('assessment-content');
   try {
-    const res = await fetch('context.md?t=' + Date.now());
+    if (!window.marked) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+        s.onload = resolve; s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    const res = await fetch('skill-assessment.md?t=' + Date.now());
     if (!res.ok) throw new Error('not found');
-    const text = await res.text();
-    content.textContent = text;
-    const m = text.match(/（(\d{4}-\d{2}-\d{2}[^）]*)更新）/);
-    if (m) updated.textContent = `最終同期: ${m[1]}`;
-    box.style.display = 'block';
-    empty.style.display = 'none';
+    const md = await res.text();
+    content.innerHTML = marked.parse(md);
   } catch {
-    empty.innerHTML = `まだコンテキストがありません<div class="task-hint">Claude Terminal で /sync-context を唱えると更新されます</div>`;
+    content.innerHTML = '<div class="memo-empty">skill-assessment.md が読み込めませんでした</div>';
   }
 }
 
-function copyContext() {
-  const text = document.getElementById('ctx-content').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('ctx-copy-btn');
-    btn.textContent = '✅ コピー済み';
-    btn.classList.add('done');
-    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('done'); }, 2000);
-  });
-}
-
-// ===== CALENDAR (unchanged) =====
+// ===== CALENDAR =====
 const DIARY = {
   "2026-04-30": [
     { repo: "demoday-backend", tag: "tag-other", items: [
@@ -525,44 +517,115 @@ const DIARY = {
     { repo: "yc-workers", tag: "tag-workers", items: [
       { type: "feat", text: "Square連携サブスク管理 + 顧客向けLINE Bot" },
     ]},
-    { repo: "yc-dotfiles", tag: "tag-dotfiles", items: [
+    { repo: "yc-dotfiles", tag: "tag-other", items: [
       { type: "init", text: "YC開発環境dotfiles + /dev-check + yc-check TUI" },
       { type: "feat", text: "SSS tier + bonus tools 追加" },
     ]},
     { repo: "orzugul-portal", tag: "tag-portal", items: [
       { type: "init", text: "orzugul portal v1 — 統合政治活動ポータル" },
     ]},
-    { repo: "yc-dev-portal", tag: "tag-dotfiles", items: [
+    { repo: "yc-dev-portal", tag: "tag-other", items: [
       { type: "init", text: "スマホ壁打ち用 GitHub Pages ダッシュボード構築" },
     ]}
   ],
   "2026-05-18": [
-    { repo: "yc-dev-portal", tag: "tag-dotfiles", items: [
+    { repo: "yc-dev-portal", tag: "tag-other", items: [
       { type: "feat", text: "開発メモ機能追加（スマホ → Cloudflare Worker → GitHub）" },
       { type: "feat", text: "残タスク表示タブ追加（/push-tasks で Terminal から更新）" },
     ]},
     { repo: "yc-workers", tag: "tag-workers", items: [
       { type: "init", text: "yc-dev-memo Worker 新設（GitHub API連携）" },
     ]},
-    { repo: "yc-dotfiles", tag: "tag-dotfiles", items: [
+    { repo: "yc-dotfiles", tag: "tag-other", items: [
       { type: "feat", text: "iMac環境整備: bat/eza/zoxide/fd/lazygit/docker/colima インストール" },
       { type: "feat", text: "/env-check 呪文: iCloud経由で全マシン診断結果を比較表示" },
+    ]},
+    { repo: "orzugul-portal", tag: "tag-portal", items: [
+      { type: "feat", text: "メディアダッシュボード /media /twitter /map 実装" },
+      { type: "feat", text: "Xフォロワー19,260人を属性タグ12種で分類" },
+      { type: "feat", text: "ポスター履歴379件の色分け地図プロット" },
+    ]}
+  ],
+  "2026-05-19": [
+    { repo: "orzugul-portal", tag: "tag-portal", items: [
+      { type: "feat", text: "メディア機能の仕上げ・微調整" },
+    ]}
+  ],
+  "2026-05-20": [
+    { repo: "ycompany-portal", tag: "tag-op", items: [
+      { type: "refactor", text: "NocoDB → Cloudflare D1 大移行 (Pages 13 + Workers 3)" },
+      { type: "feat", text: "yc-portal Worker: meetings CRUD 完全D1化" },
+      { type: "feat", text: "yc-notta-webhook / yc-template-meeting D1化" },
+      { type: "feat", text: "Pages: api/asakai / segments / zaiko / impressive-customers / presenter-candidates / nurturing-admin 全D1移行" },
+      { type: "feat", text: "13エンドポイント スモークテスト整備" },
+    ]},
+    { repo: "yc-workers", tag: "tag-workers", items: [
+      { type: "refactor", text: "Worker統合: 旧22本 → 新8本に集約 (yc-ai/content/forms/infra/line-webhook/ops/portal/shortcut)" },
+    ]}
+  ],
+  "2026-05-22": [
+    { repo: "ycompany-portal", tag: "tag-op", items: [
+      { type: "feat", text: "みおりビュー (個人別 hide_features + View As)" },
+      { type: "feat", text: "在庫管理 大幅改善 — 消費量予測・二列アラート・last_checked" },
+      { type: "feat", text: "大型「朝会を始める」ボタンを index.html トップに配置" },
+      { type: "fix", text: "shift-cockpit init() の DOMContentLoaded 待ち / null safety" },
+    ]}
+  ],
+  "2026-05-23": [
+    { repo: "ycompany-portal", tag: "tag-op", items: [
+      { type: "feat", text: "🎯 CI/CD 基盤完成 — 自動デプロイ・スモーク43件・PR運用" },
+      { type: "feat", text: "deploy.yml 修復: Node 22 + wrangler@4 (10連敗から初の green)" },
+      { type: "feat", text: "Workers 8本の自動デプロイ workflow (matrix並列)" },
+      { type: "feat", text: "本番ヘルスチェック workflow_run 即時実行化" },
+      { type: "feat", text: "CF Access Service Token 認証経路検証をスモークに統合" },
+      { type: "feat", text: "main protected branch + PR 運用 (GitHub Pro 加入)" },
+      { type: "security", text: "preview-pages.dev バイパス全削除 (別セッション混入修正)" },
+      { type: "fix", text: "permissions/me の期待値を guest に (Actions ランナーは未認証)" },
+    ]},
+    { repo: "yc-dev-portal", tag: "tag-other", items: [
+      { type: "feat", text: "skill-assessment.md 自動生成 (実装力診断レポート初版)" },
+      { type: "feat", text: "diary.html 改造: 壁打ち削除・診断タブ追加・強化計画化" },
     ]}
   ]
 };
 
 let currentYear = 2026, currentMonth = 4, selectedDate = null;
+let PLANS_BY_DATE = {}; // date string -> [plan]
+
+async function loadPlansForCalendar() {
+  try {
+    const res = await fetch('plan.json?t=' + Date.now());
+    if (!res.ok) return;
+    const data = await res.json();
+    PLANS_BY_DATE = {};
+    (data.plans || []).forEach(p => {
+      if (!PLANS_BY_DATE[p.date]) PLANS_BY_DATE[p.date] = [];
+      PLANS_BY_DATE[p.date].push(p);
+    });
+    renderCalendar();
+    calcStats();
+  } catch {}
+}
 
 function getEntryDots(dateStr) {
-  const entry = DIARY[dateStr];
-  if (!entry) return [];
   const dots = new Set();
-  entry.forEach(e => {
-    if (e.tag === 'tag-op') dots.add('dot-op');
-    else if (e.tag === 'tag-workers') dots.add('dot-workers');
-    else if (e.tag === 'tag-portal' || e.tag === 'tag-setagaya') dots.add('dot-portal');
-    else dots.add('dot-other');
-  });
+  const entry = DIARY[dateStr];
+  if (entry) {
+    entry.forEach(e => {
+      if (e.tag === 'tag-op') dots.add('dot-op');
+      else if (e.tag === 'tag-workers') dots.add('dot-workers');
+      else if (e.tag === 'tag-portal' || e.tag === 'tag-setagaya') dots.add('dot-portal');
+      else dots.add('dot-other');
+    });
+  }
+  const plans = PLANS_BY_DATE[dateStr];
+  if (plans) {
+    plans.forEach(p => {
+      if (p.type === 'learning') dots.add('dot-learning');
+      else if (p.type === 'milestone') dots.add('dot-milestone');
+      else dots.add('dot-learning');
+    });
+  }
   return [...dots];
 }
 
@@ -584,11 +647,17 @@ function renderCalendar() {
     const dd = String(d).padStart(2, '0');
     const dateStr = `${currentYear}-${mm}-${dd}`;
     const hasEntry = !!DIARY[dateStr];
+    const hasPlan = !!PLANS_BY_DATE[dateStr];
     const isToday = (today.getFullYear() === currentYear && today.getMonth() === currentMonth && today.getDate() === d);
     const isSelected = selectedDate === dateStr;
     const dots = getEntryDots(dateStr).map(cls => `<div class="dot ${cls}"></div>`).join('');
-    let cls = 'cal-cell' + (hasEntry ? ' has-entry' : '') + (isToday ? ' today' : '') + (isSelected ? ' selected' : '');
-    html += `<div class="${cls}" onclick="${hasEntry ? `showEntry('${dateStr}')` : ''}">
+    let cls = 'cal-cell';
+    if (hasEntry) cls += ' has-entry';
+    if (hasPlan) cls += ' has-plan';
+    if (isToday) cls += ' today';
+    if (isSelected) cls += ' selected';
+    const onclick = (hasEntry || hasPlan) ? `showEntry('${dateStr}')` : '';
+    html += `<div class="${cls}" onclick="${onclick}">
       <div class="day-num">${d}</div><div class="dots">${dots}</div></div>`;
     dayCount++;
   }
@@ -602,25 +671,45 @@ function showEntry(dateStr) {
   selectedDate = dateStr;
   renderCalendar();
   const entry = DIARY[dateStr];
+  const plans = PLANS_BY_DATE[dateStr];
   const panel = document.getElementById('entry-panel');
   const noMsg = document.getElementById('no-entry-msg');
   const d = new Date(dateStr + 'T00:00:00');
   const weekdays = ['日','月','火','水','木','金','土'];
   const label = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${weekdays[d.getDay()]}）`;
-  const commitCount = entry.reduce((sum, e) => sum + e.items.length, 0);
-  document.getElementById('entry-date-label').innerHTML = `${label}<span>${commitCount}件の開発</span>`;
-  if (!entry || !entry.length) {
+  const commitCount = entry ? entry.reduce((sum, e) => sum + e.items.length, 0) : 0;
+  const planCount = plans ? plans.length : 0;
+  const counterText = [];
+  if (commitCount) counterText.push(`${commitCount}件の開発`);
+  if (planCount) counterText.push(`${planCount}件の予定`);
+  document.getElementById('entry-date-label').innerHTML = `${label}<span>${counterText.join(' / ')}</span>`;
+
+  if (!entry && !plans) {
     panel.classList.remove('visible'); noMsg.style.display = 'block'; return;
   }
   noMsg.style.display = 'none'; panel.classList.add('visible');
-  const typeLabels = { feat: 'feat', fix: 'fix', docs: 'docs', refactor: 'rfct', init: 'init' };
+  const typeLabels = { feat: 'feat', fix: 'fix', docs: 'docs', refactor: 'rfct', init: 'init', security: 'sec', learning: '学習', milestone: 'MS', practice: '実践' };
   let html = '';
-  entry.forEach(section => {
-    const items = section.items.map(item => {
-      return `<li class="feat-item"><span class="feat-type type-${item.type}">${typeLabels[item.type]||item.type}</span>${item.text}</li>`;
+  if (entry) {
+    entry.forEach(section => {
+      const items = section.items.map(item => {
+        return `<li class="feat-item"><span class="feat-type type-${item.type}">${typeLabels[item.type]||item.type}</span>${(item.text||'').replace(/</g,'&lt;')}</li>`;
+      }).join('');
+      html += `<div class="entry-section"><span class="repo-tag ${section.tag}">${section.repo}</span><ul class="feat-list">${items}</ul></div>`;
+    });
+  }
+  if (plans) {
+    const items = plans.map(p => {
+      const t = p.type || 'learning';
+      return `<li class="feat-item">
+        <span class="feat-type type-${t}">${typeLabels[t]||t}</span>
+        <div><div>${(p.title||'').replace(/</g,'&lt;')}</div>
+        ${p.detail ? `<div style="color:#94a3b8;font-size:11px;margin-top:2px;">${p.detail.replace(/</g,'&lt;')}</div>` : ''}</div>
+      </li>`;
     }).join('');
-    html += `<div class="entry-section"><span class="repo-tag ${section.tag}">${section.repo}</span><ul class="feat-list">${items}</ul></div>`;
-  });
+    const tagCls = plans[0].type === 'milestone' ? 'tag-milestone' : 'tag-learning';
+    html += `<div class="entry-section"><span class="repo-tag ${tagCls}">🎯 強化計画</span><ul class="feat-list">${items}</ul></div>`;
+  }
   document.getElementById('entry-content').innerHTML = html;
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -631,16 +720,27 @@ function nextMonth() { if (++currentMonth > 11) { currentMonth = 0; currentYear+
 function calcStats() {
   const days = Object.keys(DIARY).length;
   const commits = Object.values(DIARY).reduce((s, d) => s + d.reduce((s2, sec) => s2 + sec.items.length, 0), 0);
-  const repos = new Set(Object.values(DIARY).flatMap(d => d.map(s => s.repo))).size;
+  const planCount = Object.values(PLANS_BY_DATE).reduce((s, arr) => s + arr.length, 0);
   document.getElementById('stat-days').textContent = days;
   document.getElementById('stat-commits').textContent = commits;
-  document.getElementById('stat-repos').textContent = repos;
+  document.getElementById('stat-plans').textContent = planCount;
 }
 
-calcStats();
-renderCalendar();
-const latestDate = Object.keys(DIARY).sort().reverse()[0];
-if (latestDate) showEntry(latestDate);
+// ===== INIT =====
+window.addEventListener('load', () => {
+  // memo: Cmd+Enter / Ctrl+Enter
+  const ta = document.getElementById('quick-memo-text');
+  if (ta) ta.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') addQuickMemo();
+  });
+
+  calcStats();
+  renderCalendar();
+  loadPlansForCalendar();
+
+  const latestDate = Object.keys(DIARY).sort().reverse()[0];
+  if (latestDate) showEntry(latestDate);
+});
 </script>
 </body>
 </html>
