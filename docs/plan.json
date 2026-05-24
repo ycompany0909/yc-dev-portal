@@ -24,6 +24,20 @@
 
   "plans": [
     {
+      "date": "2026-05-25",
+      "type": "practice",
+      "title": "🐉 Dragon Harness v2.2 実装 — 三権統合 + 自動化度80%達成",
+      "detail": "Proposal #32-34 反映。司法機能（上訴プロセス）追加 + グローバルファイル検証自動化（Tier 2.13 30%→70%）+ デプロイ後検証自動化（Tier 2.14 20%→60%）。推奨順: #32（30min・テキスト） → #34（30min・script） → #33（1h・yml）。成果: 三権統合完成 + Tier 2 平均80% 自動化度達成 = 構造的完成。以降は実戦の判例蓄積でのみ進化する生きたシステムへ。",
+      "level_target": "Lv4 完成（法体系の構造的完成） + Lv6 素材（外に出せる組織設計理論）"
+    },
+    {
+      "date": "2026-05-25",
+      "type": "practice",
+      "title": "🎨 Dragon Harness v2.3 実装 — 原則6：美の構造化 ✅ 完成",
+      "detail": "Proposal #35 反映。「壊れない」から「気持ちいい」へ。盲目の竜騎士が竜の鱸に触れて美しさを確認する。Phase 1（Part 0に原則6追加・完成） → Phase 2（check-aesthetic-structure.sh 5つのサブ原則検証スクリプト・完成） → Phase 3（aesthetic-check.yml GitHub Actions・動作確認済み） → Phase 4（メタデータ更新・完成）。成果: Part 0 原則が5→6に拡張。DH が「自動防御」から「自動美化」へ進化。実装時間: 2.5h（見積2.5h、実績一致）。",
+      "level_target": "Lv5（美の体験設計） + Lv6 素材（デザイン哲学の輸出）"
+    },
+    {
       "date": "2026-06-02",
       "type": "externalize",
       "title": "🌍 アクション 1: 法体系テンプレート化 (Lv6 直結・最優先)",
