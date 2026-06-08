@@ -24,11 +24,13 @@ DIARY_HTML = Path(__file__).parent.parent / "docs" / "diary.html"
 
 # (github_repo, display_name, css_tag)
 REPOS = [
+    ("ycompany0909/ycompany-portal",      "ycompany-portal",      "tag-op"),
     ("ycompany0909/Operation-Management", "Operation-Management", "tag-op"),
     ("ycompany0909/yc-workers",           "yc-workers",           "tag-workers"),
     ("ycompany0909/yc-accounting",        "yc-accounting",        "tag-accounting"),
     ("ycompany0909/yc-dotfiles",          "yc-dotfiles",          "tag-dotfiles"),
     ("ycompany0909/orzugul-portal",       "orzugul-portal",       "tag-portal"),
+    ("ycompany0909/ikizama-portal",       "ikizama-portal",       "tag-setagaya"),
     ("ycompany0909/Setagaya-seiji",       "Setagaya-seiji",       "tag-setagaya"),
     ("ycompany0909/timetree-mail",        "timetree-mail",        "tag-other"),
     ("ycompany0909/demoday-2026",         "demoday-2026",         "tag-other"),
