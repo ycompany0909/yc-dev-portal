@@ -358,14 +358,14 @@
     <div class="container" style="padding-bottom:40px">
 
       <div class="combat-hero" style="margin-top:16px">
-        <div class="combat-num">97</div>
-        <div class="combat-title">YC AI 戦闘力</div>
-        <div class="combat-sub">実常勤 FTE 2.33 × Claude Code で業界最前線水準</div>
+        <div class="combat-num">61</div>
+        <div class="combat-title">YC AI 戦闘力（正直評価）</div>
+        <div class="combat-sub">「動く」と「信頼できる」の間にある現在地。伸び代 +32 ポイント。</div>
       </div>
 
       <!-- 開発規模スコア -->
       <div class="ov-section">
-        <div class="ov-section-title">開発規模</div>
+        <div class="ov-section-title">開発規模（実績値）</div>
         <div class="ov-stat-grid">
           <div class="ov-stat-card"><div class="ov-stat-num">37+</div><div class="ov-stat-label">開発日数</div></div>
           <div class="ov-stat-card"><div class="ov-stat-num">900+</div><div class="ov-stat-label">累計コミット</div></div>
@@ -467,38 +467,39 @@
 
       <!-- 技術深度ゲージ -->
       <div class="ov-section">
-        <div class="ov-section-title">技術深度 評価</div>
+        <div class="ov-section-title">技術深度 評価（正直版）</div>
         <div class="ov-block">
           <div class="gauge-row">
-            <span class="gauge-label">アーキテクチャ</span>
-            <div class="gauge-track"><div class="gauge-fill" style="width:88%;background:#3b82f6"></div></div>
-            <span class="gauge-score">88</span>
+            <span class="gauge-label">アーキテクチャ設計</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:65%;background:#3b82f6"></div></div>
+            <span class="gauge-score">65</span>
           </div>
           <div class="gauge-row">
-            <span class="gauge-label">AI 統合深度</span>
-            <div class="gauge-track"><div class="gauge-fill" style="width:95%;background:#f59e0b"></div></div>
-            <span class="gauge-score">95</span>
+            <span class="gauge-label">AI 統合活用</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:78%;background:#f59e0b"></div></div>
+            <span class="gauge-score">78</span>
           </div>
           <div class="gauge-row">
             <span class="gauge-label">データ設計</span>
-            <div class="gauge-track"><div class="gauge-fill" style="width:82%;background:#06b6d4"></div></div>
-            <span class="gauge-score">82</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:65%;background:#06b6d4"></div></div>
+            <span class="gauge-score">65</span>
           </div>
           <div class="gauge-row">
-            <span class="gauge-label">CI/CD・品質</span>
-            <div class="gauge-track"><div class="gauge-fill" style="width:80%;background:#8b5cf6"></div></div>
-            <span class="gauge-score">80</span>
+            <span class="gauge-label">テスト・品質担保</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:28%;background:#ef4444"></div></div>
+            <span class="gauge-score">28</span>
           </div>
           <div class="gauge-row">
-            <span class="gauge-label">規律・ドキュメント</span>
-            <div class="gauge-track"><div class="gauge-fill" style="width:92%;background:#ef4444"></div></div>
-            <span class="gauge-score">92</span>
+            <span class="gauge-label">規律遵守</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:50%;background:#8b5cf6"></div></div>
+            <span class="gauge-score">50</span>
           </div>
           <div class="gauge-row">
             <span class="gauge-label">セキュリティ</span>
-            <div class="gauge-track"><div class="gauge-fill" style="width:70%;background:#22c55e"></div></div>
-            <span class="gauge-score">70</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:38%;background:#ef4444"></div></div>
+            <span class="gauge-score">38</span>
           </div>
+          <div style="margin-top:10px;font-size:10.5px;color:#64748b">※ E2E テスト 0 本・D1 本番バックアップ未整備・セキュリティ監査未実施。スモーク 43 件は存在するが UI テストは皆無。</div>
         </div>
       </div>
 
@@ -515,59 +516,56 @@
 
       <!-- YC AI戦闘力 考察 -->
       <div class="ov-section">
-        <div class="ov-section-title">YC AI 戦闘力 考察</div>
+        <div class="ov-section-title">YC AI 戦闘力 考察（悲観的正直版）</div>
 
         <div class="ov-block">
-          <h3>なぜ「戦闘力 97」か</h3>
-          <p>実常勤 FTE 2.33（山川総支配人 1 + 田貝店長 1 + 佐々生副社長 1/3）で、通常なら10〜15名体制が必要なシステム群を 50日未満で構築・運用している。この「FTE 対 実装量比の異常値」が YC の AI 戦闘力の本質。</p>
+          <h3>「61」という数字の根拠</h3>
+          <p>FTE 2.33 で「動くもの」は作った。ただし「動く」と「信頼できる」は別の話。現時点でスコアを下げている最大要因は 3 つ。</p>
           <ul>
-            <li>1 FTE あたり 26+ 機能 / 5,949 お客様</li>
-            <li>3ポータル × 13+ リポジトリ × 8 Worker を 2 名体制で開発・運用</li>
-            <li>フルスタック（CF Workers/D1/LINE/GitHub CI）× AI 統合を同時に実現</li>
-            <li>オルズグル社長「AI なしで物理的に運用不可」と明言（2026-06-15）</li>
+            <li>❌ 本番 D1 バックアップ未整備 — 今夜 DB が吹っ飛んだら復元の手段がない</li>
+            <li>❌ E2E テスト 0 本 — スモーク 43 件は「デプロイが通るか」を確認するだけで、UI の回帰を検知しない</li>
+            <li>❌ Tier 1.17 を繰り返し破ってきた AI が、その条文自身を書いたという皮肉 — 自律的な品質保証と呼ぶには程遠い</li>
           </ul>
         </div>
 
         <div class="ov-block">
-          <h3>現在地の正直な評価</h3>
-          <p>「ベンチャー企業のシニアフルスタックエンジニア 1〜2名」水準の実装量と技術深度。ノーコードではなく、本格的なサーバーレスアーキテクチャで動いている点が差別化要因。ただし未検証・未完の領域も残る。</p>
+          <h3>実際に機能していないもの</h3>
           <ul>
-            <li>✅ アーキテクチャ設計 / データモデリング / AI統合 / 規律体系</li>
-            <li>✅ CI/CD（スモーク 43件 + matrix 並列デプロイ）</li>
-            <li>⚠️ セキュリティ監査（CF Access 依存・トークン管理は属人的）</li>
-            <li>⚠️ E2E テスト不足（UI テスト未整備）</li>
-            <li>⚠️ memory 210本 2.3MB 肥大化 → コンテキスト圧迫リスク</li>
-            <li>❌ 本番 D1 バックアップ自動化（未実装）</li>
+            <li>セキュリティ監査 — CF Access 依存で外部レビュー・ペンテスト未実施。脆弱性があっても気づけない状態</li>
+            <li>インシデント対応計画 — 本番障害発生時の手順書が存在しない</li>
+            <li>ロールバック手順 — デプロイ後に問題が出た場合の復旧 SOP なし</li>
+            <li>規律遵守 50点 — DH 60+ 条を持っているが、同じ違反（Tier 1.17 虚偽報告）を繰り返している。ルールが多いことは品質ではない</li>
+            <li>memory 210本 2.3MB 肥大化 — コンテキスト圧迫で CLAUDE.md 116k chars 警告が実際に発生した</li>
           </ul>
         </div>
 
         <div class="ov-block">
-          <h3>AI との協働で何が機能したか</h3>
-          <p>「AI にコードを書かせる」だけでなく、Dragon Harness という AI 行動規範体系を構築し、虚偽報告・過大報告・手抜き実装を構造的に抑制した点が最大の成功要因。</p>
+          <h3>伸び代マップ（+32 ポイントの内訳）</h3>
+          <p style="font-size:11px;color:#94a3b8;margin-bottom:8px">現在 61 → 目標 93。具体的な施策と推定加点。</p>
           <ul>
-            <li>Tier 1.17「未確認は未確認と言う」→ 虚偽完了報告事件から立法</li>
-            <li>三眼診断（龍/律/民 30/30 目標）→ 品質基準の定量化</li>
-            <li>HTC（精神と時の部屋）→ 5軸 Outside-In 機能検証</li>
-            <li>千里眼 Pro/Lite → AI プロファイリングの精度・速度 最適化</li>
-            <li>HANDOFF.md 文化 → セッション跨ぎの文脈継続</li>
+            <li>D1 自動バックアップ + リストア訓練 実施 → <strong>+8 pt</strong></li>
+            <li>E2E テスト 20本以上（Playwright）実装 → <strong>+10 pt</strong></li>
+            <li>セキュリティ外部レビュー + 脆弱性対応 → <strong>+7 pt</strong></li>
+            <li>Tier 1.17 違反ゼロ継続 3ヶ月 → <strong>+4 pt</strong></li>
+            <li>インシデント対応 SOP 整備 → <strong>+3 pt</strong></li>
           </ul>
+          <p style="font-size:11px;color:#64748b;margin-top:6px">これらが揃って初めて「信頼できる」と呼べる水準。現在は「速い」「安い」「動く」の 3 拍子だけ。</p>
         </div>
 
         <div class="ov-block">
-          <h3>次のフェーズで突破すべき壁</h3>
+          <h3>それでも評価できる点</h3>
+          <p>過剰に卑下するつもりもない。FTE 2.33 で 3 ポータル・15+ リポジトリ・8 Worker を実運用まで持ち込んだ事実は変わらない。</p>
           <ul>
-            <li>D1 本番バックアップ自動化 + リストア訓練</li>
-            <li>CF Pages GitHub 連携でデプロイ rate limit 根本解消</li>
-            <li>memory 棚卸し → 常時 150本以下に圧縮維持</li>
-            <li>E2E テスト自動化（Playwright）</li>
-            <li>おZ会ポータル本格実装（S級協議後）</li>
-            <li>経理 Drive 自動振り分け AI 本実装</li>
+            <li>✅ CF Workers + D1 + GitHub Actions の本格サーバーレス — ノーコードではない</li>
+            <li>✅ Dragon Harness という AI 行動規範体系を自前構築 — 虚偽報告の構造的抑制に効いている（完全ではないが）</li>
+            <li>✅ CI スモーク 43 件・matrix 並列デプロイ — 「動かないまま本番」は防いでいる</li>
+            <li>✅ 千里眼・HTC・三眼診断など、AI 協働の方法論を実践から抽出している</li>
           </ul>
         </div>
       </div>
 
       <div style="text-align:center;font-size:10px;color:#475569;padding:6px 0">
-        最終評価: 2026-06-19 / Dragon Harness v8 / 三眼診断 30/30 基準
+        評価: 2026-06-19 / 悲観的基準 / 目標 93（E2E+Backup+Security+規律遵守で達成可能）
       </div>
     </div>
   </div>
