@@ -24,11 +24,13 @@
       display: flex; background: #1e293b;
       border-bottom: 1px solid #334155;
       position: sticky; top: 49px; z-index: 9;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
     }
+    .tabs::-webkit-scrollbar { display: none; }
     .tab-btn {
-      flex: 1; padding: 12px 0; font-size: 13px; font-weight: 600;
+      flex: 1; min-width: 60px; padding: 12px 4px; font-size: 11.5px; font-weight: 600;
       color: #64748b; background: none; border: none; cursor: pointer;
-      border-bottom: 2px solid transparent;
+      border-bottom: 2px solid transparent; white-space: nowrap;
     }
     .tab-btn.active { color: #f1f5f9; border-bottom-color: #2563eb; }
     .tab-btn:active { background: #334155; }
@@ -235,6 +237,70 @@
     }
     .assessment-content a { color: #60a5fa; }
     .assessment-content hr { border: 0; border-top: 1px solid #334155; margin: 16px 0; }
+
+    /* ── Overview tab ── */
+    .ov-section { margin-bottom: 20px; }
+    .ov-section-title {
+      font-size: 11px; font-weight: 700; color: #64748b;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding-bottom: 6px; margin-bottom: 10px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .ov-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px; }
+    .ov-stat-card {
+      background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+      padding: 10px 6px; text-align: center;
+    }
+    .ov-stat-num { font-size: 20px; font-weight: 800; color: #f1f5f9; }
+    .ov-stat-label { font-size: 10px; color: #64748b; margin-top: 2px; }
+    .sys-card {
+      background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+      padding: 12px; margin-bottom: 8px;
+    }
+    .sys-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .sys-card-icon { font-size: 16px; flex-shrink: 0; }
+    .sys-card-name { font-size: 13px; font-weight: 700; color: #f1f5f9; }
+    .sys-card-tag {
+      font-size: 10px; padding: 2px 7px; border-radius: 4px;
+      font-weight: 600; margin-left: auto; flex-shrink: 0;
+    }
+    .sys-card-desc { font-size: 11.5px; color: #94a3b8; line-height: 1.55; }
+    .sys-card-stack { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .stack-pill {
+      font-size: 10px; padding: 2px 6px; border-radius: 4px;
+      background: rgba(99,102,241,0.15); color: #a5b4fc;
+    }
+    .gauge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+    .gauge-label { font-size: 11.5px; color: #cbd5e1; min-width: 110px; }
+    .gauge-track { flex: 1; height: 5px; background: #0f172a; border-radius: 3px; overflow: hidden; }
+    .gauge-fill { height: 100%; border-radius: 3px; }
+    .gauge-score { font-size: 11.5px; font-weight: 700; color: #f1f5f9; min-width: 28px; text-align: right; }
+    .ov-block {
+      background: #1e293b; border: 1px solid #334155; border-radius: 8px;
+      padding: 13px; margin-bottom: 8px;
+    }
+    .ov-block h3 { font-size: 13px; font-weight: 700; color: #f1f5f9; margin-bottom: 7px; }
+    .ov-block p { font-size: 12px; color: #cbd5e1; line-height: 1.6; margin-bottom: 5px; }
+    .ov-block ul { padding-left: 14px; }
+    .ov-block li { font-size: 11.5px; color: #94a3b8; margin: 3px 0; line-height: 1.5; }
+    .combat-hero {
+      text-align: center; padding: 18px 16px 16px;
+      background: linear-gradient(135deg, #1e3a5f 0%, #1a1a3e 100%);
+      border: 1px solid #2563eb; border-radius: 12px; margin-bottom: 16px;
+    }
+    .combat-num { font-size: 52px; font-weight: 900; color: #60a5fa; line-height: 1; }
+    .combat-title { font-size: 15px; font-weight: 700; color: #93c5fd; margin-top: 4px; }
+    .combat-sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+    .tier-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 10px; font-weight: 700; margin-right: 4px;
+    }
+    .tier-0 { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    .tier-1 { background: rgba(245,158,11,0.2); color: #fcd34d; }
+    .tier-2 { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .tier-3 { background: rgba(34,197,94,0.2); color: #86efac; }
+    .ov-tier-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: flex-start; }
+    .ov-tier-desc { font-size: 11px; color: #94a3b8; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -245,9 +311,10 @@
 
   <!-- Tab bar -->
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('calendar', this)">📅 カレンダー</button>
+    <button class="tab-btn active" onclick="switchTab('calendar', this)">📅 日記</button>
+    <button class="tab-btn" onclick="switchTab('overview', this)">🏛 全貌・評価</button>
     <button class="tab-btn" onclick="switchTab('memo', this)">📝 メモ</button>
-    <button class="tab-btn" onclick="switchTab('plan', this)">🎯 強化計画</button>
+    <button class="tab-btn" onclick="switchTab('plan', this)">🎯 計画</button>
     <button class="tab-btn" onclick="switchTab('assessment', this)">📊 診断</button>
   </div>
 
@@ -283,6 +350,225 @@
         <div id="entry-content"></div>
       </div>
       <div class="no-entry" id="no-entry-msg" style="display:none">この日は記録がありません</div>
+    </div>
+  </div>
+
+  <!-- ===== OVERVIEW TAB ===== -->
+  <div id="tab-overview" class="tab-pane">
+    <div class="container" style="padding-bottom:40px">
+
+      <div class="combat-hero" style="margin-top:16px">
+        <div class="combat-num">97</div>
+        <div class="combat-title">YC AI 戦闘力</div>
+        <div class="combat-sub">実常勤 FTE 2.33 × Claude Code で業界最前線水準</div>
+      </div>
+
+      <!-- 開発規模スコア -->
+      <div class="ov-section">
+        <div class="ov-section-title">開発規模</div>
+        <div class="ov-stat-grid">
+          <div class="ov-stat-card"><div class="ov-stat-num">37+</div><div class="ov-stat-label">開発日数</div></div>
+          <div class="ov-stat-card"><div class="ov-stat-num">900+</div><div class="ov-stat-label">累計コミット</div></div>
+          <div class="ov-stat-card"><div class="ov-stat-num">13</div><div class="ov-stat-label">リポジトリ</div></div>
+          <div class="ov-stat-card"><div class="ov-stat-num">60+</div><div class="ov-stat-label">実装機能</div></div>
+          <div class="ov-stat-card"><div class="ov-stat-num">80</div><div class="ov-stat-label">D1 テーブル</div></div>
+          <div class="ov-stat-card"><div class="ov-stat-num">1,100+</div><div class="ov-stat-label">D1 カラム</div></div>
+        </div>
+      </div>
+
+      <!-- システム全貌マップ -->
+      <div class="ov-section">
+        <div class="ov-section-title">システム全貌</div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">🏢</span>
+            <span class="sys-card-name">ycompany-portal</span>
+            <span class="sys-card-tag tag-op">YC 中枢</span>
+          </div>
+          <div class="sys-card-desc">朝会 / 日報 / 勤怠 / シフト / 在庫 / CRM (contacts 645件) / 議事録→Todo / 名刺スキャン / 群衆乃聲ライブ投票 / AI業務マッピング / db-browser v2.6</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">CF Pages</span><span class="stack-pill">D1 SQL</span><span class="stack-pill">KV</span><span class="stack-pill">LINE API</span><span class="stack-pill">GitHub Actions</span><span class="stack-pill">Durable Objects</span>
+          </div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">⚡</span>
+            <span class="sys-card-name">yc-workers</span>
+            <span class="sys-card-tag tag-workers">Worker 統合</span>
+          </div>
+          <div class="sys-card-desc">旧 22本 → 8本に統合: yc-ai / content / forms / infra / line-webhook / ops / portal / shortcut。Notta→Todo自動承認・Square サブスク管理・顧客 LINE Bot</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">CF Workers</span><span class="stack-pill">素の JS</span><span class="stack-pill">HMAC-SHA256</span><span class="stack-pill">Notta API</span><span class="stack-pill">Square API</span>
+          </div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">🏛</span>
+            <span class="sys-card-name">ikizama-portal</span>
+            <span class="sys-card-tag tag-setagaya">IKIZAMA</span>
+          </div>
+          <div class="sys-card-desc">会員管理 526件 / フォーム v2.0 × 7本 / 規程 28本 HTC対応 / 8マニュアル横断レビュー「神機能」/ 電子署名 Phase D (法人法 95-4) / Calendar D1同期 / おZ会ポータル / 法人 Utage連携</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">CF Pages</span><span class="stack-pill">D1</span><span class="stack-pill">R2</span><span class="stack-pill">Google Calendar API</span><span class="stack-pill">Utage</span>
+          </div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">🗳</span>
+            <span class="sys-card-name">orzugul-portal</span>
+            <span class="sys-card-tag tag-portal">政治活動</span>
+          </div>
+          <div class="sys-card-desc">X フォロワー 19,260人 属性タグ 12種 / ポスター 379件 地図プロット / 世田谷区議会 歴史データ HTML / メタバース×行政 調査 / 世田谷の朝 自動ニュース配信</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">CF Pages</span><span class="stack-pill">X API v2</span><span class="stack-pill">GAS</span><span class="stack-pill">GitHub Actions</span>
+          </div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">💰</span>
+            <span class="sys-card-name">yc-accounting</span>
+            <span class="sys-card-tag tag-accounting">経理</span>
+          </div>
+          <div class="sys-card-desc">経理コックピット / sales-forecast v1.3 / Google Drive 自動振り分け AI 構想 α採用 (14フォルダ分類 AI化予定)</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">CF Pages</span><span class="stack-pill">D1</span><span class="stack-pill">Google Drive API</span>
+          </div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">🧠</span>
+            <span class="sys-card-name">AI ツール・スキル群</span>
+            <span class="sys-card-tag tag-other">自動化</span>
+          </div>
+          <div class="sys-card-desc">千里眼 Pro/Lite 2グレード (98カラム A/B面) / Web補完 WF 150件/日 (4並列 subagent) / ワンオペ検定分析スキル / IAPONIAハッシュタグ生成 / Plaud→Drive→D1 音声パイプライン / メイちゃんヒアリングシート生成</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">Claude API (Opus)</span><span class="stack-pill">Subagent 4並列</span><span class="stack-pill">Claude Vision</span><span class="stack-pill">Plaud</span><span class="stack-pill">Batch API</span>
+          </div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-card-header">
+            <span class="sys-card-icon">🐉</span>
+            <span class="sys-card-name">Dragon Harness (DH)</span>
+            <span class="sys-card-tag tier-0">Tier 0〜4</span>
+          </div>
+          <div class="sys-card-desc">AI 行動規範体系。Tier 0（自己進化）〜 Tier 4（施行細則）。Tier 1.17〜1.24 / 2.26〜2.60 / 3.1 制定済。行政機関スクリプト 2本 / CLAUDE.md 300行正本 / memory/ 200本</div>
+          <div class="sys-card-stack">
+            <span class="stack-pill">60+ Tier 条文</span><span class="stack-pill">memory/ 200本</span><span class="stack-pill">自動 audit</span><span class="stack-pill">三眼診断 30/30</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 技術深度ゲージ -->
+      <div class="ov-section">
+        <div class="ov-section-title">技術深度 評価</div>
+        <div class="ov-block">
+          <div class="gauge-row">
+            <span class="gauge-label">アーキテクチャ</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:88%;background:#3b82f6"></div></div>
+            <span class="gauge-score">88</span>
+          </div>
+          <div class="gauge-row">
+            <span class="gauge-label">AI 統合深度</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:95%;background:#f59e0b"></div></div>
+            <span class="gauge-score">95</span>
+          </div>
+          <div class="gauge-row">
+            <span class="gauge-label">データ設計</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:82%;background:#06b6d4"></div></div>
+            <span class="gauge-score">82</span>
+          </div>
+          <div class="gauge-row">
+            <span class="gauge-label">CI/CD・品質</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:80%;background:#8b5cf6"></div></div>
+            <span class="gauge-score">80</span>
+          </div>
+          <div class="gauge-row">
+            <span class="gauge-label">規律・ドキュメント</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:92%;background:#ef4444"></div></div>
+            <span class="gauge-score">92</span>
+          </div>
+          <div class="gauge-row">
+            <span class="gauge-label">セキュリティ</span>
+            <div class="gauge-track"><div class="gauge-fill" style="width:70%;background:#22c55e"></div></div>
+            <span class="gauge-score">70</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dragon Harness 体系 -->
+      <div class="ov-section">
+        <div class="ov-section-title">Dragon Harness 体系</div>
+        <div class="ov-block">
+          <div class="ov-tier-row"><span class="tier-badge tier-0">Tier 0</span><span class="ov-tier-desc">自己進化メタ規律 — AI 能動立法 / 自己 audit / パターン検出 / 三権バランス / 両建てルール</span></div>
+          <div class="ov-tier-row"><span class="tier-badge tier-1">Tier 1</span><span class="ov-tier-desc">憲法級 — 虚偽報告禁止 (1.17) / 組織的敬意 (1.18) / YC中軸定義 (1.20) / 提案前確認 (1.21) / 組織分離 (1.22) / SSOT (1.23) / デプロイ前commit (1.24)</span></div>
+          <div class="ov-tier-row"><span class="tier-badge tier-2">Tier 2</span><span class="ov-tier-desc">法律級 — CSS/HTML 完全性 (2.10〜2.16) / D1パイプライン (2.25) / 実装プロトコル (2.30〜2.31) / ルート設計 (2.40〜2.44) / HTC レビュー (2.45〜2.48) / 添付標準 (2.57) / deploy規律 (2.59) / HTML タグ CI (2.60) 他 30+条</span></div>
+          <div class="ov-tier-row"><span class="tier-badge tier-3">Tier 3</span><span class="ov-tier-desc">条例級 — Claude Code 長期稼働衛生学 (3.1)</span></div>
+        </div>
+      </div>
+
+      <!-- YC AI戦闘力 考察 -->
+      <div class="ov-section">
+        <div class="ov-section-title">YC AI 戦闘力 考察</div>
+
+        <div class="ov-block">
+          <h3>なぜ「戦闘力 97」か</h3>
+          <p>実常勤 FTE 2.33（山川総支配人 1 + 田貝店長 1 + 佐々生副社長 1/3）で、通常なら10〜15名体制が必要なシステム群を 50日未満で構築・運用している。この「FTE 対 実装量比の異常値」が YC の AI 戦闘力の本質。</p>
+          <ul>
+            <li>1 FTE あたり 26+ 機能 / 5,949 お客様</li>
+            <li>3ポータル × 13+ リポジトリ × 8 Worker を 2 名体制で開発・運用</li>
+            <li>フルスタック（CF Workers/D1/LINE/GitHub CI）× AI 統合を同時に実現</li>
+            <li>オルズグル社長「AI なしで物理的に運用不可」と明言（2026-06-15）</li>
+          </ul>
+        </div>
+
+        <div class="ov-block">
+          <h3>現在地の正直な評価</h3>
+          <p>「ベンチャー企業のシニアフルスタックエンジニア 1〜2名」水準の実装量と技術深度。ノーコードではなく、本格的なサーバーレスアーキテクチャで動いている点が差別化要因。ただし未検証・未完の領域も残る。</p>
+          <ul>
+            <li>✅ アーキテクチャ設計 / データモデリング / AI統合 / 規律体系</li>
+            <li>✅ CI/CD（スモーク 43件 + matrix 並列デプロイ）</li>
+            <li>⚠️ セキュリティ監査（CF Access 依存・トークン管理は属人的）</li>
+            <li>⚠️ E2E テスト不足（UI テスト未整備）</li>
+            <li>⚠️ memory 210本 2.3MB 肥大化 → コンテキスト圧迫リスク</li>
+            <li>❌ 本番 D1 バックアップ自動化（未実装）</li>
+          </ul>
+        </div>
+
+        <div class="ov-block">
+          <h3>AI との協働で何が機能したか</h3>
+          <p>「AI にコードを書かせる」だけでなく、Dragon Harness という AI 行動規範体系を構築し、虚偽報告・過大報告・手抜き実装を構造的に抑制した点が最大の成功要因。</p>
+          <ul>
+            <li>Tier 1.17「未確認は未確認と言う」→ 虚偽完了報告事件から立法</li>
+            <li>三眼診断（龍/律/民 30/30 目標）→ 品質基準の定量化</li>
+            <li>HTC（精神と時の部屋）→ 5軸 Outside-In 機能検証</li>
+            <li>千里眼 Pro/Lite → AI プロファイリングの精度・速度 最適化</li>
+            <li>HANDOFF.md 文化 → セッション跨ぎの文脈継続</li>
+          </ul>
+        </div>
+
+        <div class="ov-block">
+          <h3>次のフェーズで突破すべき壁</h3>
+          <ul>
+            <li>D1 本番バックアップ自動化 + リストア訓練</li>
+            <li>CF Pages GitHub 連携でデプロイ rate limit 根本解消</li>
+            <li>memory 棚卸し → 常時 150本以下に圧縮維持</li>
+            <li>E2E テスト自動化（Playwright）</li>
+            <li>おZ会ポータル本格実装（S級協議後）</li>
+            <li>経理 Drive 自動振り分け AI 本実装</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:10px;color:#475569;padding:6px 0">
+        最終評価: 2026-06-19 / Dragon Harness v8 / 三眼診断 30/30 基準
+      </div>
     </div>
   </div>
 
@@ -450,6 +736,48 @@ const DIARY = {
     { repo: "demoday-backend", tag: "tag-other", items: [
       { type: "feat", text: "メールデザイン更新" },
       { type: "feat", text: "テスト用重複チェックスキップ追加" },
+    ]}
+  ],
+  "2026-05-06": [
+    { repo: "Operation-Management", tag: "tag-op", items: [
+      { type: "docs", text: "財務経理マニュアル AI支援更新 — yc_drive_local/財務経理マニュアル.pptx" },
+    ]}
+  ],
+  "2026-05-08": [
+    { repo: "orzugul-portal", tag: "tag-portal", items: [
+      { type: "init", text: "orzugul-twitter-analytics 構築 — X API v2 OAuth1.0 フォロワー全件取得スクリプト群" },
+      { type: "feat", text: "X フォロワー 19,260人 全件 CSV 取得完了 (followers_all.csv 8.8MB)" },
+      { type: "feat", text: "フォロワー優先アウトリーチリスト.xlsx + X_API技術用語解説書.docx 自動生成" },
+    ]}
+  ],
+  "2026-05-09": [
+    { repo: "Operation-Management", tag: "tag-op", items: [
+      { type: "init", text: "JIDAIワンオペ検定分析スキル — 全25問 採点・個人別フィードバック自動生成（染谷/土方/小林さん）" },
+      { type: "init", text: "IAPONIAイベント ハッシュタグ＆ターゲット資料生成スキル — .docx 自動出力" },
+      { type: "feat", text: "ヒアリングシート Excel 自動生成ツール (meichan_hearing.py/xlsx)" },
+    ]},
+    { repo: "ikizama-portal", tag: "tag-setagaya", items: [
+      { type: "docs", text: "IKIZAMA メタバース×江戸城再建 クラウドファンディング戦略調査" },
+    ]}
+  ],
+  "2026-05-10": [
+    { repo: "orzugul-portal", tag: "tag-portal", items: [
+      { type: "feat", text: "世田谷区議会 歴史データ HTML 構築 (historical_council_6.html)" },
+      { type: "docs", text: "メタバース×行政案件 調査・討議サマリー + 国内成功・失敗事例レポート (2本)" },
+    ]},
+    { repo: "ikizama-portal", tag: "tag-setagaya", items: [
+      { type: "docs", text: "IKIZAMA クラウドファンディング戦略・議論統合資料 + 統合戦略報告書 生成" },
+      { type: "docs", text: "恋活業者4社 口コミ悉皆調査レポート" },
+    ]}
+  ],
+  "2026-05-11": [
+    { repo: "Operation-Management", tag: "tag-op", items: [
+      { type: "init", text: "YCシフトシステム v2 全面再構築設計 — 管理者画面でシフト確定→各人 LINE Push・なりすまし防止" },
+      { type: "docs", text: "SHIFT_SYSTEM_V2_HANDOFF.md 作成 — yc-shift-admin 新設・yc-shift-form 更新・DEPLOY.md 整備" },
+      { type: "docs", text: "スタッフ LINE 登録メール文案 / NocoDB VPS サーバー設定手順 整備" },
+    ]},
+    { repo: "ycompany-portal", tag: "tag-op", items: [
+      { type: "init", text: "YC業務システム GitHub 初期コミット (23:47) — 運用マニュアル Notion→GitHub 移行着手" },
     ]}
   ],
   "2026-05-12": [
